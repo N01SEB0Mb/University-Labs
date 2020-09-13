@@ -56,12 +56,14 @@ class EdgeListGraph(set):
         It consists of two Vertex objects
         """
 
-        def __new__(cls, vertices: Iterable):
+        def __new__(cls, vertices: Iterable, weight: float=1.0, directed: bool=False):
             """
             Creates new Edge object
 
             Args:
                 vertices (Iterable): Any iterable object consists of two Vertex objects
+                weight (float, optional): Weight of the edge. Defaults to 1.0
+                directed(bool, optional): Is edge directed. Defaults to False
 
             Raises:
                 TypeError: If vertices argument is not iterable
@@ -76,12 +78,14 @@ class EdgeListGraph(set):
             else:
                 return new_edge
 
-        def __init__(self, *args, **kwargs):
+        def __init__(self, verices: Iterable, weight: float=1.0, directed: bool=False):
             """
             Inits Edge object
 
             Args:
                 vertices (Iterable): Any iterable object consists of two Vertex objects
+                weight (float, optional): Weight of the edge. Defaults to 1.0
+                directed(bool, optional): Is edge directed. Defaults to False
 
             Raises:
                 GraphTypeError: If vertices argument does not consists only of Vertex objects
@@ -89,6 +93,15 @@ class EdgeListGraph(set):
             Warnings:
                 GraphWarning: If connecting vertex to itself
             """
+
+            try:
+                self.weight = float(weight)
+            except (TypeError, ValueError):
+                raise exceptions.GraphTypeError("'' is not valid type for weight value".format(
+                    weight.__class__.__name__
+                ))
+
+            self.directed = bool(directed)
 
             if not isinstance(self[0], EdgeListGraph.Vertex) or not isinstance(self[1], EdgeListGraph.Vertex):
                 raise exceptions.GraphTypeError("invalid vertex type '{}', use 'Vertex' instead".format(
@@ -99,6 +112,17 @@ class EdgeListGraph(set):
             if self[0] == self[1]:
                 warnings.warn("Connecting vertex to itself", exceptions.GraphWarning)
 
+        def __hash__(self):
+            """
+            Overwrited __hash__ method
+            Is used to comparison in set
+
+            Returns:
+                int: object hash
+            """
+
+            return hash((self[0], self[1]) if self.directed else (min(self), max(self)))
+
         def __str__(self):
             """
             Overwrites __str__ method
@@ -106,7 +130,7 @@ class EdgeListGraph(set):
             Returns:
                 str: Edge object converted to string
             """
-            return str(self[0]) + "-" + str(self[1])
+            return str(self[0]) + "--(" + str(self.weight) + (")--" if not self.directed else ")->") + str(self[1])
 
         def __repr__(self):
             """
@@ -115,7 +139,7 @@ class EdgeListGraph(set):
             Returns:
                 str: Representation of Edge object
             """
-            return repr(self[0]) + "-" + repr(self[1])
+            return repr(self[0]) + "--(" + str(self.weight) + (")--" if not self.directed else ")->") + repr(self[1])
 
     """
     This is Graph class implemented with edge list
@@ -129,8 +153,8 @@ class EdgeListGraph(set):
             edge_list (Iterable): Any iterable object that consists of Edge objects
 
         Raises:
+            TypeError: If edge_list is not iterable
             GraphTypeError: If edge_list does not consists only of Edge objects
-            GraphTypeError: If edge_list is not iterable
         """
 
         super(set, self).__init__()
@@ -144,7 +168,7 @@ class EdgeListGraph(set):
                         edge.__class__.__name__
                     ))
         else:
-            raise exceptions.GraphTypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
+            raise exceptions.TypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
 
     def __str__(self):
         """
@@ -153,7 +177,7 @@ class EdgeListGraph(set):
         Returns:
             str: Graph object converted to string
         """
-        return ", ".join([str(edge) for edge in self])
+        return "; ".join([str(edge) for edge in self])
 
     def __repr__(self):
         """
