@@ -4,7 +4,7 @@ import sys
 import warnings
 from collections.abc import Iterable
 
-import exceptions
+import GraphExceptions
 
 
 class EdgeListGraph(set):
@@ -26,7 +26,7 @@ class EdgeListGraph(set):
             if isinstance(index, int):
                 return int.__new__(cls, index)
             else:
-                raise exceptions.GraphTypeError("invalid index type '{}', use 'int' instead".format(
+                raise GraphExceptions.GraphTypeError("invalid index type '{}', use 'int' instead".format(
                     iterable.__class__.__name__
                 ))
 
@@ -72,13 +72,13 @@ class EdgeListGraph(set):
 
             new_edge = super(EdgeListGraph.Edge, cls).__new__(cls, vertices)
             if len(new_edge) != 2:
-                raise exceptions.PairError("too {} vertices specified, there should be 2 vertices".format(
+                raise GraphExceptions.PairError("too {} vertices specified, there should be 2 vertices".format(
                     "few" if len(new_edge) < 2 else "much"
                 ))
             else:
                 return new_edge
 
-        def __init__(self, verices: Iterable, weight: float=1.0, directed: bool=False):
+        def __init__(self, vertices: Iterable, weight: float=1.0, directed: bool=False):
             """
             Inits Edge object
 
@@ -97,20 +97,20 @@ class EdgeListGraph(set):
             try:
                 self.weight = float(weight)
             except (TypeError, ValueError):
-                raise exceptions.GraphTypeError("'' is not valid type for weight value".format(
+                raise GraphExceptions.GraphTypeError("'' is not valid type for weight value".format(
                     weight.__class__.__name__
                 ))
 
             self.directed = bool(directed)
 
             if not isinstance(self[0], EdgeListGraph.Vertex) or not isinstance(self[1], EdgeListGraph.Vertex):
-                raise exceptions.GraphTypeError("invalid vertex type '{}', use 'Vertex' instead".format(
+                raise GraphExceptions.GraphTypeError("invalid vertex type '{}', use 'Vertex' instead".format(
                     self[0].__class__.__name__ if not isinstance(self[0],
                                                                  EdgeListGraph.Vertex) else self[1].__class__.__name__
                 ))
 
             if self[0] == self[1]:
-                warnings.warn("Connecting vertex to itself", exceptions.GraphWarning)
+                warnings.warn("Connecting vertex to itself", GraphExceptions.GraphWarning)
 
         def __hash__(self):
             """
@@ -182,11 +182,10 @@ class EdgeListGraph(set):
                 if isinstance(edge, EdgeListGraph.Edge):
                     self.add(edge)
                 else:
-                    raise exceptions.GraphTypeError("edge list should consists only of 'Edge' objects, not '{}'".format(
-                        edge.__class__.__name__
-                    ))
+                    error_message = "edge list should consists only of 'Edge' objects, not '{}'"
+                    raise GraphExceptions.GraphTypeError(error_message.format(edge.__class__.__name__))
         else:
-            raise exceptions.TypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
+            raise GraphExceptions.TypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
 
     def __str__(self):
         """
@@ -205,47 +204,3 @@ class EdgeListGraph(set):
             str: Representation of Graph object
         """
         return ", ".join([repr(edge) for edge in self])
-
-
-class AdjacencyListGraph(dict):
-    class Vertex(int):
-        """
-        This is Vertex class of AdjacencyListGraph, base of Edge object
-        """
-
-        def __new__(cls, index: int):
-            """
-            Creates new Vertex object
-
-            Args:
-                index (int): Graph vertex index
-            Raises:
-                GraphTypeError: If index type is not int
-            """
-
-            if isinstance(index, int):
-                return int.__new__(cls, index)
-            else:
-                raise exceptions.GraphTypeError("invalid index type '{}', use 'int' instead".format(
-                    iterable.__class__.__name__
-                ))
-
-        def __init__(self, index: int):
-            """
-            Inits Vertex object
-
-            Args:
-                index: Graph vertex index
-            """
-
-            super(AdjacencyListGraph.Vertex, self).__init__()
-
-        def __repr__(self):
-            """
-            Overwrites __repr__ method
-
-            Returns:
-                str: Representation of Vertex object
-            """
-
-            return "Vertex[{}]".format(self)

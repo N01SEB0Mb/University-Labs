@@ -1,6 +1,8 @@
 # coding=utf-8
 
-from structures import *
-from exceptions import *
+from EdgeListGraph import *
+from AdjacencyListGraph import *
+from GraphExceptions import *
+from GraphWarnings import *
 
 __version__ = "v0.1"

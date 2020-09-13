@@ -12,23 +12,17 @@ class GraphError(Exception):
         super(Exception, self).__init__(*args, **kwargs)
 
 
-class GraphWarning(Warning):
-    """
-    This is base graph warning
-    """
-    def __init__(self, *args, **kwargs):
-        super(Warning, self).__init__(*args, **kwargs)
-
-
 class GraphTypeError(GraphError, TypeError):
     """
     This error occurs when there is a type mismatch in this package
     """
+    def __init__(self, *args, **kwargs):
+        super(GraphError, self).__init__(*args, **kwargs)
 
 
 class PairError(GraphError):
     """
     This error occurs when an edge is attempted to initialize with wrong number of vertices
     """
-    def __init__(self, message):
-        super(GraphError, self).__init__(message)
+    def __init__(self, *args, **kwargs):
+        super(GraphError, self).__init__(*args, **kwargs)
