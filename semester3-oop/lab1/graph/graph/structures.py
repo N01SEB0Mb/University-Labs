@@ -123,6 +123,24 @@ class EdgeListGraph(set):
 
             return hash((self[0], self[1]) if self.directed else (min(self), max(self)))
 
+        def __eq__(self, other):
+            """
+            Overwrites __eq__ method
+            Can be equal only to object of the same class
+
+            Args:
+                other (EdgeListGraph.Edge): object to compare with
+
+            Returns:
+                bool: is object equal to other
+            """
+            if not isinstance(other, EdgeListGraph.Edge):
+                return False
+            if self.directed:
+                return self[0] == other[0] and self[1] == other[1]
+            else:
+                return (self[0] == other[0] and self[1] == other[1]) or (self[0] == other[1] and self[1] == other[0])
+
         def __str__(self):
             """
             Overwrites __str__ method
@@ -187,3 +205,47 @@ class EdgeListGraph(set):
             str: Representation of Graph object
         """
         return ", ".join([repr(edge) for edge in self])
+
+
+class AdjacencyListGraph(dict):
+    class Vertex(int):
+        """
+        This is Vertex class of AdjacencyListGraph, base of Edge object
+        """
+
+        def __new__(cls, index: int):
+            """
+            Creates new Vertex object
+
+            Args:
+                index (int): Graph vertex index
+            Raises:
+                GraphTypeError: If index type is not int
+            """
+
+            if isinstance(index, int):
+                return int.__new__(cls, index)
+            else:
+                raise exceptions.GraphTypeError("invalid index type '{}', use 'int' instead".format(
+                    iterable.__class__.__name__
+                ))
+
+        def __init__(self, index: int):
+            """
+            Inits Vertex object
+
+            Args:
+                index: Graph vertex index
+            """
+
+            super(AdjacencyListGraph.Vertex, self).__init__()
+
+        def __repr__(self):
+            """
+            Overwrites __repr__ method
+
+            Returns:
+                str: Representation of Vertex object
+            """
+
+            return "Vertex[{}]".format(self)
