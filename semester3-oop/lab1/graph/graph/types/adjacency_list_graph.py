@@ -54,27 +54,6 @@ class AdjacencyListGraph(dict):
         It consists of Vertex object and edge properties
         """
 
-        # def __new__(cls, vertex, weight: float = 1.0):
-        #     """
-        #     Creates new Edge object
-        #
-        #     Args:
-        #         vertices (Iterable): Any iterable object consists of two Vertex objects
-        #         weight (float, optional): Weight of the edge. Defaults to 1.0
-        #
-        #     Raises:
-        #         TypeError: If vertices argument is not iterable
-        #         PairError: If number of vertices is not 2
-        #     """
-        #
-        #     new_edge = super(EdgeListGraph.Edge, cls).__new__(cls, vertex)
-        #     if len(new_edge) != 2:
-        #         raise graph.exceptions.PairError("too {} vertices specified, there should be 2 vertices".format(
-        #             "few" if len(new_edge) < 2 else "much"
-        #         ))
-        #     else:
-        #         return new_edge
-
         def __init__(self, vertex, weight: float = 1.0):
             """
             Inits Edge object
@@ -85,10 +64,12 @@ class AdjacencyListGraph(dict):
 
             Raises:
                 GraphTypeError: If vertex argument is not instance of Vertex class
+
+            Warnings:
+                LoopWarning: if connecting vertex to itself
             """
 
-            super(AdjacencyListGraph.Vertex, self).__init__()
-            print(self)
+            super().__init__()
 
             try:
                 self.weight = float(weight)
@@ -104,7 +85,7 @@ class AdjacencyListGraph(dict):
                 ))
 
             if self[0] == self[1]:
-                warnings.warn("Connecting vertex to itself", graph.exceptions.GraphWarning)
+                warnings.warn("Connecting vertex to itself", graph.exceptions.LoopWarning)
 
         def __hash__(self):
             """

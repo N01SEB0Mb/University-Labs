@@ -91,7 +91,7 @@ class EdgeListGraph(set):
                 GraphTypeError: If vertices argument does not consists only of Vertex objects
 
             Warnings:
-                GraphWarning: If connecting vertex to itself
+                LoopWarning: If connecting vertex to itself
             """
 
             try:
@@ -110,7 +110,7 @@ class EdgeListGraph(set):
                 ))
 
             if self[0] == self[1]:
-                warnings.warn("Connecting vertex to itself", graph.exceptions.GraphWarning)
+                warnings.warn("Connecting vertex to itself", graph.exceptions.LoopWarning)
 
         def __hash__(self):
             """
