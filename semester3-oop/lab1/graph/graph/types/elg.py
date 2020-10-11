@@ -1,94 +1,60 @@
 # coding=utf-8
+"""
+EdgeListGraph and EdgeListGraph.Edge types
+"""
 
-import sys
 import warnings
 from collections.abc import Iterable
 
 import graph.exceptions
+from .vertex import Vertex
 
 
 class EdgeListGraph(set):
-    class Vertex(int):
-        """
-        This is Vertex class of EdgeListGraph, base of Edge object
-        """
-
-        def __new__(cls, index: int):
-            """
-            Creates new Vertex object
-
-            Args:
-                index (int): Graph vertex index
-            Raises:
-                GraphTypeError: If index type is not int
-            """
-
-            if isinstance(index, int):
-                return int.__new__(cls, index)
-            else:
-                raise graph.exceptions.GraphTypeError("invalid index type '{}', use 'int' instead".format(
-                    iterable.__class__.__name__
-                ))
-
-        def __init__(self, index: int):
-            """
-            Inits Vertex object
-
-            Args:
-                index (int): Graph vertex index
-            """
-
-            super(EdgeListGraph.Vertex, self).__init__()
-
-        def __repr__(self):
-            """
-            Overwrites __repr__ method
-
-            Returns:
-                str: Representation of Vertex object
-            """
-
-            return "Vertex[{}]".format(self)
 
     class Edge(tuple):
         """
-        This is Edge class of EdgeListGraph to be used in edge list
-        It consists of two Vertex objects
+        This is 'Edge' class of 'EdgeListGraph' to be used in edge list
+        It consists of two 'Vertex' objects, weight of edge and is the edge directed or not
+
+        Notes:
+            if edge is directed, then direction is from the first vertex to second
         """
 
-        def __new__(cls, vertices: Iterable, weight: float=1.0, directed: bool=False):
+        def __new__(cls, vertex_from: Vertex, vertex_to: Vertex, weight: float=1.0, directed: bool=False):
             """
             Creates new Edge object
 
             Args:
-                vertices (Iterable): Any iterable object consists of two Vertex objects
+                vertex_from (Vertex): Start vertex of edge
+                vertex_to (Vertex): End vertex of edge
                 weight (float, optional): Weight of the edge. Defaults to 1.0
                 directed(bool, optional): Is edge directed. Defaults to False
 
             Raises:
-                TypeError: If vertices argument is not iterable
-                PairError: If number of vertices is not 2
+                GraphTypeError: If vertices args is not 'Vertex' type
             """
 
-            new_edge = super(EdgeListGraph.Edge, cls).__new__(cls, vertices)
-            if len(new_edge) != 2:
-                raise graph.exceptions.PairError("too {} vertices specified, there should be 2 vertices".format(
-                    "few" if len(new_edge) < 2 else "much"
-                ))
+            if isinstance(vertex_from, Vertex) and isinstance(vertex_to, Vertex):
+                return super(EdgeListGraph.Edge, cls).__new__(cls, (vertex_from, vertex_to))
             else:
-                return new_edge
+                vertex_type = vertex_to.__class__.__name__ if isinstance(vertex_from,
+                                                                         Vertex) else vertex_from.__class__.__name__
+                error_message = "'vertex_from' and 'vertex_to' must be 'Vertex' object, not {}"
+                raise graph.exceptions.GraphTypeError(error_message.format(error_message.format(vertex_type)))
 
-        def __init__(self, vertices: Iterable, weight: float=1.0, directed: bool=False):
+        def __init__(self, vertex_from: Vertex, vertex_to: Vertex, weight: float=1.0, directed: bool=False):
             """
             Inits Edge object
 
             Args:
-                vertices (Iterable): Any iterable object consists of two Vertex objects
+                vertex_from (Vertex): Start vertex of edge
+                vertex_to (Vertex): End vertex of edge
                 weight (float, optional): Weight of the edge. Defaults to 1.0
                 directed(bool, optional): Is edge directed. Defaults to False
 
             Raises:
-                GraphTypeError: If vertices argument does not consists only of Vertex objects
+                GraphTypeError: If 'weight' argument is not float/can`t be converted to float
 
             Warnings:
                 LoopWarning: If connecting vertex to itself
@@ -97,24 +63,18 @@ class EdgeListGraph(set):
             try:
                 self.weight = float(weight)
             except (TypeError, ValueError):
-                raise graph.exceptions.GraphTypeError("'' is not valid type for weight value".format(
+                raise graph.exceptions.GraphTypeError("'{}' is not valid type for weight value".format(
                     weight.__class__.__name__
                 ))
 
             self.directed = bool(directed)
-
-            if not isinstance(self[0], EdgeListGraph.Vertex) or not isinstance(self[1], EdgeListGraph.Vertex):
-                raise graph.exceptions.GraphTypeError("invalid vertex type '{}', use 'Vertex' instead".format(
-                    self[0].__class__.__name__ if not isinstance(self[0],
-                                                                 EdgeListGraph.Vertex) else self[1].__class__.__name__
-                ))
 
             if self[0] == self[1]:
                 warnings.warn("Connecting vertex to itself", graph.exceptions.LoopWarning)
 
         def __hash__(self):
             """
-            Overwrited __hash__ method
+            Overloads __hash__ method
             Is used to comparison in set
 
             Returns:
@@ -125,7 +85,7 @@ class EdgeListGraph(set):
 
         def __eq__(self, other):
             """
-            Overwrites __eq__ method
+            Overloads __eq__ method
             Can be equal only to object of the same class
 
             Args:
@@ -134,6 +94,7 @@ class EdgeListGraph(set):
             Returns:
                 bool: is object equal to other
             """
+
             if not isinstance(other, EdgeListGraph.Edge):
                 return False
             if self.directed:
@@ -143,21 +104,24 @@ class EdgeListGraph(set):
 
         def __str__(self):
             """
-            Overwrites __str__ method
+            Overloads __str__ method
 
             Returns:
                 str: Edge object converted to string
             """
+
             return str(self[0]) + "--(" + str(self.weight) + (")--" if not self.directed else ")->") + str(self[1])
 
         def __repr__(self):
             """
-            Overwrites __repr__ method
+            Overloads __repr__ method
 
             Returns:
                 str: Representation of Edge object
+
             """
-            return repr(self[0]) + "--(" + str(self.weight) + (")--" if not self.directed else ")->") + repr(self[1])
+
+            return "Edge[{0}-{2}{1}, {3}]".format(repr(self[0]), repr(self[1]), ">" if self.directed else "-", self.weight)
 
     """
     This is Graph class implemented with edge list
@@ -171,11 +135,14 @@ class EdgeListGraph(set):
             edge_list (Iterable): Any iterable object that consists of Edge objects
 
         Raises:
-            TypeError: If edge_list is not iterable
+            GraphTypeError: If edge_list is not iterable
             GraphTypeError: If edge_list does not consists only of Edge objects
         """
 
         super(set, self).__init__()
+
+        if edge_list is None:
+            edge_list = []
 
         if isinstance(edge_list, Iterable):
             for edge in edge_list:
@@ -185,22 +152,24 @@ class EdgeListGraph(set):
                     error_message = "edge list should consists only of 'Edge' objects, not '{}'"
                     raise graph.exceptions.GraphTypeError(error_message.format(edge.__class__.__name__))
         else:
-            raise graph.exceptions.TypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
+            raise graph.exceptions.GraphTypeError("'{}' object is not iterable".format(edge_list.__class__.__name__))
 
     def __str__(self):
         """
-        Overwrites __str__ method
+        Overloads __str__ method
 
         Returns:
             str: Graph object converted to string
         """
-        return "; ".join([str(edge) for edge in self])
+
+        return ", ".join([str(edge) for edge in self])
 
     def __repr__(self):
         """
-        Overwrites __repr__ method
+        Overloads __repr__ method
 
         Returns:
             str: Representation of Graph object
         """
-        return ", ".join([repr(edge) for edge in self])
+
+        return "EdgeListGraph[{}]".format(", ".join([repr(edge) for edge in self]))
