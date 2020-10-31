@@ -1,3 +1,3 @@
-##This is repository with my university works.
+## This is repository with my university projects.
 
-![Alt Text](https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif)
+<img src="https://i.giphy.com/media/YQitE4YNQNahy/giphy.webp"/>
