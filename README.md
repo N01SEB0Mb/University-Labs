@@ -2,7 +2,7 @@
 
 <img src="https://i.giphy.com/media/YQitE4YNQNahy/giphy.webp"/>
 
-#### List of works:
+### List of works:
 
 * Semester 1
     * Basics of programming
