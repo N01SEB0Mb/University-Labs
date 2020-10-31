@@ -7,13 +7,13 @@
 * Semester 1
     * Basics of programming
         * Labs
-            0. [Print all numbers without repeating digits from a to b.](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab0) (C++)
-            1. [Korselt's criterion](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab1) (С++)
-            2. [Trajectory modeling](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab2) (C++)
-            3. [Polynomial point interpolation](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab3) (C++)
-            4. [Operations with strings and arrays](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab4) (C++)
-            5. None
-            6. [Removing words from the text](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab6) (C++)
+            1. [Print all numbers without repeating digits from a to b.](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab0) (C++)
+            2. [Korselt's criterion](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab1) (С++)
+            3. [Trajectory modeling](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab2) (C++)
+            4. [Polynomial point interpolation](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab3) (C++)
+            5. [Operations with strings and arrays](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab4) (C++)
+            6. None
+            7. [Removing words from the text](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester1/lab6) (C++)
 
 * Semester 2
     * Basics of programming
