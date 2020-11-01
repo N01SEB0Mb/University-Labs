@@ -59,13 +59,16 @@ class Coordinates:
 
 
 class LawCoordinates(Coordinates):
+    ECONOMIC = "economic"
+    SOCIAL = "social"
+
     def __init__(self, value: float, direction: str) -> None:
-        if direction == "economic":
+        if direction == self.ECONOMIC:
             super(LawCoordinates, self).__init__(value, 0.0)
-        elif direction == "social":
+        elif direction == self.SOCIAL:
             super(LawCoordinates, self).__init__(0.0, value)
         else:
-            raise ValueError("'direction' value must be 'economic' or 'social'")
+            raise ValueError("'direction' value must be '{}.ECONOMIC' or '{}.SOCIAL'".format(self.__class__.__name__))
 
         self._direction = direction
 
@@ -75,10 +78,12 @@ class LawCoordinates(Coordinates):
 
     @direction.setter
     def direction(self, value: str) -> None:
-        if value in ("economic", "social"):
+        if value in (self.ECONOMIC, self.SOCIAL):
             self._direction = value
         else:
-            raise ValueError("Direction must be 'economic' or 'social'")
+            raise ValueError(f"'direction' value must be"
+                             f"'{self.__class__.__name__}.ECONOMIC' or"
+                             f"'{self.__class__.__name__}.SOCIAL'")
 
     @property
     def economic(self) -> float:
@@ -86,10 +91,10 @@ class LawCoordinates(Coordinates):
 
     @economic.setter
     def economic(self, value: float) -> None:
-        if self._direction == "economic":
+        if self._direction == self.ECONOMIC:
             self._economic = -1.0 if value < -1.0 else 1.0 if value > 1.0 else value
         else:
-            raise ValueError("Law is 'social', you can't change 'economic' value")
+            raise ValueError("Law is social, you can't change economic value")
 
     @property
     def social(self) -> float:
@@ -97,7 +102,7 @@ class LawCoordinates(Coordinates):
 
     @social.setter
     def social(self, value: float) -> None:
-        if self._direction == "social":
+        if self._direction == self.SOCIAL:
             self._social = -1.0 if value < -1.0 else 1.0 if value > 1.0 else value
         else:
-            raise ValueError("Law is 'economic', you can't change 'social' value")
+            raise ValueError("Law is economic, you can't change social value")
