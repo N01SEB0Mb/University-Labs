@@ -31,7 +31,6 @@ class CalcNew(CalculatorABC):
 
         for func in cls._getFuncs():
             try:
-                print(func)
                 return func(x)
             except CalculatorTypeError:
                 pass
