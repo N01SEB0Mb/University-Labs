@@ -4,7 +4,7 @@ Task solution using class with __call__ method
 """
 
 from .basecalc import CalculatorABC, CalculatorTypeError
-from typing import Union, Iterable, Any
+from typing import Union, Iterable, Any, List, Callable
 
 
 class CalcCall(CalculatorABC):

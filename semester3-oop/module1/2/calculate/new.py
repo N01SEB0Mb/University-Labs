@@ -4,7 +4,7 @@ Task solution using class with __new__ method
 """
 
 from .basecalc import CalculatorABC, CalculatorTypeError
-from typing import Union, Iterable, Any
+from typing import Union, Iterable, Any, List, Callable
 
 
 class CalcNew(CalculatorABC):

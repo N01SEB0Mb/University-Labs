@@ -4,7 +4,7 @@ Abstract class for CalcCall and CalcNew solutions
 """
 
 from math import sin, factorial
-from typing import Tuple, List, Optional, Callable
+from typing import Tuple, List, Optional, Callable, Union, Any
 
 
 class CalculatorTypeError(TypeError):
