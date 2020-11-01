@@ -32,9 +32,9 @@ def CalcFunc(x: Union[int, float, str, list, tuple, Any]) -> int:
         lambda value: isinstance(value, str):  # Is string
             lambda: len([char for char in x if char.isalpha() and char.isupper()]),
         lambda value: isinstance(value, tuple):  # Is pair
-            lambda: calc(x[0]) * (calc(x[1]) + 1) % 541,
+            lambda: CalcFunc(x[0]) * (CalcFunc(x[1]) + 1) % 541,
         lambda value: isinstance(value, list):  # Is list
-            lambda: sum(map(calc, x)) % 741,
+            lambda: sum(map(CalcFunc, x)) % 741,
         lambda value: isinstance(value, int) or isinstance(value, float) and abs(int(value)) == value:  # Is natural
             lambda: (factorial(x) + x - 1) % 141,
         lambda value: isinstance(value, int) or isinstance(value, float) and int(value) == value:  # Is integer
