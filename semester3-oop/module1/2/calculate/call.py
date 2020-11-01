@@ -33,7 +33,7 @@ class CalcCall(CalculatorABC):
             except CalculatorTypeError:
                 pass
 
-    def _getFuncs(self):
+    def _getFuncs(self) -> List[Callable[[Union[int, float, str, tuple, list, Any]], int]]:
         """
         Method to get list of calculating methods
 

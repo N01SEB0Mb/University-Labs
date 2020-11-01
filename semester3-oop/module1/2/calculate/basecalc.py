@@ -4,7 +4,7 @@ Abstract class for CalcCall and CalcNew solutions
 """
 
 from math import sin, factorial
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, Callable
 
 
 class CalculatorTypeError(TypeError):
@@ -12,7 +12,7 @@ class CalculatorTypeError(TypeError):
     Calculator type error, used in CalculatorABC calculation methods
     """
 
-    def __init__(self, argtype: str, msg: Optional[str] = "'value' argument must be {}"):
+    def __init__(self, argtype: str, msg: Optional[str] = "'value' argument must be {}") -> None:
         """
         CalculatorTypeError __init__ method override
         Initializes CalculatorTypeError object
@@ -31,18 +31,17 @@ class CalculatorABC:
     Contains methods for every type calculation
 
     Notes:
-        Does not have calculation for pairs and lists because of recursion,
+        Does not have calculation for pairs and lists because of recursion
         that is different in CalcCall and CalcNew classes, so they define it by self
-        Does not have _getFuncs() method
     """
 
     @classmethod
-    def _getFuncs(cls):
+    def _getFuncs(cls) -> List[Callable[[Union[int, float, str, tuple, list, Any]], int]]:
         """
         Method to get list of calculating methods.
 
         Overriden in both CalcCall and CalcNew classes,
-        because CalcNew has no object instance, but CalcCall has,
+        because CalcNew has no object instance but CalcCall has,
         so it cause problems.
 
         Returns:

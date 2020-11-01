@@ -11,7 +11,7 @@ class CalcNew(CalculatorABC):
     """
     CalcNew class that simulates function:
     when class is called __new__ method must return new CalcNew object,
-    but it returning calculation answer
+    but it returning calculation answer.
     You can call this class like function
     """
 
@@ -37,7 +37,7 @@ class CalcNew(CalculatorABC):
                 pass
 
     @classmethod
-    def _getFuncs(cls):
+    def _getFuncs(cls) -> List[Callable[[Union[int, float, str, tuple, list, Any]], int]]:
         """
         Method to get list of calculating methods
 
