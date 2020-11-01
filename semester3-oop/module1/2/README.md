@@ -15,9 +15,9 @@ Solution defined using 3 different methods:
  * **CalcCall** ([_call.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/call.py)):
  python class with `__call__` method.
  Unlike CalcFunc, uses different method for every `x` type.
- Inherits [`CalculatorABC`](https://github.com/no1sebomb/University-Labs/blob/b8b49caac44ce8b8fd3c157c48aa882531dff364/semester3-oop/module1/2/calculate/basecalc.py#L28) class with defined method for most of types.
+ Inherits [`CalculatorABC`](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/basecalc.py#L28) class with defined method for most of types.
  Checking of type is realised using `try/except` construction:
- If `x` type is not suits method type, it raises [`CalculatorTypeError`](https://github.com/no1sebomb/University-Labs/blob/b8b49caac44ce8b8fd3c157c48aa882531dff364/semester3-oop/module1/2/calculate/basecalc.py#L10).
+ If `x` type is not suits method type, it raises [`CalculatorTypeError`](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/basecalc.py#L10).
  Object looping over all it's methods until succeed (No exception raised).
     * Pluses
         1. More versatility
@@ -91,6 +91,11 @@ Type value to calculate or <Enter> to exit: (8, 8)
 CalcFunc((8, 8)) = 2
 CalcCall((8, 8)) = 2
 CalcNew((8, 8))  = 2
+
+Type value to calculate or <Enter> to exit: {1: 2}
+CalcFunc({1: 2}) = 8941
+CalcCall({1: 2}) = 8941
+CalcNew({1: 2})  = 8941
 
 Type value to calculate or <Enter> to exit: 
 
