@@ -74,7 +74,7 @@ class CalculatorABC:
             CalculatorTypeError: if 'value' argument is not natural number
         """
 
-        if isinstance(value, int) or isinstance(value, float) and abs(int(value)) == value:
+        if (isinstance(value, int) or isinstance(value, float)) and abs(int(value)) == value:
             return (factorial(value) + value - 1) % 141
         else:
             raise CalculatorTypeError("natural")
