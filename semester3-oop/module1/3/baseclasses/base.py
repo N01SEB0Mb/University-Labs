@@ -24,7 +24,7 @@ class Base1:
         return 3 * s + self.N + 41
 
     def __call__(self, s: int) -> int:
-        if self in DELETED:
+        if self.N in DELETED:
             return s
 
         for item in included:
@@ -35,16 +35,12 @@ class Base1:
     def __del__(self) -> None:
         global S
 
-        DELETED.add(self)
+        DELETED.add(self.N)
 
         for item in self.included:
-            del item
+            item.__del__()
 
-    def __hash__(self) -> int:
-        return self.N
-
-    def __eq__(self, other) -> bool:
-        return hash(self) == hash(other)
+        S = self(S)
 
     def __str__(self) -> str:
         return f"{self.N}"
@@ -62,7 +58,7 @@ class Base2:
         return s // 2 - self.N
 
     def __call__(self, s: int) -> int:
-        if self in DELETED:
+        if self.N in DELETED:
             return s
 
         for item in included:
@@ -73,16 +69,14 @@ class Base2:
     def __del__(self) -> None:
         global S
 
-        DELETED.add(self)
+        DELETED.add(self.N)
 
         for item in self.included:
-            del item
+            item.__del__()
 
-    def __hash__(self) -> int:
-        return self.N
-
-    def __eq__(self, other) -> bool:
-        return hash(self) == hash(other)
+        print(self.N, S)
+        S = self(S)
+        print(self.N, S)
 
     def __str__(self) -> str:
         return f"{self.N}"
