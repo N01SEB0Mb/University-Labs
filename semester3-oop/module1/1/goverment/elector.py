@@ -9,13 +9,17 @@ from .position import Position
 
 
 class Elector(Position):
+    IDEOLOGICAL = 0
+    ACTIVE = 1
+    RANDOM = 2
+
     def __init__(
             self,
             economic: float,
             social: float,
             name: str,
             age: int,
-            strategy: int = 1
+            strategy: int = IDEOLOGICAL
     ) -> None:
         super(Elector, self).__init__(economic, social)
 
@@ -41,10 +45,19 @@ class Elector(Position):
         return number
 
     def chooseParty(self, partyList: List[Party]) -> int:
-        bestParty = 0
+        if self.strategy == self.IDEOLOGICAL:
+            bestParty = 0
 
-        for number, party in partyList:
-            if self.checkParty(party) > self.checkParty(partyList[bestParty]):
-                bestParty = number
+            for number, party in partyList:
+                if self.checkParty(party) > self.checkParty(partyList[bestParty]):
+                    bestParty = number
 
-        return bestParty
+            return bestParty
+        elif self.strategy == self.ACTIVE:
+            for number, party in partyList:
+                if party.active:
+                    return number
+            else:
+                return 0
+        elif self.strategy == self.RANDOM:
+            return randint(0, len(partyList) - 1)

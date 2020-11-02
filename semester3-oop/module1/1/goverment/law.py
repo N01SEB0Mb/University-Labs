@@ -38,8 +38,8 @@ class ParlamentaryLaw(Law):
     MIN_TIME_LAW = 10
     MAX_TIME_LAW = 99
 
-    MIN_VOTES_LAW = 33
-    MAX_VOTES_LAW = 66
+    MIN_VOTES_LAW = 0.33
+    MAX_VOTES_LAW = 0.66
 
     def __init__(self,  lawtype: int, value: int, complexity: int) -> None:
         super(ParlamentaryLaw, self).__init__(complexity)
@@ -63,7 +63,7 @@ class ParlamentaryLaw(Law):
         elif lawtype == cls.TIME_LAW:
             value = randint(cls.MIN_TIME_LAW, cls.MAX_TIME_LAW)
         else:
-            value = randint(cls.MIN_VOTES_LAW, cls.MAX_VOTES_LAW)
+            value = uniform(cls.MIN_VOTES_LAW, cls.MAX_VOTES_LAW)
 
         return cls(lawtype, value, randint(cls.MIN_COMPLEXITY, cls.MAX_COMPLEXITY))
 
@@ -71,12 +71,20 @@ class ParlamentaryLaw(Law):
 class ElectoralLaw(Law):
     FREQUENCY_LAW = 0
     MAX_SEATS_LAW = 1
+    MIN_SEATS_LAW = 2
+    TIME_LAW = 3
 
     MIN_FREQUENCY_LAW = 100
     MAX_FREQUENCY_LAW = 1000
 
     MIN_MAX_SEATS_LAW = 50
     MAX_MAX_SEATS_LAW = 300
+
+    MIN_MIN_SEATS_LAW = 2
+    MAX_MIN_SEATS_LAW = 20
+
+    MIN_TIME_LAW = 10
+    MAX_TIME_LAW = 100
 
     def __init__(self, lawtype: int, value: int, complexity: int) -> None:
         super(ElectoralLaw, self).__init__(complexity)
@@ -88,14 +96,23 @@ class ElectoralLaw(Law):
     def random(cls, lawtype: int = None) -> ElectoralLaw:
         lawtype = lawtype if lawtype in (
             cls.FREQUENCY_LAW,
-            cls.MAX_SEATS_LAW
+            cls.MAX_SEATS_LAW,
+            cls.MIN_SEATS_LAW,
+            cls.TIME_LAW
         ) else choice(
             cls.FREQUENCY_LAW,
-            cls.MAX_SEATS_LAW
+            cls.MAX_SEATS_LAW,
+            cls.MIN_SEATS_LAW,
+            cls.TIME_LAW
         )
+
         if lawtype == cls.FREQUENCY_LAW:
             value = randint(cls.MIN_FREQUENCY_LAW, cls.MAX_FREQUENCY_LAW)
-        else:
+        elif lawtype == cls.MAX_SEATS_LAW:
             value = randint(cls.MIN_MAX_SEATS_LAW, cls.MAX_MAX_SEATS_LAW)
+        elif lawtype == cls.MIN_SEATS_LAW:
+            value = randint(cls.MIN_MIN_SEATS_LAW, cls.MAX_MIN_SEATS_LAW)
+        elif lawtype == cls.TIME_LAW:
+            value = randint(cls.MIN_TIME_LAW, cls.MAX_TIME_LAW)
 
         return cls(lawtype, value, randint(cls.MIN_COMPLEXITY, cls.MAX_COMPLEXITY))

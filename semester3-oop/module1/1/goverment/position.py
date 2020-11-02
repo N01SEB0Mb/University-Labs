@@ -30,7 +30,7 @@ class Position(Coordinates):
         if isinstance(law, IdeologyLaw):
             result = law in self
         else:
-            result = bool(randint(0, 1))
+            result = not randint(0, 1)
 
         self.good.append(law) if result else self.bad.append(law)
         return result
