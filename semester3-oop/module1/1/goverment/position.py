@@ -16,7 +16,7 @@ class Position(Coordinates):
         self.good = list()
         self.bad = list()
 
-    def __contains__(self, law: Law) -> bool:
+    def __contains__(self, law) -> bool:
         if isinstance(law, Law):
             if law.direction == law.ECONOMIC:
                 return abs(law.economic - self.economic) <= self.IDEOLOGY_DELTA

@@ -20,7 +20,7 @@ class IdeologyLaw(LawCoordinates, Law):
         self.complexity = complexity
 
     @classmethod
-    def random(cls, direction: str = None) -> IdeologyLaw:
+    def random(cls, direction: str = None):
         direction = direction if direction in (self.SOCIAL, self.ECONOMIC) else choice(self.SOCIAL, self.ECONOMIC)
         value = round(uniform(-1.0, 1.0), 3)
 
@@ -48,7 +48,7 @@ class ParlamentaryLaw(Law):
         self.value = value
 
     @classmethod
-    def random(cls, lawtype: int = None) -> ParlamentaryLaw:
+    def random(cls, lawtype: int = None):
         lawtype = lawtype if lawtype in (
             cls.SEATS_LAW,
             cls.TIME_LAW,
@@ -93,7 +93,7 @@ class ElectoralLaw(Law):
         self.value = value
 
     @classmethod
-    def random(cls, lawtype: int = None) -> ElectoralLaw:
+    def random(cls, lawtype: int = None):
         lawtype = lawtype if lawtype in (
             cls.FREQUENCY_LAW,
             cls.MAX_SEATS_LAW,
