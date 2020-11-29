@@ -4,6 +4,7 @@ import math
 from typing import Callable, Optional, Union, Any
 
 from .decorator import staticmethod
+from .exceptions import ExpressionError
 
 
 Number = Union[int, float]
