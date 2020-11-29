@@ -24,7 +24,7 @@ class ExpressionError(SyntaxError):
         """
 
         super(ExpressionError, self).__init__(
-            "Invalid expression given" + (f": {errmsg}" if errmsg else ""),
+            errmsg if errmsg else "Invalid expression given",
             *args,
             **kwargs
         )
