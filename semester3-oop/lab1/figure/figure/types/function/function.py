@@ -1,10 +1,11 @@
 # coding=utf-8
 
 import math
+import functools
 from typing import Callable, Optional, Union, Any
 
-from .decorator import staticmethod
-from .exceptions import ExpressionError
+from decorator import staticmethod
+from exceptions import ExpressionError
 
 
 Number = Union[int, float]
@@ -237,7 +238,7 @@ class Function:
             self,
             expression,
             argument: Optional[str] = "x"
-    ) -> Callable:
+    ) -> Callable[[Number], Number]:
         """
         Parse expression string
 
@@ -250,8 +251,61 @@ class Function:
 
         Raises:
             ExpressionError: If expression is invalid
-
         """
+
+        def toFunc(
+                operationsList: list
+        ) -> Callable[[Number], Number]:
+            """
+            Convert list of operations to function
+
+            Args:
+                operationsList (list): List of operations you want to convert
+
+            Returns:
+                Callable[[Number], Number]: Result function
+
+            Notes:
+                This is recursive function
+            """
+
+            try:
+                leftarg = operationsList[0]
+
+                for index in range(1, len(operationsList), 2):
+                    rightarg = operationsList[index + 1]
+                    operation = self.Operation[operationsList[index]]
+
+                    return toFunc([lambda x: operation(leftarg(x), rightarg(x))] + operationsList[3:])
+            except IndexError:
+                raise ExpressionError()
+            else:
+                return leftarg
+
+        def toFloat(
+                x: Number,
+                string: str
+        ) -> float:
+            """
+            Converts string to float. Used for
+            Args:
+                x:
+                string:
+
+            Returns:
+
+            """
+            return float(string)
+
+        def positive(
+                x: Number
+        ) -> Number:
+            return x
+
+        def negative(
+                x: Number
+        ) -> Number:
+            return -x
 
         # Remove spaces
         expression = expression.replace(" ", "")
@@ -303,13 +357,13 @@ class Function:
 
                     else:  # If there was no parentheses
                         if current == f"+{argument}" or current == argument:  # Positive argument
-                            operations.append(lambda x: x)
+                            operations.append(functools.partial(positive))
 
                         elif current == f"-{argument}":  # Negative argument
-                            operations.append(lambda x: -x)
+                            operations.append(functools.partial(negative))
                         else:  # Number
                             try:
-                                operations.append(float(current))
+                                operations.append(functools.partial(toFloat, string=current))
                             except BaseException:
                                 raise ExpressionError(f"Unknown value '{current}'")
 
@@ -330,13 +384,13 @@ class Function:
 
             else:  # If there was no parentheses
                 if current == f"+{argument}" or current == argument:  # Positive argument
-                    operations.append(lambda x: x)
+                    operations.append(functools.partial(positive))
 
                 elif current == f"-{argument}":  # Negative argument
-                    operations.append(lambda x: -x)
+                    operations.append(functools.partial(negative))
                 else:  # Number
                     try:
-                        operations.append(float(current))
+                        operations.append(functools.partial(toFloat, string=current))
                     except BaseException:
                         raise ExpressionError(f"Unknown value '{current}'")
 
@@ -349,7 +403,7 @@ class Function:
             if not Function.Operation.isOperator(operations[number], prior=True):
                 if number - lastPrior > 2:  # If two or more operators since last prior
                     prioredOperations.append(
-                        self.__toFunc(
+                        toFunc(
                             operations[lastPrior + 1: number]
                         )
                     )
@@ -368,7 +422,7 @@ class Function:
 
                 if number - lastPrior >= 2:
                     prioredOperations.append(
-                        self.__toFunc(
+                        toFunc(
                             operations[lastPrior + 1: number + 1]
                         )
                     )
@@ -379,28 +433,4 @@ class Function:
             else:  # If every operation is prior
                 prioredOperations = operations[:]
 
-        return self.__toFunc(prioredOperations)
-
-    def __toFunc(
-            self,
-            operations: list
-    ) -> Callable:
-        leftarg = operations[0]
-
-        for index in range(1, len(operations), 2):
-            rightarg = operations[index + 1]
-            opfunc = self.Operation[operations[index]]
-
-            if isinstance(leftarg, float) and isinstance(rightarg, float):
-                return self.__toFunc([lambda x: opfunc(leftarg, rightarg)] + operations[3:])
-            elif isinstance(leftarg, float):
-                return self.__toFunc([lambda x: opfunc(leftarg, rightarg(x))] + operations[3:])
-            elif isinstance(rightarg, float):
-                return self.__toFunc([lambda x: opfunc(leftarg(x), rightarg)] + operations[3:])
-            else:
-                return self.__toFunc([lambda x: opfunc(leftarg(x), rightarg(x))] + operations[3:])
-
-        if isinstance(leftarg, float):
-            return lambda x: leftarg
-        else:
-            return leftarg
+        return toFunc(prioredOperations)
