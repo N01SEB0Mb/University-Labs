@@ -5,7 +5,7 @@ from typing import Any, Optional
 from number import Number
 
 
-class Expression:
+class ExpressionNode:
     """
     Operation class (binary tree node-like)
 
@@ -23,23 +23,23 @@ class Expression:
             value (Any): Node value
 
         Notes:
-            If Expression supposed to have any childs then 'value' must be callable
-            If value is argument, then provide True if argument is positive, else - False
+            If ExpressionNode supposed to have any childs then 'value' must be callable
+            If value is argumentName, then provide True if argumentName is positive, else - False
         """
 
         self.value: Any = value
-        self.__left:  Optional["Expression"] = None
-        self.__right: Optional["Expression"] = None
+        self.__left:  Optional["ExpressionNode"] = None
+        self.__right: Optional["ExpressionNode"] = None
 
     def __call__(self, value: Number) -> Number:
         """
-        __call__ method override. Used to get expression result for specified argument
+        __call__ method override. Used to get expression result for specified argumentName
         
         Args:
-            value (Number): Function argument
+            value (Number): Expression argumentName
 
         Returns:
-            Number: Function result
+            Number: Expression result
         """
 
         if self.__left is not None or self.__right is not None:
@@ -52,13 +52,13 @@ class Expression:
                 *(leftarg + rightarg)
             )
         else:
-            # Does not have childs -> value attribute is number / argument
+            # Does not have childs -> value attribute is number / argumentName
 
             if self.value is True:
-                # Value is argument
+                # Value is argumentName
                 return value
             elif self.value is False:
-                # Value is argument (negative)
+                # Value is argumentName (negative)
                 return -value
             else:
                 # Value is number
@@ -76,42 +76,42 @@ class Expression:
 
     def __str__(self) -> str:
         """
-        __str__ method override. Converts Expression to str
+        __str__ method override. Converts ExpressionNode to str
 
         Returns:
-            str: Expression converted to str
+            str: ExpressionNode converted to str
         """
 
-        return f"Expression({str(self.__left)},{str(self.value)},{str(self.__right)})"
+        return f"ExpressionNode({str(self.__left)},{str(self.value)},{str(self.__right)})"
 
     @property
-    def left(self) -> Optional["Expression"]:
+    def left(self) -> Optional["ExpressionNode"]:
         """
         Get node left child
 
         Returns:
-            Expression: Node left child
+            ExpressionNode: Node left child
         """
 
         return self.__left
 
     @left.setter
-    def left(self, node: Optional["Expression"]) -> None:
+    def left(self, node: Optional["ExpressionNode"]) -> None:
         """
         Node left child setter
 
         Args:
-            node (Expression): Node you want to set
+            node (ExpressionNode): Node you want to set
 
         Raises:
-            TypeError: If 'node' argument type is not 'ExpressionNode' or None
+            TypeError: If 'node' argumentName type is not 'ExpressionNode' or None
         """
 
-        if isinstance(node, Expression):
+        if isinstance(node, ExpressionNode):
             self.__left = node
         else:
             raise TypeError(
-                f"Node left child type must be 'Expression' or None, not '{node.__class__.__name__}'"
+                f"Node left child type must be 'ExpressionNode' or None, not '{node.__class__.__name__}'"
             )
 
     @left.deleter
@@ -123,33 +123,33 @@ class Expression:
         del self.__left
 
     @property
-    def right(self) -> Optional["Expression"]:
+    def right(self) -> Optional["ExpressionNode"]:
         """
         Get node right child
 
         Returns:
-            Expression: Node right child
+            ExpressionNode: Node right child
         """
 
         return self.__right
 
     @right.setter
-    def right(self, node: Optional["Expression"]) -> None:
+    def right(self, node: Optional["ExpressionNode"]) -> None:
         """
         Node right child setter
 
         Args:
-            node (Expression): Node you want to set
+            node (ExpressionNode): Node you want to set
 
         Raises:
-            TypeError: If 'node' argument type is not 'ExpressionNode' or None
+            TypeError: If 'node' argumentName type is not 'ExpressionNode' or None
         """
 
-        if isinstance(node, Expression):
+        if isinstance(node, ExpressionNode):
             self.__right = node
         else:
             raise TypeError(
-                f"Node right child type must be 'Expression' or None, not '{node.__class__.__name__}'"
+                f"Node right child type must be 'ExpressionNode' or None, not '{node.__class__.__name__}'"
             )
 
     @right.deleter
