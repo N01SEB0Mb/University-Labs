@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Operation class definition. Used to get specified operations
+"""
 
 import math
 from typing import Callable

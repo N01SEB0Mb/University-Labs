@@ -1,11 +1,19 @@
 # coding=utf-8
+"""
+Binary tree node used for expressions.
+If node has any childs, then node value is function and childs are parameters
+If there is none childs, then node value is number / given argument
+
+Notes:
+    If there are more than 1000 children, a RecursionError may be thrown.
+"""
 
 from typing import Any, Optional
 
 from .number import Number
 
 
-class ExpressionNode:
+class ExpressionNode(object):
     """
     Operation class (binary tree node-like)
 

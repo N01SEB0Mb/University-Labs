@@ -1,11 +1,14 @@
 # coding=utf-8
+"""
+Exceptions used in expression package
+"""
 
 from typing import Optional, Any
 
 
 class ExpressionError(SyntaxError):
     """
-    Raised if invalid function expression is given
+    Raised if invalid function expression is given. Inherits SyntaxError
     """
 
     def __init__(

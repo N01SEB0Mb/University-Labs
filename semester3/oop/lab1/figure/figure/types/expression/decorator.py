@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Custom @staticmethod decorator. Used in Operation class for operation methods
+"""
 
 from typing import Callable, Optional, Any
 
@@ -34,8 +37,8 @@ class staticmethod(object):
             ["+"]
         """
 
-        self.args = list(args)
-        self.prior = prior
+        self.args: list = list(args)
+        self.prior: bool = prior
 
     def __call__(
             self,
@@ -66,6 +69,7 @@ class staticmethod(object):
 
             return function(*args)
 
+        # Set up wrapper attibutes
         wrapper.args = self.args
         wrapper.prior = self.prior
         wrapper.__doc__ = function.__doc__

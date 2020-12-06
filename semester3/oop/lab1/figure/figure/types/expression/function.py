@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+Expression class definition
+Parses and stores expression
+"""
 
 import math
 import functools
@@ -11,9 +15,14 @@ from .operations import Operation
 from .exceptions import ExpressionError
 
 
-class Expression:
+class Expression(object):
     """
     Expression class, used to store and evaluate the result of an expression
+
+    Examples:
+        >>> func = Expression("3 * (x - 5)")
+        >>> func(6)
+        3
     """
 
     def __init__(
@@ -40,9 +49,18 @@ class Expression:
 
     def __call__(
             self,
-            value: Number
-    ):
-        return self.__func(value)
+            argument: Number
+    ) -> Number:
+        """
+        __call__ method override. Calls expression with specified argument
+        Args:
+            argument (Number): Specified argument
+
+        Returns:
+            Number: Function result
+        """
+
+        return self.__func(argument)
 
     def __parse(
             self,
