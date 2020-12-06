@@ -29,7 +29,7 @@ class Operation:
             Number: Result
         """
 
-        result = 0
+        result: Number = 0
 
         for summand in summands:
             result += summand
@@ -52,7 +52,7 @@ class Operation:
             Number: result
         """
 
-        result = minuend
+        result: Number = minuend
 
         for subtrahend in subtrahends:
             result -= subtrahend
@@ -73,7 +73,7 @@ class Operation:
             Number: Result
         """
 
-        result = 1
+        result: Number = 1
 
         for multiplier in multipliers:
             result *= multiplier
@@ -96,7 +96,7 @@ class Operation:
             Number: Result
         """
 
-        result = dividend
+        result: Number = dividend
 
         for divisor in divisors:
             result /= divisor
@@ -119,7 +119,7 @@ class Operation:
             Number: Result
         """
 
-        result = dividend
+        result: Number = dividend
 
         for divisor in divisors:
             result %= divisor
@@ -142,7 +142,7 @@ class Operation:
             Number: Power result
         """
 
-        result = base
+        result: Number = base
 
         for power in powers:
             result **= power

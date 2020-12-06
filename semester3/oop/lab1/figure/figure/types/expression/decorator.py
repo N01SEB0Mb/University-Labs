@@ -3,7 +3,7 @@
 Custom @staticmethod decorator. Used in Operation class for operation methods
 """
 
-from typing import Callable, Optional, Any
+from typing import Callable, Any
 
 
 class staticmethod(object):
@@ -20,14 +20,14 @@ class staticmethod(object):
     def __init__(
             self,
             *args: Any,
-            prior: Optional[bool] = True
+            prior: bool = True
     ) -> None:
         """
         __init__ method override. Used to store decorator arguments into args and prior attributes
         
         Args:
             *args (Any): Decorator arguments you want to store
-            prior (Optional[bool]): Is method prior. Defaults by True
+            prior (bool): Is method prior. Defaults by True
 
         Examples:
             >>> class A:

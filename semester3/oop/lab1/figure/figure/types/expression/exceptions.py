@@ -3,7 +3,7 @@
 Exceptions used in expression package
 """
 
-from typing import Optional, Any
+from typing import Any
 
 
 class ExpressionError(SyntaxError):
@@ -13,7 +13,7 @@ class ExpressionError(SyntaxError):
 
     def __init__(
             self,
-            errmsg: Optional[str] = "",
+            errmsg: str = "",
             *args: Any,
             **kwargs: Any
     ) -> None:
@@ -21,7 +21,7 @@ class ExpressionError(SyntaxError):
         __init__ method override. Initalizes ExpressionError object
 
         Args:
-            errmsg (Optional[str]): Error description
+            errmsg (str): Error description
             *args (Any): SyntaxError.__init__ *args
             **kwargs: SyntaxError.__init__ **kwargs
         """

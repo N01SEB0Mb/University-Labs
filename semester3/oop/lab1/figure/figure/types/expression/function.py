@@ -6,8 +6,7 @@ Parses and stores expression
 
 import math
 import functools
-from typing import Callable, Optional, Union, Any
-from types import FunctionType
+from typing import Callable, Optional, List, Union, Any
 
 from .number import Number
 from .node import ExpressionNode
@@ -30,14 +29,14 @@ class Expression(object):
     def __init__(
             self,
             expressionString: str,
-            argumentName: Optional[str] = "x"
+            argumentName: str = "x"
     ) -> None:
         """
         Inits function
 
         Args:
             expressionString (str): Function expression
-            argumentName (Optional[str]): The function argumentName specified in the expression. Default is "x"
+            argumentName (str): The function argumentName specified in the expression. Default is "x"
 
         Raises:
             ExpressionError: If expression is invalid
@@ -67,14 +66,14 @@ class Expression(object):
     def __parse(
             self,
             expression: str,
-            argumentName: Optional[str] = "x"
+            argumentName: str = "x"
     ) -> ExpressionNode:
         """
         Parse expression string
 
         Args:
             expression (str): Function expression you want to parse
-            argumentName (Optional[str]): The function argumentName specified in the expression. Default is "x"
+            argumentName (str): The function argumentName specified in the expression. Default is "x"
 
         Returns:
             Callable: Given expression converted to callable object
@@ -98,7 +97,7 @@ class Expression(object):
                 list: Paired up operations
             """
 
-            index = 1
+            index: int = 1
 
             # Iterate through operations (every 2-nd element)
             while index < len(operationsToPair):
@@ -121,17 +120,17 @@ class Expression(object):
             return operationsToPair
 
         # Remove spaces
-        expression = expression.replace(" ", "")
+        expression: str = expression.replace(" ", "")
 
         # Operation variables
-        operations = list()
-        current = ""
-        signOk = True
+        operations: List[Union[ExpressionNode, str]] = list()
+        current: str = ""
+        signOk: bool = True
 
         # Parentheses variables
-        isParentheses = False
-        parentFunction = None
-        parenthesesNumber = 0
+        isParentheses: bool = False
+        parenthesesNumber: int = 0
+        parentFunction: Optional[Callable] = None
 
         # Iterate through expression
         for char in expression:
@@ -188,8 +187,8 @@ class Expression(object):
                             operations.append(ExpressionNode(True))
 
                         elif current == f"-{argumentName}":  # Negative argumentName
-
                             operations.append(ExpressionNode(False))
+
                         else:  # Number
                             try:
                                 operations.append(ExpressionNode(float(current)))
