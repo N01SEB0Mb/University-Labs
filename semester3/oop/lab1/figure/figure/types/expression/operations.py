@@ -3,8 +3,8 @@
 import math
 from typing import Callable
 
-from number import Number
-from decorator import staticmethod
+from .number import Number
+from .decorator import staticmethod
 
 
 class Operation:

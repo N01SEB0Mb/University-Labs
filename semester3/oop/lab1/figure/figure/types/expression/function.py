@@ -5,10 +5,10 @@ import functools
 from typing import Callable, Optional, Union, Any
 from types import FunctionType
 
-from number import Number
-from node import ExpressionNode
-from operations import Operation
-from exceptions import ExpressionError
+from .number import Number
+from .node import ExpressionNode
+from .operations import Operation
+from .exceptions import ExpressionError
 
 
 class Expression:

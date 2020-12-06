@@ -2,7 +2,7 @@
 
 from typing import Any, Optional
 
-from number import Number
+from .number import Number
 
 
 class ExpressionNode:
