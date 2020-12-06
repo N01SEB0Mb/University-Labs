@@ -16,9 +16,7 @@ class Operation:
     """
 
     @staticmethod("+", prior=False)
-    def addition(
-            *summands: Number
-    ) -> Number:
+    def addition(*summands: Number) -> Number:
         """
         Summand numbers
 
@@ -37,10 +35,7 @@ class Operation:
         return result
 
     @staticmethod("-", prior=False)
-    def subtract(
-            minuend: Number,
-            *subtrahends: Number
-    ) -> Number:
+    def subtract(minuend: Number, *subtrahends: Number) -> Number:
         """
         Substract numbers
 
@@ -60,9 +55,7 @@ class Operation:
         return result
 
     @staticmethod("*")
-    def multiply(
-            *multipliers: Number
-    ) -> Number:
+    def multiply(*multipliers: Number) -> Number:
         """
         Multiply numbers
 
@@ -81,10 +74,7 @@ class Operation:
         return result
 
     @staticmethod("/")
-    def division(
-            dividend: Number,
-            *divisors: Number
-    ) -> Number:
+    def division(dividend: Number, *divisors: Number) -> Number:
         """
         Divide numbers
 
@@ -104,10 +94,7 @@ class Operation:
         return result
 
     @staticmethod("%")
-    def mod(
-            dividend: Number,
-            *divisors: Number
-    ) -> Number:
+    def mod(dividend: Number, *divisors: Number) -> Number:
         """
         Remainder of division
 
@@ -127,10 +114,7 @@ class Operation:
         return result
 
     @staticmethod("^")
-    def power(
-            base: Number,
-            *powers: Number
-    ) -> Number:
+    def power(base: Number, *powers: Number) -> Number:
         """
         Raise number to power
 
@@ -148,6 +132,121 @@ class Operation:
             result **= power
 
         return result
+
+    @staticmethod("abs")
+    def abs(number: Number) -> Number:
+        """
+        Get absolute value
+
+        Args:
+            number (Number): number
+
+        Returns:
+            Number: Absolute value of number
+        """
+
+        if number < 0:
+            return -number
+        else:
+            return number
+
+    @staticmethod("sin")
+    def sin(angle: Number) -> Number:
+        """
+        Angle sinus
+
+        Args:
+            angle (Number): Angle
+
+        Returns:
+            Number: Sinus of given angle
+        """
+
+        return math.sin(angle)
+
+    @staticmethod("cos")
+    def cos(angle: Number) -> Number:
+        """
+        Angle cosinus
+
+        Args:
+            angle (Number): Angle
+
+        Returns:
+            Number: Cosinus of given angle
+        """
+
+        return math.cos(angle)
+
+    @staticmethod("tan")
+    def tan(angle: Number) -> Number:
+        """
+        Angle tangens
+
+        Args:
+            angle (Number): Angle
+
+        Returns:
+            Number: Tangens of given angle
+        """
+
+        return math.tan(angle)
+
+    @staticmethod("cotan")
+    def cotan(angle: Number) -> Number:
+        """
+        Angle cotangens
+
+        Args:
+            angle (Number): Angle
+
+        Returns:
+            Number: Cotangens of given angle
+        """
+
+        return 1.0 / math.tan(angle)
+
+    @staticmethod("sqrt")
+    def sqrt(square: Number) -> Number:
+        """
+        Get square root
+
+        Args:
+            square (Number): Given number
+
+        Returns:
+            Number: Square root of given number
+        """
+
+        return math.sqrt(square)
+
+    @staticmethod("ceil")
+    def ceil(number: Number) -> Number:
+        """
+        Ceiling of number
+
+        Args:
+            number (Number): Number
+
+        Returns:
+            Number: Ceiling of given number
+        """
+
+        return math.ceil(number)
+
+    @staticmethod("floor")
+    def floor(number: Number) -> Number:
+        """
+        Floor of number
+
+        Args:
+            number (Number): Number
+
+        Returns:
+            Number: Floor of number
+        """
+
+        return math.floor(number)
 
     def __class_getitem__(
             cls,
@@ -182,10 +281,7 @@ class Operation:
         operations = dict(
             filter(
                 lambda key: "_" not in key[0],
-                {
-                    **math.__dict__,
-                    **cls.__dict__
-                }.items()
+                cls.__dict__.items()
             )
         )
 
