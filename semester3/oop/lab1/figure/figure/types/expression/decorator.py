@@ -15,6 +15,8 @@ class staticmethod(object):
         args (list): Decorator parameters
     """
 
+    __slots__ = ["args", "prior"]
+
     def __init__(
             self,
             *args: Any,

@@ -25,6 +25,8 @@ class Expression(object):
         3
     """
 
+    __slots__ = ["__arg", "__func"]
+
     def __init__(
             self,
             expressionString: str,
