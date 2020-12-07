@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from expression import Expression
+from .expression import Expression
 from .axisfigure import AxisFigure
 
 

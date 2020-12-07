@@ -2,7 +2,7 @@
 
 from math import nan, isnan
 
-from expression import Expression, Number
+from .expression import Expression, Number
 
 
 class AxisFigure(object):
