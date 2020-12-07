@@ -129,6 +129,7 @@ class Expression(object):
 
         # Parentheses variables
         isParentheses: bool = False
+        parenthesesSign: bool = True
         parenthesesNumber: int = 0
         parentFunction: Optional[Callable] = None
 
@@ -140,7 +141,12 @@ class Expression(object):
 
                 else:  # If parentheses started
                     if current:
-                        parentFunction = Operation[current]
+                        if current[0] == "-":
+                            parentFunction = Operation[current[1:]]
+                            parenthesesSign = False
+                        else:
+                            parentFunction = Operation[current]
+
                         current = ""
 
                     isParentheses = True
@@ -174,13 +180,26 @@ class Expression(object):
                                 current,
                                 argumentName=argumentName
                             )
-                            operations.append(functionNode)
+                            operation = functionNode
                         else:
                             # If there is not parent function
-                            operations.append(self.__parse(
+                            operation = self.__parse(
                                 current,
                                 argumentName=argumentName
-                            ))
+                            )
+
+                        if parenthesesSign:
+                            # Positive
+                            operations.append(operation)
+                        else:
+                            # Negative
+                            # Represent -operation like 0 - operation
+                            functionNode = ExpressionNode(Operation["-"])
+
+                            functionNode.left = ExpressionNode(0)
+                            functionNode.right = operation
+
+                            operations.append(functionNode)
 
                     else:  # If there was no parentheses
                         if current == f"+{argumentName}" or current == argumentName:  # Positive argumentName
@@ -201,6 +220,7 @@ class Expression(object):
                     # Clear variables
                     current = ""
                     isParentheses = False
+                    parenthesesSign = True
                     signOk = True
 
         if current:  # If last part not added
@@ -212,13 +232,26 @@ class Expression(object):
                         current,
                         argumentName=argumentName
                     )
-                    operations.append(functionNode)
+                    operation = functionNode
                 else:
                     # If there is not parent function
-                    operations.append(self.__parse(
+                    operation = self.__parse(
                         current,
                         argumentName=argumentName
-                    ))
+                    )
+
+                if parenthesesSign:
+                    # Positive
+                    operations.append(operation)
+                else:
+                    # Negative
+                    # Represent -operation like 0 - operation
+                    functionNode = ExpressionNode(Operation["-"])
+
+                    functionNode.left = ExpressionNode(0)
+                    functionNode.right = operation
+
+                    operations.append(functionNode)
 
             else:  # If there was no parentheses
                 if current == f"+{argumentName}" or current == argumentName:  # Positive argumentName
