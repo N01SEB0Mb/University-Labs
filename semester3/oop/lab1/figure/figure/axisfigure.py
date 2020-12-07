@@ -1,6 +1,8 @@
 # coding=utf-8
 
-from expression import Expression
+from math import nan, isnan
+
+from expression import Expression, Number
 
 
 class AxisFigure(object):
@@ -11,10 +13,7 @@ class AxisFigure(object):
 
     __slots__ = ["__func1", "__func2"]
 
-    def __init__(
-            self,
-            first: Expression
-    ) -> None:
+    def __init__(self, first: Expression) -> None:
         """
         Initializes Figure object using function
 
@@ -34,6 +33,51 @@ class AxisFigure(object):
             )
 
         self.__func2 = Expression("0")
+
+    def area(
+            self,
+            start: Number,
+            end: Number,
+            parts: int = 1000
+    ) -> Number:
+        """
+        Calculate shape area
+
+        Args:
+            start (Number): Start ordinate (x0)
+            end (Number): End ordinate (x1)
+            parts (int): Count of shape parts. Greater -> more accuracy
+
+        Returns:
+            Number: Shape area
+        """
+
+        getX = lambda index: start + (index / parts) * (end - start)
+
+        result = 0
+
+        for part in range(parts):
+            x = getX(part + 0.5)
+
+            try:
+                height = self.height(x)
+                assert not isnan(height)
+            except BaseException:
+                pass
+            else:
+                result += height
+
+        return result * (end - start) / parts
+
+    def height(self, x: Number):
+        try:
+            firstValue = self.__func1(x)
+            secondValue = self.__func2(x)
+        except BaseException:
+            return nan
+        else:
+            return abs(firstValue - secondValue)
+
 
     @property
     def first(self) -> Expression:
