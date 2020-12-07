@@ -206,6 +206,34 @@ class Operation:
 
         return 1.0 / math.tan(angle)
 
+    @staticmethod("asin")
+    def asin(value: Number) -> Number:
+        """
+        Value arcsinus
+
+        Args:
+            value (Number): Value
+
+        Returns:
+            Number: Angle
+        """
+
+        return math.asin(value)
+
+    @staticmethod("acos")
+    def acos(value: Number) -> Number:
+        """
+        Value arccosinus
+
+        Args:
+            value (Number): Value
+
+        Returns:
+            Number: Angle
+        """
+
+        return math.acos(value)
+
     @staticmethod("sqrt")
     def sqrt(square: Number) -> Number:
         """
