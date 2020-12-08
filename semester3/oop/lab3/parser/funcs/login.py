@@ -1,65 +1,33 @@
 # coding=utf-8
 
-import multiprocessing.dummy as mp
+import multiprocessing as mp
 from time import time
 from tabulate import tabulate
-from typing import Optional, Iterable, List
 
-from parser.types.clients import CLIENT_CLASSES, BaseClient
-
-
-def run(
-        clientClass: type,
-        queue: mp.Queue
-) -> None:
-    """
-    Runs initialization for client class. Used in separate processes
-
-    Args:
-        clientClass (type): Class of client you want to init
-        queue (mp.Queue): Queue for saving result
-
-    Notes:
-        This function puts result in queue, instead of returning it
-    """
-
-    queue.put(clientClass())
+from parser.client import CLIENT_CLASSES
 
 
-def login(
-        clientClasses: Iterable[type]
-) -> List[BaseClient]:
-    """
-    Initialize clients
+def run(client_class, queue):
+    queue.put(client_class())
 
-    Args:
-        clientClasses (Iterable[type]): Set of client classes you want to initialize
 
-    Returns:
-        List[BaseClient]: Initialized clients
+def init(clientsSet=None):
+    client_classes = clientsSet or CLIENT_CLASSES
+    clients = list()
 
-    Notes:
-        Initializing is performed using multiprocessing
-    """
-
-    clientsList = list()
-
-    startTime = time()
+    start_time = time()
 
     queue = mp.Queue()
     processes = []
 
-    for clientClass in clientClasses:
-        process = mp.Process(
-            target=run,
-            args=(clientClass, queue)
-        )
+    for client_class in client_classes:
+        process = mp.Process(target=run, args=(client_class, queue))
         processes.append(process)
         process.start()
 
-    for _ in clientClasses:
+    for _ in client_classes:
         client = queue.get()
-        clientsList.append(client)
+        clients.append(client)
 
     for process in processes:
         process.join()
@@ -67,10 +35,10 @@ def login(
     print(tabulate([{
         "Name": client.name,
         "Connected": client.connected,
-        "Signed in": client.loggedIn,
-        "Time": "%.3f s" % client.loginTime
-    } for client in clientsList], headers="keys"))
+        "Signed in": client.logged,
+        "Time": client.login_time
+    } for client in clients], headers="keys"))
 
-    print("Total authorization time: %.3f s" % (time() - startTime))
+    print("Total authorization time: %.3f s" % (time() - start_time))
 
-    return clientsList
+    return clients

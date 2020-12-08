@@ -2,104 +2,63 @@
 
 import traceback
 import multiprocessing as mp
+import requests.exceptions
 from time import time
-from typing import Iterable
 from functools import partial
-from requests.exceptions import ReadTimeout, ConnectionError
 
-from parser.types.clients import BaseClient
-from parser.types.response import ResponseStatus, ResponseSearch
+from parser import CONFIG
 
 
-def run(
-        article: str,
-        client: BaseClient,
-        queue: mp.Queue
-) -> None:
-    """
-    Runs searching for target client with specified article. Used in separate processes
-
-    Args:
-        article (str): Article of item you want to find
-        client (BaseClient): Client for searching item
-        queue (mp.Queue): Queue for saving result
-
-    Notes:
-        This function puts result in queue, instead of returning it
-    """
-
-    # Time measuring
-
-    startTime = time()
+def run(func, queue, client_name):
+    start_time = time()
 
     try:
-        # Trying to search article
-        result = client.search(article)
-    except (ReadTimeout, ConnectionError):
-        # If timeout expired
-
-        result = ResponseSearch.List(
-            status=ResponseStatus(
-                ResponseStatus.TIMEOUT_EXPIRED
-            )
-        )
+        result = func()
+    except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
+        result = {"code": CONFIG["codes"]["connectionError"],
+                  "message": "Время ожидания истекло"}
     except BaseException:
-        # Other error
+        result = {"code": CONFIG["codes"]["pythonError"],
+                  "message": traceback.format_exc()}
 
-        result = ResponseSearch.List(
-            status=ResponseStatus(
-                ResponseStatus.INTERNAL_ERROR,
-                description=traceback.format_exc()
-            )
-        )
-
-    # Put into queue
-
-    queue.put([
-        result,
-        "%.3f s" % (time() - startTime),
-        client
-    ])
+    queue.put([result, client_name, "%.3f s" % (time() - start_time)])
 
 
-def search(
-        article: str,
-        clients: Iterable[BaseClient]
-) -> dict:
-    """
-    Search specified article with given clients
-
-    Args:
-        article (str): Article of item you want to find
-        clients (Iterable[BaseClient]): Searching clients
-
-    Returns:
-        dict: Searching results
-
-    Notes:
-        Searching is performed using multiprocessing
-    """
-
+def search_article(article, clients):
     queue = mp.Queue()
     processes = []
-
     response = {}
 
     for client in clients:
-        process = mp.Process(
-            target=run,
-            args=(
-                article,
-                client,
-                queue
-            )
-        )
+        process = mp.Process(target=run, args=(partial(client.search, article), queue, client.name))
         processes.append(process)
         process.start()
 
     for _ in clients:
-        result, searchingTime, client = queue.get()
-        response[client.name] = result
+        result, site_name, site_time = queue.get()
+        response[site_name] = result
+        response[site_name]["site_time"] = site_time
+
+    for process in processes:
+        process.join()
+
+    return response
+
+
+def search_brand(article, brand, clients):
+    queue = mp.Queue()
+    processes = []
+    response = {}
+
+    for client in clients:
+        process = mp.Process(target=run, args=(partial(client.get_info, article, brand), queue, client.name))
+        processes.append(process)
+        process.start()
+
+    for _ in clients:
+        result, site_name, site_time = queue.get()
+        response[site_name] = result
+        response[site_name]["site_time"] = site_time
 
     for process in processes:
         process.join()

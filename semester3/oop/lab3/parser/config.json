@@ -1,0 +1,36 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": "5000",
+    "threading": true
+  },
+  "parser": {
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0",
+      "Connection": "keep-alive"
+    },
+    "connectionTimeout": 10,
+    "searchOnlyArticle": true,
+    "picturesPath": "pictures/{0}/"
+  },
+  "logging": {
+    "enabled": true,
+    "path": "logs/{}.log",
+    "clientsPath": "logs/clients/{}.log"
+  },
+  "autoAuth": {
+    "enabled": true,
+    "hour": 8,
+    "minute": 0
+  },
+  "currency": {
+    "direct24": ["EUR"]
+  },
+  "codes": {
+    "successful": 0,
+    "notFound": -1,
+    "connectionError": -2,
+    "authorizationError": -3,
+    "pythonError": -4
+  }
+}
