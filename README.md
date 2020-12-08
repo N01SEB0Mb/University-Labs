@@ -29,11 +29,14 @@
 * Semester 3
     * Basics of Object-Oriented Programming
         * Labs
-            1. [Graphs and math realisation](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3-oop/lab1) (Python, undone)
-            2. None
-            3. None
+            1. [Graphs and math realisation](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3/oop/lab1)
+               (Python3)
+            2. [Random scenarios](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3/oop/lab2)
+               (Python3 + PyQt5)
+            3. (+ Project) [Parsing sites with autoparts](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3/oop/lab3)
+               (Python3 + Requests + Flask)
         * Modules
-            1. [Democracy system realisation, calculation function and class inheritance](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3-oop/module1) (Python, undone)
+            1. [Democracy system realisation, calculation function and class inheritance](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3/oop/module1) (Python3)
     * Databases
         * Labs
             1. None
@@ -42,6 +45,10 @@
         * Labs
             1. None
             2. None
+    
+    * Probability
+        * Projects
+            1. [Chi-Square test](https://github.com/N01SEB0Mb/University-Labs/tree/master/semester3/probability/chi-square) (Python3)
 
 Full tasks can be found at lab directories in _TASK.md_ file
 
