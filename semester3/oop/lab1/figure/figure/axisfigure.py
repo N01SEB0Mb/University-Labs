@@ -73,6 +73,7 @@ class AxisFigure(object):
         try:
             firstValue = self.__func1(x)
             secondValue = self.__func2(x)
+            print(x, firstValue, secondValue)
         except BaseException:
             return nan
         else:
