@@ -1,0 +1,12 @@
+{
+  "logging": {
+    "enabled": true,
+    "path": "logs/{}.log",
+    "clientsPath": "logs/clients/{}.log"
+  },
+  "autoAuth": {
+    "enabled": true,
+    "hour": 8,
+    "minute": 0
+  }
+}

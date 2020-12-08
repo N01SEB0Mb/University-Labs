@@ -1,0 +1,79 @@
+{
+  "success": {
+    "code": 0,
+    "message": {
+      "ua": "Ок",
+      "en": "Ok"
+    }
+  },
+  "empty": {
+    "code": -1,
+    "message": {
+      "ua": "Порожньо",
+      "en": "Empty"
+    }
+  },
+  "notDefined": {
+    "code": -2,
+    "message": {
+      "ua": "Метод не реалізовано",
+      "en": "Method not defined"
+    }
+  },
+  "itemNotFound": {
+    "code": -10,
+    "message": {
+      "ua": "Предмет не знайдено",
+      "en": "Item not found"
+    }
+  },
+  "articleNotFound": {
+    "code": -11,
+    "message": {
+      "ua": "Артикул не знайдено",
+      "en": "Article not found"
+    }
+  },
+  "brandNotFound": {
+    "code": -12,
+    "message": {
+      "ua": "Бренд не знайдено",
+      "en": "Brand not found"
+    }
+  },
+  "noConnection": {
+    "code": -20,
+    "message": {
+      "ua": "Помилка з'єднання",
+      "en": "Connection error"
+    }
+  },
+  "timeoutExpired": {
+    "code": -21,
+    "message": {
+      "ua": "Час очікування минув",
+      "en": "Timeout expired"
+    }
+  },
+  "authorizationFailed": {
+    "code": -22,
+    "message": {
+      "ua": "Помилка авторизації",
+      "en": "Authorization error"
+    }
+  },
+  "internalError": {
+    "code": -30,
+    "message": {
+      "ua": "Внутрішня помилка",
+      "en": "Internal error"
+    }
+  },
+  "noMemory": {
+    "code": -31,
+    "message": {
+      "ua": "Недостатньо місця на диску",
+      "en": "Not enough memory on disk"
+    }
+  }
+}

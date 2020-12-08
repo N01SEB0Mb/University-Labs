@@ -1,0 +1,9 @@
+{
+  "name": "busmarket",
+
+  "username": "<username>",
+  "password": "<password>",
+  "token": "<API-token>",
+
+  "currencyId": "A358000C2947F7AE11E23F5617780B16"
+}
