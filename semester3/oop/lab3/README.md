@@ -35,21 +35,24 @@ You will see message with authorization status
 
 Example:
 ```
-Name          Connected    Signed in    Time
-------------  -----------  -----------  -------
-busmarket     True         True         0.000 s
-autolider     True         True         0.284 s
-autotechnics  True         True         0.301 s
-formparts     True         True         0.555 s
-direct24      True         True         0.698 s
-asiaparts     True         True         3.411 s
-Total authorization time: 3.413 s
+Name             Connected    Signed in  Time
+-------------  -----------  -----------  -------
+direct24                 1            1  0.000 s
+busmarket                1            1  0.000 s
+autotechnics             1            1  0.192 s
+intercars                1            1  0.662 s
+xpertauto                1            1  1.091 s
+mahina                   1            1  1.837 s
+asiaparts                1            1  1.868 s
+autolider                1            1  3.153 s
+masterservice            1            1  3.670 s
+Total authorization time: 3.692 s
 ```
 
 After that you will see server initialization message:
 
 ```
- * Serving Flask app "parser.server.app" (lazy loading)
+ * Serving Flask app "parser.server.server" (lazy loading)
  * Environment: production
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
@@ -57,7 +60,7 @@ After that you will see server initialization message:
 
 Now you can send requests
 
-Requests format:
+### Requests format:
 
 `GET http://host:port/parser/search?article=[<articles>]&brand=[<brands>]&sites=[<sites>]`
 
