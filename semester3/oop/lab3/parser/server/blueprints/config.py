@@ -4,8 +4,8 @@ import time
 from flask_api import status
 from flask import Blueprint, request
 
-from topauto_parser.server.funcs import *
-from topauto_parser.funcs import *
+from parser.server.funcs import *
+from parser.funcs import *
 
 
 configRoute = Blueprint(

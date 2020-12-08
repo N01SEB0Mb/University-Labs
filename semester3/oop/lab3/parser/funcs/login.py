@@ -5,7 +5,7 @@ from time import time
 from tabulate import tabulate
 from typing import Optional, Iterable, List
 
-from topauto_parser.types.clients import CLIENT_CLASSES, BaseClient
+from parser.types.clients import CLIENT_CLASSES, BaseClient
 
 
 def run(

@@ -20,8 +20,8 @@ from typing import Any, Optional, Tuple, Set, Generator
 from requests.packages.urllib3 import disable_warnings
 
 
-from topauto_parser.config import PARSER, BRANDS, Path
-from topauto_parser.types.response import ResponseStatus, ResponseSearch, ResponseInfo, ResponseCurrency
+from parser.config import PARSER, BRANDS, Path
+from parser.types.response import ResponseStatus, ResponseSearch, ResponseInfo, ResponseCurrency
 
 
 disable_warnings()
@@ -172,7 +172,7 @@ class BaseClient(requests.Session):
     ) -> bool:
         """
         Used to compare brands.
-        Checks if strings are equal or in same list of equal brands (topauto_parser.config.BRANDS)
+        Checks if strings are equal or in same list of equal brands (parser.config.BRANDS)
 
         Args:
             searchBrand (str): Searching brand

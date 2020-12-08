@@ -1,7 +1,7 @@
 # coding=utf-8
 """
 This file defines ResponseStatus class that is used in response.
-Response status configuration could be found in "~/topauto_parser/config/data/status.json"
+Response status configuration could be found in "~/parser/config/data/status.json"
 
 Examples:
     Successful response status example::
@@ -10,7 +10,7 @@ Examples:
 
 from typing import Optional
 
-from topauto_parser.config import STATUS
+from parser.config import STATUS
 
 
 class ResponseStatus(dict):

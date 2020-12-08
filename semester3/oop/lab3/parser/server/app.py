@@ -6,8 +6,8 @@ import traceback
 from flask_api import status
 
 from .baseserver import ParserServer
-from topauto_parser.funcs import login
-from topauto_parser.server.blueprints import parserRoute, configRoute
+from parser.funcs import login
+from parser.server.blueprints import parserRoute, configRoute
 
 
 app = ParserServer(__name__)

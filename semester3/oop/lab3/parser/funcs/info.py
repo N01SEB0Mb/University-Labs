@@ -7,8 +7,8 @@ from typing import Iterable
 from functools import partial
 from requests.exceptions import ReadTimeout, ConnectionError
 
-from topauto_parser.types.clients import BaseClient
-from topauto_parser.types.response import ResponseStatus, ResponseInfo
+from parser.types.clients import BaseClient
+from parser.types.response import ResponseStatus, ResponseInfo
 
 
 def run(

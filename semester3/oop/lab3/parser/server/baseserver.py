@@ -4,9 +4,9 @@ import time
 from flask import Flask
 from typing import Any, Set, Type, Optional
 
-from topauto_parser.funcs import login
-from topauto_parser.config import SERVER
-from topauto_parser.types.clients import CLIENT_CLASSES, BaseClient
+from parser.funcs import login
+from parser.config import SERVER
+from parser.types.clients import CLIENT_CLASSES, BaseClient
 
 
 class ParserServer(Flask):

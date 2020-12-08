@@ -1,7 +1,7 @@
 # coding=utf-8
 
-from topauto_parser.types.clients.baseclient import *
-from topauto_parser.config import loadJSON, Path
+from parser.types.clients.baseclient import *
+from parser.config import loadJSON, Path
 
 
 class AutoLider(BaseClient):

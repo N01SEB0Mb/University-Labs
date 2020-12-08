@@ -3,7 +3,7 @@
 from flask import current_app
 from typing import Iterable, List, Set
 
-from topauto_parser.types.clients import BaseClient
+from parser.types.clients import BaseClient
 
 
 def getParametersList(
