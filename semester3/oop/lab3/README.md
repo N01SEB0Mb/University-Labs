@@ -11,7 +11,10 @@ This program collects info about parts from different sites and returns formatte
 - [AutoTechnics](https://b2b.ad.ua/)
 - [Busmarket](https://bm.parts/)
 - [Direct24](https://direct24.com.ua/)
-- [FormParts](https://b2b.ad.ua/)
+- [InterCars](https://ic-ua.intercars.eu/)
+- [Mahina](https://mahina.in.ua/)
+- [MasterService](https://steering.com.ua/)
+- [XPertAuto](https://xpert-auto.ua/)
 
 ### Usage
 
@@ -79,7 +82,7 @@ Requests format:
 
    `GET http://host:port/parser/search?article=[<articles>]&brand=[<brands>]`
 
-    **Warning**: If number of articles and brands are different, you will get `400 METHOD NOT ALLOWED` status code
+    **Warning**: If number of articles and brands are different, you will get `400 BAD REQUEST` status code
 
     Examples:
     - You want to find part using article '115906' and brand 'sachs':
