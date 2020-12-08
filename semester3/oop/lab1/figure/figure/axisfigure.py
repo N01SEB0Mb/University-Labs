@@ -11,7 +11,7 @@ class AxisFigure(object):
     Figure is a shape between function and X-axis
     """
 
-    __slots__ = ["__func1", "__func2"]
+    __slots__ = ["_func1", "_func2"]
 
     def __init__(self, first: Expression) -> None:
         """
@@ -26,13 +26,13 @@ class AxisFigure(object):
 
         # Check first type
         if isinstance(first, Expression):
-            self.__func1 = first
+            self._func1 = first
         else:
             raise TypeError(
                 f"'first' argument type must be 'Expression', not '{first.__class__.__name__}'"
             )
 
-        self.__func2 = Expression("0")
+        self._func2 = Expression("0")
 
     def area(
             self,
@@ -71,8 +71,8 @@ class AxisFigure(object):
 
     def height(self, x: Number):
         try:
-            firstValue = self.__func1(x)
-            secondValue = self.__func2(x)
+            firstValue = self._func1(x)
+            secondValue = self._func2(x)
             print(x, firstValue, secondValue)
         except BaseException:
             return nan
@@ -86,7 +86,7 @@ class AxisFigure(object):
         Get Figure first function
         """
 
-        return self.__func1
+        return self._func1
 
     @first.setter
     def first(self, expression: Expression) -> None:
@@ -101,7 +101,7 @@ class AxisFigure(object):
         """
 
         if isinstance(expression, Expression):
-            self.__func1 = expression
+            self._func1 = expression
         else:
             raise TypeError(
                 f"Figure first function type must be 'Expression', not '{expression.__class__.__name__}'"
@@ -113,4 +113,4 @@ class AxisFigure(object):
         Delete Figure first function
         """
 
-        del self.__func1
+        del self._func1

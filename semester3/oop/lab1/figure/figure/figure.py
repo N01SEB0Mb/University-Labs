@@ -30,7 +30,7 @@ class Figure(AxisFigure):
 
         # Check second type
         if isinstance(second, Expression):
-            self.__func2 = second
+            self._func2 = second
         else:
             raise TypeError(
                 f"'seconds' argument type must be 'Expression', not '{second.__class__.__name__}'"
@@ -42,7 +42,7 @@ class Figure(AxisFigure):
         Get Figure second function
         """
 
-        return self.__func2
+        return self._func2
 
     @second.setter
     def second(self, expression: Expression) -> None:
@@ -57,7 +57,7 @@ class Figure(AxisFigure):
         """
 
         if isinstance(expression, Expression):
-            self.__func2 = expression
+            self._func2 = expression
         else:
             raise TypeError(
                 f"Figure second function type must be 'Expression', not '{expression.__class__.__name__}'"
@@ -69,4 +69,4 @@ class Figure(AxisFigure):
         Delete Figure second function
         """
 
-        del self.__func2
+        del self._func2
