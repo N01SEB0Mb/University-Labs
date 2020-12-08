@@ -1,0 +1,5 @@
+{
+  "maxRecursionLimit": 1000,
+  "processes": 2,
+  "parts": 1000
+}
