@@ -147,3 +147,21 @@ class GraphABC(ABC):
         """
 
         pass
+
+    def __str__(self) -> str:
+        """
+        Convertion to str
+
+        Returns:
+            str: Graph converted to str (<vertex>: <connected vertices>)
+        """
+
+        return "\n".join(
+            map(
+                lambda vertex: f"{vertex}: " + " ".join(map(
+                    str,
+                    self.__getitem__(vertex))
+                ),
+                self.__iter__()
+            )
+        )
