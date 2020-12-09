@@ -19,3 +19,10 @@ class GraphTypeError(GraphError, TypeError):
 
     pass
 
+
+class GraphExistenceError(GraphError):
+    """
+    This error occurs when there is a index mismatch in this package
+    """
+
+    pass
