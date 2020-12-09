@@ -81,13 +81,16 @@ class GraphABC(ABC):
     @abstractmethod
     def __contains__(self, vertex: Vertex) -> bool:
         """
-        __contains__ method. Check if vertex exists
+        Check if vertex exists
 
         Args:
             vertex (Vertex): Vertex you want to check
 
         Returns:
             bool: Does the vertex exists
+
+        Raises:
+            GraphTypeError: If vertex argument type is not 'Vertex'
         """
 
         pass
