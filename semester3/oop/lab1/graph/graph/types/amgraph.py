@@ -19,7 +19,7 @@ class AMGraph(GraphABC):
         Inits AMGraph
         """
 
-        self.__am: List[List[bool]] = [[]]
+        self.__am: List[List[bool]] = []
 
         super(AMGraph, self).__init__()
 
@@ -31,9 +31,13 @@ class AMGraph(GraphABC):
             raise graph.exceptions.GraphExistenceError("Could not add unordered vertex")
 
         # Set connections
-        self.__am.append([
-            vertex in connections for vertex in range(len(self.__am))
-        ])
+        self.__am.append(list())
+
+        for connection in range(len(self.__am) - 1):
+            self.__am[-1].append(connection in connections)
+            self.__am[connection].append(connection in connections)
+        else:
+            self.__am[-1].append((len(self.__am) - 1) in connections)
 
     def remove(self, vertex: Vertex):
         # Check existence
@@ -72,13 +76,13 @@ class AMGraph(GraphABC):
         self.__al[end][start] = False
 
     def __iter__(self) -> Iterable[Vertex]:
-        return [Vertex(vertex) for vertex in range(len(self.__am))]
+        return iter([Vertex(vertex) for vertex in range(len(self.__am))])
 
     def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
         if vertex not in self:
             raise graph.exceptions.GraphExistenceError("Vertex does not exists")
 
-        for vertex, connected in enumerate(self.__al[vertex]):
+        for vertex, connected in enumerate(self.__am[vertex]):
             if connected:
                 yield Vertex(vertex)
 
