@@ -8,13 +8,13 @@ class GraphWarning(Warning):
     """
     This is base graph warning
     """
-    def __init__(self, *args, **kwargs):
-        super(Warning, self).__init__(*args, **kwargs)
+
+    pass
 
 
 class LoopWarning(GraphWarning):
     """
     This warning appears when you connect vertex to itself
     """
-    def __init__(self, *args, **kwargs):
-        super(GraphWarning, self).__init__(*args, **kwargs)
+
+    pass
