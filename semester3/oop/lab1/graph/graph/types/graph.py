@@ -1,7 +1,7 @@
 # coding=utf-8
 
-from typing import Iterable
 from abc import ABC, abstractmethod
+from typing import Iterable, Generator
 
 import graph.exceptions
 from .vertex import Vertex
@@ -47,6 +47,21 @@ class GraphABC(ABC):
         pass
 
     @abstractmethod
+    def connected(self, start: Vertex, end: Vertex) -> bool:
+        """
+        Checks if vertices are connected
+
+        Args:
+            start (Vertex): Start vertex
+            end (Vertex): End vertex
+
+        Returns:
+            bool: Does vertices connected
+        """
+
+        pass
+
+    @abstractmethod
     def connect(self, start: Vertex, end: Vertex) -> None:
         """
         Connects 2 vertices
@@ -77,6 +92,21 @@ class GraphABC(ABC):
         """
 
         pass
+
+    @abstractmethod
+    def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
+        """
+        Get vertex connections
+
+        Args:
+            vertex (Vertex): Vertex, connections of which you want to get
+
+        Yields:
+            Vertex: Connected vertices
+
+        Raises:
+            GraphExistenceError: If vertex does not exists
+        """
 
     @abstractmethod
     def __contains__(self, vertex: Vertex) -> bool:
