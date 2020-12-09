@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from warnings import warn
 from typing import Generator, Iterable, Dict, Set
 
 import graph.exceptions
@@ -33,10 +34,14 @@ class ALGraph(GraphABC):
 
         # Add connections
         for connection in connections:
-            # If connected vertex exists
             if connection in self:
+                # If connected vertex exists
                 self.__al[vertex].add(connection)
                 self.__al[connection].add(vertex)
+
+            if connection == vertex and self.LOOP_WARN:
+                # Loop warning
+                warn(graph.exceptions.LoopWarning("Connecting vertex to itself"))
 
     def remove(self, vertex: Vertex):
         # Check existence
@@ -69,6 +74,10 @@ class ALGraph(GraphABC):
         # Add connections
         self.__al[start].add(end)
         self.__al[end].add(start)
+
+        # If connected to itself
+        if start == end and self.LOOP_WARN:
+            warn(graph.exceptions.LoopWarning("Connecting vertex to itself"))
 
     def disconnect(self, start: Vertex, end: Vertex) -> None:
         # Check existence

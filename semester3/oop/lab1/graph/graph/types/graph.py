@@ -10,7 +10,12 @@ from .vertex import Vertex
 class GraphABC(ABC):
     """
     Abstract base class of graph
+
+    Attributes:
+        LOOP_WARN (bool): Enable or disable LoopWarning
     """
+
+    LOOP_WARN: bool = True
 
     __slots__ = []
 
@@ -27,6 +32,9 @@ class GraphABC(ABC):
             GraphTypeError: If there are type mismatch
             GraphExistenceError: If you trying to add vertex that already exists
             GraphExistenceError: If you trying to connect non-existent vertices
+
+        Warnings:
+            LoopWarning: If you trying to connect vertex to itself
         """
 
         pass
@@ -73,6 +81,9 @@ class GraphABC(ABC):
         Raises:
             GraphTypeError: If there are type mismatch
             GraphExistenceError: If vertex does not exists
+
+        Warnings:
+            LoopWarning: If you trying to connect vertex to itself
         """
 
         pass

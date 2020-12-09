@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from warnings import warn
 from typing import Generator, Iterable, List, Set
 
 import graph.exceptions
@@ -33,11 +34,16 @@ class AMGraph(GraphABC):
         # Set connections
         self.__am.append(list())
 
-        for connection in range(len(self.__am) - 1):
-            self.__am[-1].append(connection in connections)
-            self.__am[connection].append(connection in connections)
-        else:
-            self.__am[-1].append((len(self.__am) - 1) in connections)
+        # Iterare every vertex connection
+        for connection in range(vertex + 1):
+            self.__am[vertex].append(connection in connections)
+
+            if connection != vertex:
+                self.__am[connection].append(connection in connections)
+            else:
+                # If connecting to itself
+                if vertex in connections and self.LOOP_WARN:
+                    warn(graph.exceptions.LoopWarning("Connecting vertex to itself"))
 
     def remove(self, vertex: Vertex):
         # Check existence
@@ -65,6 +71,10 @@ class AMGraph(GraphABC):
         # Add connections
         self.__al[start][end] = True
         self.__al[end][start] = True
+
+        # If connected to itself
+        if start == end and self.LOOP_WARN:
+            warn(graph.exceptions.LoopWarning("Connecting vertex to itself"))
 
     def disconnect(self, start: Vertex, end: Vertex) -> None:
         # Check existence
