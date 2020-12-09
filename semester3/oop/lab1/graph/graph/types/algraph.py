@@ -28,11 +28,15 @@ class ALGraph(GraphABC):
         if vertex in self:
             raise graph.exceptions.GraphExistenceError("Vertex already exists")
 
-        # Set connections
-        self.__al[vertex] = set(filter(
-            lambda connection: connection in self,
-            connections
-        ))
+        # Add vertex
+        self.__al[vertex] = set()
+
+        # Add connections
+        for connection in connections:
+            # If connected vertex exists
+            if connection in self:
+                self.__al[vertex].add(connection)
+                self.__al[connection].add(vertex)
 
     def remove(self, vertex: Vertex):
         # Check existence
@@ -80,7 +84,7 @@ class ALGraph(GraphABC):
             raise graph.exceptions.GraphExistenceError("Given vertices does not connected")
 
     def __iter__(self) -> Iterable[Vertex]:
-        return self.__al.keys()
+        return iter(self.__al)
 
     def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
         if vertex not in self:
