@@ -1,32 +1,25 @@
 # coding=utf-8
 
-from typing import Optional, Set
+from typing import List, Set
 
 from graph.types import *
 
 
-def BFS(graph: GraphABC, vertex: Vertex, used: Optional[Set[Vertex]] = None) -> Set[Vertex]:
+def BFS(graph: GraphABC, vertex: Vertex) -> Set[Vertex]:
     """
     BFS algorithm
 
     Args:
         graph (Graph): Graph
         vertex (Vertex): Start vertex
-        used (Optional[Set[Vertex]]): Used vertices
 
     Returns:
         Set[Vertex]: Found vertices
-
-    Notes:
-        This is recursive function
     """
 
-    # Init used vertices and add starting
-    used: Set[Vertex] = used or set()
-    used.add(vertex)
-
-    # Next vertices queue
-    queue = [vertex]
+    # Add start vertex to used and queue
+    used: Set[Vertex] = {vertex}
+    queue: List[Vertex] = [vertex]
 
     while queue:
         # Get vertex from queue
