@@ -57,17 +57,17 @@ class AMGraph(GraphABC):
             raise graph.exceptions.GraphExistenceError("Vertex does not exists")
 
         # Delete vertex
-        self.__al.pop(vertex)
+        self.__am.pop(vertex)
 
         # Delete connections
-        for connection in self.__al:
+        for connection in self.__am:
             connection.pop(vertex)
 
     def connected(self, start: Vertex, end: Vertex) -> bool:
         if start not in self or end not in self:
             raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
 
-        return bool(self.__al[start][end])
+        return bool(self.__am[start][end])
 
     def connect(self, start: Vertex, end: Vertex, weight: float = 1.0) -> None:
         # Check existence
@@ -75,8 +75,8 @@ class AMGraph(GraphABC):
             raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
 
         # Add connections
-        self.__al[start][end] = weight
-        self.__al[end][start] = weight
+        self.__am[start][end] = weight
+        self.__am[end][start] = weight
 
         # If connected to itself
         if start == end and self.LOOP_WARN:
@@ -88,8 +88,8 @@ class AMGraph(GraphABC):
             raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
 
         # Remove connections
-        self.__al[start][end] = 0.0
-        self.__al[end][start] = 0.0
+        self.__am[start][end] = 0.0
+        self.__am[end][start] = 0.0
 
     def __iter__(self) -> Iterable[Vertex]:
         return iter([Vertex(vertex) for vertex in range(len(self.__am))])
