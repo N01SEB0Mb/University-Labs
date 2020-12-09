@@ -8,12 +8,15 @@ class Vertex(int):
     This is Vertex class, base of graph
     """
 
-    def __new__(cls, index: int):
+    __slots__ = []
+
+    def __new__(cls, index: int) -> "Vertex":
         """
         Creates new Vertex object
 
         Args:
             index (int): Graph vertex index
+
         Raises:
             GraphTypeError: If index type is not int
         """
@@ -25,7 +28,7 @@ class Vertex(int):
                 index.__class__.__name__
             ))
 
-    def __init__(self, index: int):
+    def __init__(self, index: int) -> None:
         """
         Inits Vertex object
 
@@ -34,13 +37,3 @@ class Vertex(int):
         """
 
         super(Vertex, self).__init__()
-
-    def __repr__(self):
-        """
-        Overloads __repr__ method
-
-        Returns:
-            str: Representation of Vertex object
-        """
-
-        return "Vertex[{}]".format(self)
