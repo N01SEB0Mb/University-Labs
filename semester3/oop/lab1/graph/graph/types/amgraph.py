@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from typing import Generator, List, Set
+from typing import Generator, Iterable, List, Set
 
 import graph.exceptions
 from .vertex import Vertex
@@ -70,6 +70,9 @@ class AMGraph(GraphABC):
         # Remove connections
         self.__al[start][end] = False
         self.__al[end][start] = False
+
+    def __iter__(self) -> Iterable[Vertex]:
+        return [Vertex(vertex) for vertex in range(len(self.__am))]
 
     def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
         if vertex not in self:

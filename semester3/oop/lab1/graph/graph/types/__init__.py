@@ -2,6 +2,6 @@
 
 from .vertex import Vertex
 
-from .alg import AdjacencyListGraph
-from .amg import AdjacencyMatrixGraph
-from .elg import EdgeListGraph
+from .graph import GraphABC
+from .algraph import ALGraph
+from .amgraph import AMGraph

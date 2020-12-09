@@ -94,6 +94,17 @@ class GraphABC(ABC):
         pass
 
     @abstractmethod
+    def __iter__(self) -> Iterable[Vertex]:
+        """
+        Get iterator with vertices
+
+        Returns:
+            Iterable[Vertex]: Graph vertices
+        """
+
+        pass
+
+    @abstractmethod
     def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
         """
         Get vertex connections
