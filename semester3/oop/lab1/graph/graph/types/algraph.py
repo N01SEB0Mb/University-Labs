@@ -1,0 +1,90 @@
+# coding=utf-8
+
+from typing import Generator, Dict, Set
+
+import graph.exceptions
+from .vertex import Vertex
+from .graph import GraphABC
+
+
+class ALGraph(GraphABC):
+    """
+    Graph represented with adjacency list
+    """
+
+    __slots__ = ["__al"]
+
+    def __init__(self) -> None:
+        """
+        Inits ALGraph
+        """
+
+        self.__al: Dict[Vertex, Set[Vertex]] = {}
+
+        super(ALGraph, self).__init__()
+
+    def add(self, vertex: Vertex, connections: Iterable[Vertex]) -> None:
+        # Check existence
+        if vertex in self:
+            raise graph.exceptions.GraphExistenceError("Vertex already exists")
+
+        # Set connections
+        self.__al[vertex] = set(filter(
+            lambda connection: connection in self,
+            connections
+        ))
+
+    def remove(self, vertex: Vertex):
+        # Check existence
+        if vertex not in self:
+            raise graph.exceptions.GraphExistenceError("Vertex does not exists")
+
+        # Delete vertex
+        self.__al.pop(vertex)
+
+        # Delete all connections
+        for connections in self.__al.values():
+            if vertex in connections:
+                try:
+                    connections.remove(vertex)
+                except KeyError:
+                    # If connection does not exists
+                    pass
+
+    def connected(self, start: Vertex, end: Vertex) -> bool:
+        if start not in self or end not in self:
+            raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
+
+        return end in self.__al[start]
+
+    def connect(self, start: Vertex, end: Vertex) -> None:
+        # Check existence
+        if start not in self or end not in self:
+            raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
+
+        # Add connections
+        self.__al[start].add(end)
+        self.__al[end].add(start)
+
+    def disconnect(self, start: Vertex, end: Vertex) -> None:
+        # Check existence
+        if start not in self or end not in self:
+            raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
+
+        # Remove connections
+        try:
+            self.__al[start].remove(end)
+            self.__al[end].remove(start)
+        except KeyError:
+            # If connections does not exist
+            raise graph.exceptions.GraphExistenceError("Given vertices does not connected")
+
+    def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
+        if vertex not in self:
+            raise graph.exceptions.GraphExistenceError("Vertex does not exists")
+
+        for connection in self.__al[vertex]:
+            yield connection
+
+    def __contains__(self, vertex: Vertex) -> bool:
+        return vertex in self.__al
