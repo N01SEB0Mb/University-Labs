@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from abc import ABC, abstractmethod
-from typing import Iterable, Generator
+from typing import Iterable, Generator, Tuple
 
 import graph.exceptions
 from .vertex import Vertex
@@ -20,7 +20,7 @@ class GraphABC(ABC):
     __slots__ = []
 
     @abstractmethod
-    def add(self, vertex: Vertex, connections: Iterable[Vertex]) -> None:
+    def add(self, vertex: Vertex, connections: Iterable[Tuple[Vertex, float]]) -> None:
         """
         Adds vertex to graph.
 
@@ -70,13 +70,14 @@ class GraphABC(ABC):
         pass
 
     @abstractmethod
-    def connect(self, start: Vertex, end: Vertex) -> None:
+    def connect(self, start: Vertex, end: Vertex, weight: float = 1.0) -> None:
         """
         Connects 2 vertices
 
         Args:
             start (Vertex): Start vertex
             end (Vertex): End vertex
+            weight (Vertex): Edge weight
 
         Raises:
             GraphTypeError: If there are type mismatch
