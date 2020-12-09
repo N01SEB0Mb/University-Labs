@@ -15,9 +15,10 @@ class GraphABC(ABC):
         LOOP_WARN (bool): Enable or disable LoopWarning
     """
 
-    LOOP_WARN: bool = True
+    __slots__ = ["LOOP_WARN"]
 
-    __slots__ = []
+    def __init__(self) -> None:
+        self.LOOP_WARN: bool = True
 
     @abstractmethod
     def add(self, vertex: Vertex, connections: Iterable[Tuple[Vertex, float]]) -> None:
