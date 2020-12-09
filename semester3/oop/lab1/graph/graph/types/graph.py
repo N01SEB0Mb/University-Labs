@@ -47,7 +47,7 @@ class GraphABC(ABC):
         pass
 
     @abstractmethod
-    def connected(self, start: Vertex, end: Vertex) -> None:
+    def connect(self, start: Vertex, end: Vertex) -> None:
         """
         Connects 2 vertices
 
