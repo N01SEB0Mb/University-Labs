@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from typing import Generator, Dict, Set
+from typing import Generator, Iterable, Dict, Set
 
 import graph.exceptions
 from .vertex import Vertex
@@ -78,6 +78,9 @@ class ALGraph(GraphABC):
         except KeyError:
             # If connections does not exist
             raise graph.exceptions.GraphExistenceError("Given vertices does not connected")
+
+    def __iter__(self) -> Iterable[Vertex]:
+        return self.__al.keys()
 
     def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
         if vertex not in self:
