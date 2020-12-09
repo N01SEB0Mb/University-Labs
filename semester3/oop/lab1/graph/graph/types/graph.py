@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from abc import ABC, abstractmethod
-from typing import Iterable, Generator, Tuple
+from typing import Iterable, Dict, Tuple
 
 import graph.exceptions
 from .vertex import Vertex
@@ -117,15 +117,15 @@ class GraphABC(ABC):
         pass
 
     @abstractmethod
-    def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
+    def __getitem__(self, vertex: Vertex) -> Dict[Vertex, float]:
         """
         Get vertex connections
 
         Args:
             vertex (Vertex): Vertex, connections of which you want to get
 
-        Yields:
-            Vertex: Connected vertices
+        Returns:
+            Dict[Vertex, float]: Connected vertices dict
 
         Raises:
             GraphExistenceError: If vertex does not exists

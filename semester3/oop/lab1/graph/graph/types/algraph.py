@@ -91,12 +91,11 @@ class ALGraph(GraphABC):
     def __iter__(self) -> Iterable[Vertex]:
         return iter(self.__al)
 
-    def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
+    def __getitem__(self, vertex: Vertex) -> Dict[Vertex, float]:
         if vertex not in self:
             raise graph.exceptions.GraphExistenceError("Vertex does not exists")
 
-        for connection in self.__al[vertex]:
-            yield connection
+        return self.__al[vertex]
 
     def __contains__(self, vertex: Vertex) -> bool:
         return vertex in self.__al

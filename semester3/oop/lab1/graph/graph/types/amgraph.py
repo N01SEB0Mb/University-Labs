@@ -94,13 +94,11 @@ class AMGraph(GraphABC):
     def __iter__(self) -> Iterable[Vertex]:
         return iter([Vertex(vertex) for vertex in range(len(self.__am))])
 
-    def __getitem__(self, vertex: Vertex) -> Generator[Vertex, None, None]:
+    def __getitem__(self, vertex: Vertex) -> Dict[Vertex, float]:
         if vertex not in self:
             raise graph.exceptions.GraphExistenceError("Vertex does not exists")
 
-        for vertex, connected in enumerate(self.__am[vertex]):
-            if connected:
-                yield Vertex(vertex)
+        return {Vertex(connection): weight for connection, weight in enumerate(self.__am[vertex]) if weight}
 
     def __contains__(self, vertex: Vertex) -> bool:
         return vertex < len(self.__am)
