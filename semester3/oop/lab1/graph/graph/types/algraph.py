@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from warnings import warn
-from typing import Generator, Iterable, Dict, Set
+from typing import *
 
 import graph.exceptions
 from .vertex import Vertex
@@ -20,24 +20,24 @@ class ALGraph(GraphABC):
         Inits ALGraph
         """
 
-        self.__al: Dict[Vertex, Set[Vertex]] = {}
+        self.__al: Dict[Vertex, Dict[Vertex, float]] = {}
 
         super(ALGraph, self).__init__()
 
-    def add(self, vertex: Vertex, connections: Iterable[Vertex]) -> None:
+    def add(self, vertex: Vertex, connections: Iterable[Tuple[Vertex, float]]) -> None:
         # Check existence
         if vertex in self:
             raise graph.exceptions.GraphExistenceError("Vertex already exists")
 
         # Add vertex
-        self.__al[vertex] = set()
+        self.__al[vertex] = {}
 
         # Add connections
-        for connection in connections:
+        for connection, weight in connections:
             if connection in self:
                 # If connected vertex exists
-                self.__al[vertex].add(connection)
-                self.__al[connection].add(vertex)
+                self.__al[vertex][connection] = weight
+                self.__al[connection][vertex] = weight
 
             if connection == vertex and self.LOOP_WARN:
                 # Loop warning
@@ -54,11 +54,7 @@ class ALGraph(GraphABC):
         # Delete all connections
         for connections in self.__al.values():
             if vertex in connections:
-                try:
-                    connections.remove(vertex)
-                except KeyError:
-                    # If connection does not exists
-                    pass
+                connections.pop(vertex)
 
     def connected(self, start: Vertex, end: Vertex) -> bool:
         if start not in self or end not in self:
@@ -66,14 +62,14 @@ class ALGraph(GraphABC):
 
         return end in self.__al[start]
 
-    def connect(self, start: Vertex, end: Vertex) -> None:
+    def connect(self, start: Vertex, end: Vertex, weight: float = 1.0) -> None:
         # Check existence
         if start not in self or end not in self:
             raise graph.exceptions.GraphExistenceError("Given vertices does not exists")
 
         # Add connections
-        self.__al[start].add(end)
-        self.__al[end].add(start)
+        self.__al[start][end] = weight
+        self.__al[end][start] = weight
 
         # If connected to itself
         if start == end and self.LOOP_WARN:
@@ -86,8 +82,8 @@ class ALGraph(GraphABC):
 
         # Remove connections
         try:
-            self.__al[start].remove(end)
-            self.__al[end].remove(start)
+            self.__al[start].pop(end)
+            self.__al[end].pop(start)
         except KeyError:
             # If connections does not exist
             raise graph.exceptions.GraphExistenceError("Given vertices does not connected")
