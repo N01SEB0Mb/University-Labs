@@ -1,7 +1,7 @@
 ### Solution of task using Python3
 
 Solution defined using 3 different methods:
- * **CalcFunc** ([_func.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/func.py)):
+ * **CalcFunc** ([_func.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3/oop/module1/2/calculate/func.py)):
  default python function using dict with variants,
  that is more compact, unlike `if/elif/else` condions.
  Dict keys are lambda-funcs that checks if `x` suits to condition of types.
@@ -12,12 +12,12 @@ Solution defined using 3 different methods:
         3. Better type checking construction
     * Minuses:
         1. Less versatility
- * **CalcCall** ([_call.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/call.py)):
+ * **CalcCall** ([_call.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3/oop/module1/2/calculate/call.py)):
  python class with `__call__` method.
  Unlike CalcFunc, uses different method for every `x` type.
- Inherits [`CalculatorABC`](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/basecalc.py#L28) class with defined method for most of types.
+ Inherits [`CalculatorABC`](https://github.com/no1sebomb/University-Labs/blob/master/semester3/oop/module1/2/calculate/basecalc.py#L28) class with defined method for most of types.
  Checking of type is realised using `try/except` construction:
- If `x` type is not suits method type, it raises [`CalculatorTypeError`](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/basecalc.py#L10).
+ If `x` type is not suits method type, it raises [`CalculatorTypeError`](https://github.com/no1sebomb/University-Labs/blob/master/semester3/oop/module1/2/calculate/basecalc.py#L10).
  Object looping over all it's methods until succeed (No exception raised).
     * Pluses
         1. More versatility
@@ -26,7 +26,7 @@ Solution defined using 3 different methods:
         1. More code
         2. More memory
         3. First you need to create CalcCall instance, then you should call it
- * **CalcNew** ([_new.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3-oop/module1/2/calculate/new.py)):
+ * **CalcNew** ([_new.py_](https://github.com/no1sebomb/University-Labs/blob/master/semester3/oop/module1/2/calculate/new.py)):
  python class similar to previous, but it simulates function using `__new__` method:
  This method is constructor that returns new object instance, but this class returns calculation answer.
     * Pluses
@@ -38,7 +38,7 @@ Solution defined using 3 different methods:
         2. More memory
         3. Strange and unwanted usage of OOP
         
-This solutions are defined in [calculate](https://github.com/no1sebomb/University-Labs/tree/master/semester3-oop/module1/2/calculate) package.
+This solutions are defined in [calculate](https://github.com/no1sebomb/University-Labs/tree/master/semester3/oop/module1/2/calculate) package.
 
 ### Usage
 

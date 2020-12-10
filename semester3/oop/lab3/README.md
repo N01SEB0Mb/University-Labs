@@ -1,5 +1,7 @@
 ## Auto service parts parser
 
+**_(Outdated code)_**
+
 ### Description
 
 This program collects info about parts from different sites and returns formatted response
