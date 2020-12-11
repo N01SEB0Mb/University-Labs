@@ -1,7 +1,14 @@
 #include "string"
 
+
 int isShifted(const std::string &origin,
               const std::string &shifted) {
+    // Check if string are equal
+
+    if (origin == shifted) {
+        return 0;
+    }
+
     // Init values
 
     const int n = origin.length();  // Save length of string
