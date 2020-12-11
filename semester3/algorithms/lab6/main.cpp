@@ -8,7 +8,7 @@ int main() {
     std::string output;
 
     // Input origin string
-    std::cout << "Type origin string: ";
+    std::cout << "Type origin string:  ";
     std::cin >> input;
 
     // Input shifted string
