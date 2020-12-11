@@ -156,7 +156,7 @@ class ALGraph(GraphABC):
         # Check type
         if not isinstance(vertex, Vertex):
             raise graph.exceptions.GraphTypeError(
-                f"Key type must be 'Vertex', not {start__class__.__name__}"
+                f"Key type must be 'Vertex', not {vertex.__class__.__name__}"
             )
 
         # Check existence

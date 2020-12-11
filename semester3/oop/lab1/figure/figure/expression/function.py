@@ -24,7 +24,7 @@ class Expression(object):
         3
     """
 
-    __slots__ = ["__arg", "__func"]
+    __slots__ = ["__arg", "__func", "__expr"]
 
     def __init__(
             self,
@@ -43,6 +43,7 @@ class Expression(object):
         """
 
         self.__arg: str = argumentName
+        self.__expr = expressionString
         self.__func: ExpressionNode = self.__parse(
             expressionString,
             argumentName=argumentName
@@ -271,3 +272,13 @@ class Expression(object):
                 onlyPrior=True
             ),
         )[0]
+
+    def __str__(self) -> str:
+        """
+        Convert to string
+
+        Returns:
+            str: Expression
+        """
+
+        return self.__expr
