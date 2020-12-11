@@ -11,7 +11,7 @@ Then, you calculate positional sum of chars for `A` and `B`:\
 `a = 1 * A[1] + 2 * A[2] + ... + N * A[N]`\
 `b = 1 * B[1] + 2 * B[2] + ... + N * B[N]`
 
-From other side, 'b' is shifted sum of 'A':\
+From other side, `b` is shifted sum of `A`:\
 `b = (1 + d) * A[1] + (2 + d) * A[2] + ... + (N + d) * A[N] - N * SF`
 Where `SF` is sum of shifted chars:\
 `SF = A[N + 1 - d] + A[N + 2 - d] + ... + A[N]`
