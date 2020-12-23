@@ -21,3 +21,7 @@ It means that:\
 So you just iterate through possible shift values (`d: 1 -> N - 1`) and check if values are equal. If they are equal, that means that found shift value is correct
 
 If none of possible shift values are matching, then `B` is not a shifted `A`
+
+##### Formulas
+
+<img src="https://github.com/no1sebomb/University-Labs/blob/master/resources/sem3-alg-lab6-1.png" width="200px"/>
