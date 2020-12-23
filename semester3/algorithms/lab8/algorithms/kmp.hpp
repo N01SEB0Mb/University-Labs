@@ -41,11 +41,13 @@ int kmp(std::string& text, std::string& pattern){
             q = prefixes[q];
 
         }
-        if (pattern[q] == b_copy[i])
+        if (pattern[q] == b_copy[i]) {
             q = q + 1;
-        if (q == pattern.length())
-            return i - pattern.length() + 1;
+        }
 
+        if (q == pattern.length()) {
+            return i - pattern.length() + 1;
+        }
     }
 
     return -1;
