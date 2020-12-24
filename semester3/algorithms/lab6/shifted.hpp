@@ -1,45 +1,63 @@
-#include "string"
+#include <string>
+
+// Hash constants
+const int32_t P = 255;
+const int32_t Q = INT32_MAX / 2 - 1;
 
 
 int isShifted(const std::string &origin,
               const std::string &shifted) {
-    // Check if string are equal
+    // Save length
+    const int len = origin.length();
 
-    if (origin == shifted) {
-        return 0;
+    // If length not matches
+    if (len != shifted.length()) {
+        return -1;
     }
 
-    // Init values
+    // Hash variables
+    int32_t hashOrigin = 0;
+    int32_t hashShifted = 0;
 
-    const int n = origin.length();  // Save length of string
-
-    int s = 0;  // Sum of all chars
-    int si = 0;  // Sum of shifted chars
-
-    for (char symbol: origin) {
-        s += symbol;
+    // Calculate pattern and first entry
+    for (int index = 0; index < len; index++) {
+        hashOrigin = (P * hashOrigin + origin[index]) % Q;
+        hashShifted = (P * hashShifted + shifted[index]) % Q;
     }
 
-    // Calculate subtraction of origin and shifted
+    // Calculate first multiplier (mod power)
+    int maxP = 1;
 
-    int sub = 0;
-
-    for (int i = 0; i < n; i++) {
-        sub += (i + 1) * (shifted[i] - origin[i]);
+    for (int index = 0; index < len - 1; index++) {
+        maxP = (maxP * P) % Q;
     }
 
-    // Iterate through possible shift values
+    // Iterate possible shiftings
+    for (int shift = 0; shift < len; shift++) {
+        if (hashShifted == hashOrigin) {
+            std::cout << shift << std::endl;
+            bool found = true;
 
-    int value;
+            for (int index = 0; index < len; index++) {
+                if (shifted[(index + shift) % len] != origin[index]) {
+                    found = false;
+                    break;
+                }
+            }
 
-    for (int d = 1; d < n; d++) {
-        si += origin[n - d]; // Add shifted char
-        value = d * s - n * si; // Calculate value for current shift
+            if (found) {
+                return shift;
+            }
+        }
 
-        if (value == sub) {
-            return d;  // If value == sub then shift found
+        hashShifted = (P * (hashShifted - maxP * shifted[shift]) + shifted[shift]) % Q;
+
+        // If hash is negative
+        if (hashShifted < 0) {
+            hashShifted += Q;
         }
     }
 
-    return -1;  // If shift not found
+    // If none of entries are matching
+    return -1;
 }
