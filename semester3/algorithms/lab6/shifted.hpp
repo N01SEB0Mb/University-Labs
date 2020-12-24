@@ -1,8 +1,8 @@
 #include <string>
 
 // Hash constants
-const int32_t P = 255;
-const int32_t Q = INT32_MAX / 2 - 1;
+const int P = 101;
+const int Q = 127;
 
 
 int isShifted(const std::string &origin,
@@ -16,8 +16,8 @@ int isShifted(const std::string &origin,
     }
 
     // Hash variables
-    int32_t hashOrigin = 0;
-    int32_t hashShifted = 0;
+    int hashOrigin = 0;
+    int hashShifted = 0;
 
     // Calculate pattern and first entry
     for (int index = 0; index < len; index++) {
