@@ -1,22 +1,28 @@
-#include "string"
+#include <string>
 
 
 int naive(const std::string& text, const std::string& pattern) {
     bool found;
 
-    for (int i = 0; i < text.size(); i++) {
+    // Iterate possible entries
+    for (int current = 0; current < text.size(); current++) {
         found = true;
 
-        for (int j = 0; j < pattern.size(); j++) {
-            if (pattern[j] != text[i + j]) {
+        for (int index = 0; index < pattern.size(); index++) {
+            // Check if any of char is not equal
+
+            if (text[current + index] != pattern[index]) {
                 found = false;
+                break;
             }
         }
 
+        // If all of chars are equal, return entry index
         if (found) {
-            return i;
+            return current;
         }
     }
 
+    // If none of entries are matching
     return -1;
 }
