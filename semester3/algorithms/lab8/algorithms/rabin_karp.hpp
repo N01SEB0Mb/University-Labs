@@ -1,55 +1,70 @@
-#include <cmath>
 #include <string>
-#include <iostream>
+
+// Hash constants
+const int P = 101; // Multiplier
+const int Q = 127; // Module
 
 
-const int q = 127;
-const int x = 101;
+int rabinKarp(const std::string &text, const std::string &pattern) {
+    // Save length
+    const int lenText = text.length();
+    const int lenPattern = pattern.length();
 
-
-int rabin_karp(const std::string &text, const std::string &pattern) {
-    int n = text.length(), m = pattern.length();
-
-    if (m > n) {
+    // Check if pattern < text
+    if (lenPattern > lenText) {
         return -1;
     }
 
-    int p = 0;
-    int t = 0;
-    int h = 1;
+    // Hash variables
+    int hashCurr = 0;
+    int hashPattern = 0;
 
-    for (int i = 0; i < m - 1; i++)
-        h = (h * x) % q;
-
-    for (int i = 0; i < m; i++) {
-        p = (x * p + pattern[i]) % q;
-        t = (x * t + text[i]) % q;
+    // Calculate pattern and first entry
+    for (int index = 0; index < lenPattern; index++) {
+        hashCurr = (P * hashCurr + text[index]) % Q;
+        hashPattern = (P * hashPattern + pattern[index]) % Q;
     }
 
-    for (int i = 0; i <= n - m; i++) {
-        if (p == t) {
+    // Calculate first multiplier (mod power)
+    int maxP = 1;
+
+    for (int index = 0; index < lenPattern - 1; index++) {
+        maxP = (maxP * P) % Q;
+    }
+
+    // Iterate possible entries
+    for (int current = 0; current <= lenText - lenPattern; current++) {
+        // If hashes are equal, then check strings equality
+        if (hashCurr == hashPattern) {
             bool found = true;
 
-            for (int j = 0; j < m; j++) {
-                if (text[i + j] != pattern[j]) {
+            for (int index = 0; index < lenPattern; index++) {
+                // Check if any of char is not equal
+
+                if (text[current + index] != pattern[index]) {
                     found = false;
                     break;
                 }
             }
 
+            // If all of chars are equal, return entry index
             if (found) {
-                return i;
+                return current;
             }
         }
 
-        if (i < n - m) {
-            t = (x * (t - text[i] * h) + text[i + m]) % q;
+        // If entry is not last
+        if (current < lenText - lenPattern) {
+            // Roll hash (remove old char, shift, add new char)
+            hashCurr = (P * (hashCurr - text[current] * maxP) + text[current + lenPattern]) % Q;
 
-            if (t < 0) {
-                t += q;
+            // If hash is negative
+            if (hashCurr < 0) {
+                hashCurr += Q;
             }
         }
     }
 
+    // If none of entries are matching
     return -1;
 }

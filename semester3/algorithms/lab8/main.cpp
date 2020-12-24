@@ -3,7 +3,6 @@
 #include <string>
 #include <chrono>
 
-#include "algorithms/kmp.hpp"
 #include "algorithms/naive.hpp"
 #include "algorithms/rabin_karp.hpp"
 
@@ -48,6 +47,7 @@ int main() {
     std::cin >> pattern;
 
     calcTime([](){return naive(text, pattern);}, "Naive");
-    calcTime([](){return rabin_karp(text, pattern);}, "Rabin-Karp");
-    calcTime([](){return kmp(text, pattern);}, "KMP");
+    calcTime([](){return rabinKarp(text, pattern);}, "Rabin-Karp");
+
+    return 0;
 }
