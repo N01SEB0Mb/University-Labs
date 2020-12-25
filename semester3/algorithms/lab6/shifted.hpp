@@ -35,7 +35,6 @@ int isShifted(const std::string &origin,
     // Iterate possible shiftings
     for (int shift = 0; shift < len; shift++) {
         if (hashShifted == hashOrigin) {
-            std::cout << shift << std::endl;
             bool found = true;
 
             for (int index = 0; index < len; index++) {
