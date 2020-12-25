@@ -2,7 +2,7 @@
 #include <utility>
 
 
-std::vector<std::pair<int, bool>> stable_nomemory(std::vector<std::pair<int, bool>> &array) {
+std::vector<std::pair<int, bool>> stable_nomemory(std::vector<std::pair<int, bool>> array) {
     for (int index = 1; index < array.size(); index++) {
         std::pair<int, bool> current = array[index];
 

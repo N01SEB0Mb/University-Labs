@@ -2,7 +2,7 @@
 #include <utility>
 
 
-std::vector<std::pair<int, bool>> linear_nomemory(std::vector<std::pair<int, bool>> &array) {
+std::vector<std::pair<int, bool>> linear_nomemory(std::vector<std::pair<int, bool>> array) {
     int counter = 0;
 
     for (auto &value: array) {
@@ -16,7 +16,7 @@ std::vector<std::pair<int, bool>> linear_nomemory(std::vector<std::pair<int, boo
 
 
     while (first < counter) {
-        while (!array[first].second) {
+        while (!array[first].second && first < counter) {
             first++;
         }
 
