@@ -653,7 +653,7 @@ int utilitySlaveSmall() {
         index++;
     }
 
-    printf("====================================== \n");
+    printf("\n");
 
     // Close file
     fclose(file);
