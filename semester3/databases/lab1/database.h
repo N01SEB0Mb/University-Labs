@@ -9,10 +9,10 @@
 #define MESSAGE_SIZE (512)
 
 // Database files path
-#define MESSAGES_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/database/messages.db")
-#define MESSAGES_TMP_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/database/messages.tdb")
-#define USERS_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/database/users.db")
-#define USERS_TMP_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/database/users.tdb")
+#define MESSAGES_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/lab1/database/messages.db")
+#define MESSAGES_TMP_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/lab1/database/messages.tdb")
+#define USERS_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/lab1/database/users.db")
+#define USERS_TMP_PATH ("/home/noisebomb/PycharmProjects/University-Labs/semester3/databases/lab1/database/users.tdb")
 
 // Status codes
 #define SUCCESS (0);
