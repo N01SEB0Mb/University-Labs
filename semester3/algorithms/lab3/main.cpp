@@ -25,6 +25,7 @@ int main() {
     bool finished = false;
     int operation;
 
+    // Choose operation
     while (!finished) {
         std::cout << "Choose operation:\n"
                      "1 - Extract Max\n"
@@ -40,29 +41,46 @@ int main() {
         switch (operation) {
             case 1:
                 std::cout << extractMax() << std::endl;
+
                 break;
             case 2:
+                std::cout << "Type value you want to insert: ";
+                std::cin >> value;
+
+                insert(value);
+
                 break;
             case 3:
+                int key;
+
+                std::cout << "Type key and value: ";
+                std::cin >> key >> value;
+
+                increaseKey(key, value);
+
                 break;
             case 4:
                 std::cout << height() << std::endl;
+
+                break;
             case 5:
                 writeHeap();
+
                 break;
             case 0:
                 finished = true;
+
                 std::cout << "Exit..." << std::endl;
+
                 break;
             default:
                 std::cout << "Unknown operation, try again" << std::endl;
+
                 break;
         }
 
         std::cout << "----------------" << std::endl;
     }
-    // Choose operation
-
 
     return 0;
 }

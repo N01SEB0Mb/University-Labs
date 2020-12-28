@@ -1,8 +1,21 @@
 #include <vector>
 #include <utility>
+#include <algorithm>
+#include <random>
 #include <iostream>
 
 #include "sort.hpp"
+
+
+std::vector<int> getRandom(const int &size) {
+    std::vector<int> result(size);
+
+    for (int i = 0; i < size; i++) {
+        result.push_back(rand() % 255);
+    }
+
+    return result;
+}
 
 
 int main() {
@@ -15,15 +28,23 @@ int main() {
     std::vector<int> first(n);
     std::vector<int> second(n);
 
-    std::cout << "Type first array: ";
-    for (int index = 0; index < n; index++) {
-        std::cin >> first[index];
+    first = getRandom(n);
+    second = first;
+    auto rng = std::default_random_engine {};
+    std::shuffle(first.begin(), first.end(), rng);
+
+    // Output vectors
+    for (int value: first) {
+        std::cout << value << " ";
     }
 
-    std::cout << "Type second array: ";
-    for (int index = 0; index < n; index++) {
-        std::cin >> second[index];
+    std::cout << std::endl;
+
+    for (int value: second) {
+        std::cout << value << " ";
     }
+
+    std::cout << std::endl;
 
     // Sort vector
     std::pair<std::vector<int>, std::vector<int>> result = sort(first, second);

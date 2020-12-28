@@ -47,20 +47,20 @@ int extractMax() {
 }
 
 
-void increaseKey(int i, int value) {
-	if (i == 0) {
+void increaseKey(int index, int value) {
+	if (index == 0) {
         heap[0] = value;
 		return;
 	}
 
-	int p = (i - 1) / d;
+	int p = (index - 1) / d;
 
 	if (heap[p] < value) {
-        heap[i] = heap[p];
+        heap[index] = heap[p];
 		increaseKey(p, value);
 	}
 	else {
-        heap[i] = value;
+        heap[index] = value;
 	}
 }
 

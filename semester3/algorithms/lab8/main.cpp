@@ -47,6 +47,7 @@ int main() {
     std::cin >> pattern;
 
     calcTime([](){return naive(text, pattern);}, "Naive");
+//    calcTime([](){return horspool(text, pattern);}, "Horspool");
     calcTime([](){return rabinKarp(text, pattern);}, "Rabin-Karp");
 
     return 0;
