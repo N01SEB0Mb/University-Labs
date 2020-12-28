@@ -7,7 +7,7 @@ int getMaster() {
     // Init file and data variables
     FILE *fp;
     struct User user;
-    int ID;
+    long ID;
 
     // Try opening file
     if ((fp = fopen(USERS_PATH, "rb")) == NULL) {
@@ -17,7 +17,7 @@ int getMaster() {
 
     // Print info
     printf("User ID: ");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Search ID
     while (fread(&user, sizeof(struct User), 1, fp) == 1) {
@@ -34,10 +34,10 @@ int getMaster() {
     }
 
     // Print info
-    printf("ID          : %d\n"
+    printf("ID          : %ld\n"
            "Username    : %s\n"
            "Password    : %s\n"
-           "Phone number: %d\n\n",
+           "Phone number: %lld\n\n",
            user.ID, user.username, user.password, user.number);
 
     // Close file
@@ -52,7 +52,7 @@ int getSlave() {
     // Init file and data variables
     FILE *fp;
     struct Message message;
-    int ID;
+    long ID;
 
     // Try opening file
     if ((fp = fopen(MESSAGES_PATH, "rb")) == NULL) {
@@ -62,13 +62,13 @@ int getSlave() {
 
     // Get ID
     printf("Message ID: ");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Search ID
     while (fread(&message, sizeof(struct Message), 1, fp) == 1) {
         if (message.fromID == ID) {
             // Print info
-            printf("Master ID: %d\n"
+            printf("Master ID: %ld\n"
                    "Text     : %s\n\n", message.fromID, message.text);
         }
     }
@@ -87,12 +87,12 @@ int getSlave() {
 
 int deleteMaster() {
     // ID variable
-    int ID;
+    long ID;
 
     // Request ID of master
     utilityMasterSmall();
     printf("Type user ID: ");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Deleting master
     deleteMasterByID(ID);
@@ -120,12 +120,12 @@ int deleteSlave() {
 
 int updateMaster() {
     // Id variable
-    int ID;
+    long ID;
 
     // Request ID of master
     utilityMasterSmall();
     printf("Type user ID: ");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Return master updating status
     return updateMasterByID(ID);
@@ -150,7 +150,7 @@ int insertMaster() {
     // Init file and data variables
     FILE *fp;
     struct User user;
-    int ID;
+    long ID;
 
     // Try opening file
     if ((fp = fopen(USERS_PATH, "a+b")) == NULL) {
@@ -160,7 +160,7 @@ int insertMaster() {
 
     // Get user ID
     printf("Type user ID: ");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Search ID
     while (fread(&user, sizeof(struct User), 1, fp) == 1) {
@@ -179,7 +179,7 @@ int insertMaster() {
     printf("Password: ");
     scanf("%s", user.password);
     printf("Phone number: ");
-    scanf("%d", &user.number);
+    scanf("%lld", &user.number);
 
     // Write and close file
     fwrite(&user, sizeof(struct User), 1, fp);
@@ -206,7 +206,7 @@ int insertSlave() {
     scanf("%s", message.text);
     utilityMasterSmall();
     printf("User ID: ");
-    scanf("%d", &message.fromID);
+    scanf("%ld", &message.fromID);
 
     // Write and close file
     fwrite(&message, sizeof(struct Message), 1, fp);
@@ -233,10 +233,10 @@ int utilityMaster() {
 
     while (fread(&user, sizeof(struct User), 1, file) == 1) {
         // Print info
-        printf("ID          : %d\n"
+        printf("ID          : %ld\n"
                "Username    : %s\n"
                "Password    : %s\n"
-               "Phone number: %d\n\n",
+               "Phone number: %lld\n\n",
                user.ID, user.username, user.password, user.number);
     }
 
@@ -264,7 +264,7 @@ int utilitySlave() {
 
     while (fread(&message, sizeof(struct Message), 1, file) == 1) {
         // Print info
-        printf("Master ID: %d\n"
+        printf("Master ID: %ld\n"
                "Text     : %s\n\n",
                message.fromID, message.text);
     }
@@ -310,7 +310,7 @@ int countSlave() {
     // Init file and data variables
     FILE *fp;
     struct Message message;
-    int ID;
+    long ID;
 
     int count = 0;
 
@@ -323,7 +323,7 @@ int countSlave() {
     // Get ID of master
     utilityMasterSmall();
     printf("Type user ID or -1 (all): \n");
-    scanf("%d", &ID);
+    scanf("%ld", &ID);
 
     // Count
     while (fread(&message, sizeof(struct Message), 1, fp) == 1) {
@@ -345,7 +345,7 @@ int countSlave() {
 }
 
 
-int deleteMasterByID(int ID) {
+int deleteMasterByID(long ID) {
     // Init file and data variables
     FILE *getFile;
     FILE *putFile;
@@ -389,7 +389,7 @@ int deleteMasterByID(int ID) {
     } else {
         // Remove temp file
         remove(USERS_TMP_PATH);
-        perror("User with this ID not found");
+        perror("User with such ID not found");
         return NOT_FOUND;
     }
 }
@@ -449,7 +449,7 @@ int deleteSlaveByNumber(int number) {
 }
 
 
-int deleteSlaveByID(int ID) {
+int deleteSlaveByID(long ID) {
     // Init file and data variables
     FILE *getFile;
     FILE *putFile;
@@ -483,7 +483,7 @@ int deleteSlaveByID(int ID) {
 }
 
 
-int updateMasterByID(int ID) {
+int updateMasterByID(long ID) {
     // Init file and data variables
     FILE *fp;
     struct User user;
@@ -520,7 +520,7 @@ int updateMasterByID(int ID) {
     printf("Password: ");
     scanf("%s", user.password);
     printf("Phone number: ");
-    scanf("%d", &user.number);
+    scanf("%lld", &user.number);
 
     // Update info
     fseek(fp, sizeof(struct User), SEEK_CUR);
@@ -587,7 +587,7 @@ void utilityMasterFromStruct(struct User *user) {
     printf("User:\n");
     printf("Username    : %s\n"
            "Password    : %s\n"
-           "Phone number: %d\n\n",
+           "Phone number: %lld\n\n",
            user->username, user->password, user->number);
 }
 
@@ -615,7 +615,7 @@ int utilityMasterSmall() {
     printf("User ID, Username, Password, Phone number\n\n");
 
     while (fread(&user, sizeof(struct User), 1, file) == 1) {
-        printf("%d, %s, %s, %d\n",
+        printf("%ld, %s, %s, %lld\n",
                user.ID, user.username, user.password, user.number);
     }
 
@@ -648,7 +648,7 @@ int utilitySlaveSmall() {
     printf("[index] from ID: text\n\n");
 
     while (fread(&message, sizeof(struct Message), 1, file) == 1) {
-        printf("[%d] %d: %s\n",
+        printf("[%d] %ld: %s\n",
                index, message.fromID, message.text);
         index++;
     }

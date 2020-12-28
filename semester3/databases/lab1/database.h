@@ -59,13 +59,13 @@ int countMaster();
 
 int countSlave();
 
-int deleteMasterByID(int ID);
+int deleteMasterByID(long ID);
 
 int deleteSlaveByNumber(int number);
 
-int deleteSlaveByID(int ID);
+int deleteSlaveByID(long ID);
 
-int updateMasterByID(int ID);
+int updateMasterByID(long ID);
 
 int updateSlaveByNumber(int number);
 
