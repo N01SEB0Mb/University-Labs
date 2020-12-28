@@ -127,7 +127,22 @@ void interactive() {
 
 
 int main() {
-    interactive();
-//    scenario();
+    int mode;
+
+    printf("Choose mode, interactive (0) or scenario (1): ");
+    scanf("%d", &mode);
+
+    switch (mode) {
+        case 0:
+            interactive();
+            break;
+        case 1:
+            scenario();
+            break;
+        default:
+            perror("Unknown mode given");
+            return -1;
+    }
+
     return 0;
 }
