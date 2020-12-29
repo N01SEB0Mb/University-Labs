@@ -15,9 +15,11 @@
 #define USERS_TMP_PATH ("../database/users.tdb")
 
 // Status codes
-#define SUCCESS (0);
-#define NO_FILE (1);
-#define NOT_FOUND (2);
+#define SUCCESS (0)
+#define NO_FILE (1)
+#define NOT_FOUND (2)
+
+#define SEP_LEN (24)
 
 
 // User structure
@@ -34,6 +36,8 @@ struct Message {
     char text[MESSAGE_SIZE];
 };
 
+
+void separator(char sep);
 
 int getMaster();
 
@@ -74,8 +78,6 @@ void utilityMasterFromStruct(struct User *user);
 void utilitySlaveFromStruct(struct Message *message);
 
 int utilityMasterSmall();
-
-int utilitySlaveSmall();
 
 void help();
 

@@ -6,65 +6,78 @@ void scenario() {
     printf("%s","Operations script:\n");
 
     // Insert 5 masters
+    separator('=');
     printf("%s","Insert master 5 times\n");
     for (int _ = 0; _ < 5; _++) {
         insertMaster();
     }
 
     // Insert 6 slaves
+    separator('=');
     printf("%s","Insert 1 slave to 1-st master, 2 slaves to 2-nd and 3 slaves to 3-rd\n");
     for(int _ = 0; _ < 6; _++) {
         insertSlave();
     }
 
     // Output
+    separator('=');
     printf("%s", "Output:\n");
     utilityMaster();
     utilitySlave();
 
     // Delete master
+    separator('=');
     printf("%s","Delete 2-nd master\n");
     deleteMaster();
 
     // Delete slave
+    separator('=');
     printf("%s", "Delete slave from 3-rd master\n");
     deleteSlave();
 
     // Output
+    separator('=');
     printf("%s", "Output:\n");
     utilityMaster();
     utilitySlave();
 
     // Instert master and slave
+    separator('=');
     printf("%s", "Now we will insert one more master and slave for it.\n");
     insertMaster();
     insertSlave();
 
     // Update master and slave
+    separator('=');
     printf("%s","Update 1-st master and his slave.\n");
     updateMaster();
     updateSlave();
 
     // Output
+    separator('=');
     printf("%s", "Output:\n");
     utilityMaster();
     utilitySlave();
 
     // End
+    separator('=');
     printf("%s","End of script...\n");
 }
 
 
 void help(){
-    printf("Choose operation using format: <tp>, where t is master(0) or slave(1) and p is operation:\n"
-           "1 - Get\n"
+    printf("Choose operation using format: <tp>, where t is master(0) or slave(1) and p is operation:\n");
+    separator('-');
+    printf("1 - Get\n"
            "2 - Delete\n"
            "3 - Update\n"
            "4 - Insert\n"
            "5 - Count\n"
            "6 - Utility\n"
-           "0 - Exit\n"
-           "Example: 01 - Get master, 13 - Update slave\n");
+           "0 - Exit\n");
+    separator('-');
+    printf("Example: 01 - Get master, 13 - Update slave\n");
+    separator('=');
 }
 
 
@@ -131,6 +144,8 @@ int main() {
 
     printf("Choose mode, interactive (0) or scenario (1): ");
     scanf("%d", &mode);
+
+    separator('=');
 
     switch (mode) {
         case 0:

@@ -3,6 +3,16 @@
 #include "database.h"
 
 
+void separator(char sep) {
+    // Print separator SEP_LEN times
+    for (int _ = 0; _ < SEP_LEN; _++) {
+        printf("%c", sep);
+    }
+    // Next line
+    printf("\n");
+}
+
+
 int getMaster() {
     // Init file and data variables
     FILE *fp;
@@ -15,8 +25,9 @@ int getMaster() {
         return NO_FILE;
     }
 
-    // Print info
-    printf("User ID: ");
+    // Get ID
+    utilityMasterSmall();
+    printf("Type user ID: ");
     scanf("%ld", &ID);
 
     // Search ID
@@ -34,11 +45,7 @@ int getMaster() {
     }
 
     // Print info
-    printf("ID          : %ld\n"
-           "Username    : %s\n"
-           "Password    : %s\n"
-           "Phone number: %lld\n\n",
-           user.ID, user.username, user.password, user.number);
+    utilityMasterFromStruct(&user);
 
     // Close file
     fclose(fp);
@@ -61,15 +68,16 @@ int getSlave() {
     }
 
     // Get ID
-    printf("Message ID: ");
+    utilitySlave();
+    printf("Type message ID: ");
     scanf("%ld", &ID);
 
     // Search ID
     while (fread(&message, sizeof(struct Message), 1, fp) == 1) {
         if (message.fromID == ID) {
             // Print info
-            printf("Master ID: %ld\n"
-                   "Text     : %s\n\n", message.fromID, message.text);
+            utilitySlaveFromStruct(&message);
+            break;
         }
     }
 
@@ -89,10 +97,12 @@ int deleteMaster() {
     // ID variable
     long ID;
 
-    // Request ID of master
+    // Get ID
     utilityMasterSmall();
     printf("Type user ID: ");
     scanf("%ld", &ID);
+
+    separator('=');
 
     // Deleting master
     deleteMasterByID(ID);
@@ -106,9 +116,11 @@ int deleteSlave() {
     int number;
 
     // Request number
-    utilitySlaveSmall();
-    printf("Type number of message: ");
+    utilitySlave();
+    printf("Type message number: ");
     scanf("%d", &number);
+
+    separator('=');
 
     // Delete slave
     deleteSlaveByNumber(number);
@@ -137,8 +149,8 @@ int updateSlave() {
     int number;
 
     // Request number of slave
-    utilitySlaveSmall();
-    printf("Type number of message:\n");
+    utilitySlave();
+    printf("Type message number: ");
     scanf("%d", &number);
 
     // Return slave updating status
@@ -159,8 +171,10 @@ int insertMaster() {
     }
 
     // Get user ID
+    separator('=');
     printf("Type user ID: ");
     scanf("%ld", &ID);
+    separator('-');
 
     // Search ID
     while (fread(&user, sizeof(struct User), 1, fp) == 1) {
@@ -174,12 +188,19 @@ int insertMaster() {
     user.ID = ID;
 
     // Get info
+    printf("Type user info\n");
+    separator('-');
+
     printf("Username: ");
     scanf("%s", user.username);
+
     printf("Password: ");
     scanf("%s", user.password);
+
     printf("Phone number: ");
     scanf("%lld", &user.number);
+
+    separator('-');
 
     // Write and close file
     fwrite(&user, sizeof(struct User), 1, fp);
@@ -201,12 +222,14 @@ int insertSlave() {
         return NO_FILE;
     }
 
-    // Get info
+    // Get user ID
+    separator('=');
+    printf("Type user ID: ");
+    scanf("%ld", &message.fromID);
+    separator('-');
     printf("Text: ");
     scanf("%s", message.text);
-    utilityMasterSmall();
-    printf("User ID: ");
-    scanf("%ld", &message.fromID);
+    separator('=');
 
     // Write and close file
     fwrite(&message, sizeof(struct Message), 1, fp);
@@ -229,16 +252,19 @@ int utilityMaster() {
     }
 
     // Print users
-    printf("USERS\n\n");
+    printf("USERS\n");
 
     while (fread(&user, sizeof(struct User), 1, file) == 1) {
         // Print info
+        separator('-');
         printf("ID          : %ld\n"
                "Username    : %s\n"
                "Password    : %s\n"
-               "Phone number: %lld\n\n",
+               "Phone number: %lld\n",
                user.ID, user.username, user.password, user.number);
     }
+
+    separator('=');
 
     // Close file
     fclose(file);
@@ -259,15 +285,21 @@ int utilitySlave() {
         return NO_FILE;
     }
 
+    // Index init
+    int index = 0;
+
     // Print info
+    separator('=');
     printf("MESSAGES\n");
+    separator('-');
 
     while (fread(&message, sizeof(struct Message), 1, file) == 1) {
-        // Print info
-        printf("Master ID: %ld\n"
-               "Text     : %s\n\n",
-               message.fromID, message.text);
+        printf("[%d] %ld: %s\n",
+               index, message.fromID, message.text);
+        index++;
     }
+
+    separator('=');
 
     // Close file
     fclose(file);
@@ -296,7 +328,9 @@ int countMaster() {
     }
 
     // Print count
-    printf("Count of users: %d\n", count);
+    separator('-');
+    printf("Total users: %d\n", count);
+    separator('=');
 
     // Close file
     fclose(fp);
@@ -324,18 +358,21 @@ int countSlave() {
     utilityMasterSmall();
     printf("Type user ID or -1 (all): \n");
     scanf("%ld", &ID);
+    separator('-');
 
     // Count
     while (fread(&message, sizeof(struct Message), 1, fp) == 1) {
         if (ID == -1 || message.fromID == ID) {
             count++;
         } else {
+            count++;
             break;
         }
     }
 
     // Print info
-    printf("Count of messages: %d\n", count);
+    printf("Total messages: %d\n", count);
+    separator('=');
 
     // Close file
     fclose(fp);
@@ -514,17 +551,27 @@ int updateMasterByID(long ID) {
     utilityMasterFromStruct(&user);
 
     // Get info
-    printf("Type new info:\n");
+    printf("Type new user info\n");
+    separator('-');
+
     printf("Username: ");
     scanf("%s", user.username);
+
     printf("Password: ");
     scanf("%s", user.password);
+
     printf("Phone number: ");
     scanf("%lld", &user.number);
+
+    separator('-');
 
     // Update info
     fseek(fp, -sizeof(struct User), SEEK_CUR);
     fwrite(&user, sizeof(struct User), 1, fp);
+
+    // Print success
+    printf("Successfuly updated.\n");
+    separator('=');
 
     // Close file
     fclose(fp);
@@ -584,18 +631,24 @@ int updateSlaveByNumber(int number) {
 
 void utilityMasterFromStruct(struct User *user) {
     // Print info
-    printf("User:\n");
+    separator('=');
+    printf("USER:\n");
+    separator('-');
     printf("Username    : %s\n"
            "Password    : %s\n"
-           "Phone number: %lld\n\n",
+           "Phone number: %lld\n",
            user->username, user->password, user->number);
+    separator('=');
 }
 
 
-void utilitySlaveFromStruct(struct Message *message) { //Вивід слейву
+void utilitySlaveFromStruct(struct Message *message) {
     // Print info
-    printf("Message:\n");
-    printf("Text: %s\n\n", message->text);
+    separator('=');
+    printf("MESSAGE:\n");
+    separator('-');
+    printf("Text: %s\n", message->text);
+    separator('=');
 }
 
 
@@ -611,49 +664,15 @@ int utilityMasterSmall() {
     }
 
     // Print info
+    separator('=');
     printf("USERS\n");
-    printf("User ID, Username, Password, Phone number\n\n");
+    separator('-');
 
     while (fread(&user, sizeof(struct User), 1, file) == 1) {
-        printf("%ld, %s, %s, %lld\n",
-               user.ID, user.username, user.password, user.number);
+        printf("%ld: %s\n", user.ID, user.username);
     }
 
-    printf("\n");
-
-    // Close file
-    fclose(file);
-
-    // Return success status
-    return SUCCESS;
-}
-
-
-int utilitySlaveSmall() {
-    // Init file and data variables
-    FILE *file;
-    struct Message message;
-
-    // Try opening file
-    if ((file = fopen(MESSAGES_PATH, "rb")) == NULL) {
-        perror("Error occured while opening file");
-        return NO_FILE;
-    }
-
-    // Index init
-    int index = 1;
-
-    // Print info
-    printf("MESSAGES\n");
-    printf("[index] from ID: text\n\n");
-
-    while (fread(&message, sizeof(struct Message), 1, file) == 1) {
-        printf("[%d] %ld: %s\n",
-               index, message.fromID, message.text);
-        index++;
-    }
-
-    printf("\n");
+    separator('=');
 
     // Close file
     fclose(file);
