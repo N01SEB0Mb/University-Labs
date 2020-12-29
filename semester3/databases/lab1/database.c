@@ -491,7 +491,7 @@ int updateMasterByID(long ID) {
     int found = 0;
 
     // Try opening file
-    if ((fp = fopen(USERS_PATH, "r+b")) == NULL) {
+    if ((fp = fopen(USERS_PATH, "rb+")) == NULL) {
         perror("Error occured while opening file");
         return NO_FILE;
     }
@@ -523,7 +523,7 @@ int updateMasterByID(long ID) {
     scanf("%lld", &user.number);
 
     // Update info
-    fseek(fp, sizeof(struct User), SEEK_CUR);
+    fseek(fp, -sizeof(struct User), SEEK_CUR);
     fwrite(&user, sizeof(struct User), 1, fp);
 
     // Close file
@@ -571,7 +571,7 @@ int updateSlaveByNumber(int number) {
     scanf("%s", message.text);
 
     // Update info
-    fseek(fp, sizeof(struct Message), SEEK_CUR);
+    fseek(fp, -sizeof(struct Message), SEEK_CUR);
     fwrite(&message, sizeof(struct Message), 1, fp);
 
     // Close file
