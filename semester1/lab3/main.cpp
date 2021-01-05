@@ -4,10 +4,10 @@
 #include <cmath>
 #include <array>
 #include <string>
-#include <unistd.h>
 
-using namespace std;
+#include "config.hpp"
 
+// Point structure (store X and Y coordinate)
 struct point
 {
   double x, y;
@@ -15,43 +15,32 @@ struct point
   point(double x, double y): x(x), y(y) {};
 };
 
-const int width = 600, height = 600;
-const int maxPoints = 100;
-const int maxCount = 6;
-const int axisWidth = 2;
-const int funcWidth = 2;
-const int arrowSize = 12;
-const int markSize = 3;
-const int graphDet = 300;
-const int pointDet = 10;
-const float pointRad = 3.0;
-const float gridColorRatio = 0.4;
-const float zoomDelta = 0.1;
-
-const float graphWidth = 1.0 - 4.0 * (float) arrowSize / width;
-const float graphHeight = 1.0 - 4.0 * (float) arrowSize / height;
-
+// Used variables
 int n;
-array<point, maxPoints> points;
+std::array<point, config::MAX_POINTS> points;
 
 float x, y;
 float power;
 
 int displayMode = 0;
 float graphSizeX = 1;
-float graphSizeY = graphSizeX * (graphHeight / graphWidth);
+float graphSizeY = graphSizeX * (config::graphHeight / config::graphWidth);
 float zoomScale = 1.0;
 
+
+// Convert graph X to global X
 double graphToGlobalX(double x)
 {
-  return graphWidth * (x / graphSizeX);
+  return config::graphWidth * (x / graphSizeX);
 }
 
+// Convert graph Y to global Y
 double graphToGlobalY(double y)
 {
-  return graphHeight * (y / graphSizeY);
+  return config::graphHeight * (y / graphSizeY);
 }
 
+// Interpolate points
 double interpolation(const double x)
 {
   double result = 0.0;
@@ -74,9 +63,10 @@ double interpolation(const double x)
   return result;
 }
 
+// Draw graph
 void glGraph()
 {
-  glLineWidth(axisWidth);
+  glLineWidth(config::WIDTH_AXIS);
   glColor3f(1, 1, 1);
 
   glBegin(GL_LINES);
@@ -87,29 +77,29 @@ void glGraph()
   glVertex2f(0, -1);
 
   glVertex2f(1, 0);
-  glVertex2f(1 - (float) arrowSize / width * 2.0, (float) arrowSize / height);
+  glVertex2f(1 - (float) config::SIZE_ARROW / config::WINDOW_WIDTH * 2.0, (float) config::SIZE_ARROW / config::WINDOW_HEIGHT);
   glVertex2f(1, 0);
-  glVertex2f(1 - (float) arrowSize / width * 2.0, (float) - arrowSize / height);
+  glVertex2f(1 - (float) config::SIZE_ARROW / config::WINDOW_WIDTH * 2.0, (float) - config::SIZE_ARROW / config::WINDOW_HEIGHT);
 
   glVertex2f(0, 1);
-  glVertex2f((float) arrowSize / width, 1 - (float) arrowSize / height * 2.0);
+  glVertex2f((float) config::SIZE_ARROW / config::WINDOW_WIDTH, 1 - (float) config::SIZE_ARROW / config::WINDOW_HEIGHT * 2.0);
   glVertex2f(0, 1);
-  glVertex2f((float) - arrowSize / width, 1 - (float) arrowSize / height * 2.0);
+  glVertex2f((float) - config::SIZE_ARROW / config::WINDOW_WIDTH, 1 - (float) config::SIZE_ARROW / config::WINDOW_HEIGHT * 2.0);
 
   glEnd();
 
   glLineWidth(1);
 
   if (displayMode == 2)
-    glColor3f(gridColorRatio, gridColorRatio, gridColorRatio);
+    glColor3f(config::gridColorRatio, config::gridColorRatio, config::gridColorRatio);
 
   if (displayMode)
   {
     glBegin(GL_LINES);
 
-    power = floor(log2(max(graphSizeX, graphSizeY) / maxCount));
+    power = floor(log2(std::max(graphSizeX, graphSizeY) / config::MAX_COUNT));
 
-    string scale = "Lab 3: " + to_string(pow(2, power));
+    std::string scale = "Lab 3: " + std::to_string(pow(2, power));
 
     glutSetWindowTitle(&scale[0]);
 
@@ -117,17 +107,17 @@ void glGraph()
     {
       if (displayMode - 1)
       {
-        glVertex2f(graphWidth, graphToGlobalY(mark * pow(2, power)));
-        glVertex2f(-graphWidth, graphToGlobalY(mark * pow(2, power)));
-        glVertex2f(graphWidth, graphToGlobalY(-mark * pow(2, power)));
-        glVertex2f(-graphWidth, graphToGlobalY(-mark * pow(2, power)));
+        glVertex2f(config::graphWidth, graphToGlobalY(mark * pow(2, power)));
+        glVertex2f(-config::graphWidth, graphToGlobalY(mark * pow(2, power)));
+        glVertex2f(config::graphWidth, graphToGlobalY(-mark * pow(2, power)));
+        glVertex2f(-config::graphWidth, graphToGlobalY(-mark * pow(2, power)));
       }
       else
       {
-        glVertex2f(2.0 * (float) markSize / width, graphToGlobalY(mark * pow(2, power)));
-        glVertex2f(-2.0 * (float) markSize / width, graphToGlobalY(mark * pow(2, power)));
-        glVertex2f(2.0 * (float) markSize / width, graphToGlobalY(-mark * pow(2, power)));
-        glVertex2f(-2.0 * (float) markSize / width, graphToGlobalY(-mark * pow(2, power)));
+        glVertex2f(2.0 * (float) config::MARK_SIZE / config::WINDOW_WIDTH, graphToGlobalY(mark * pow(2, power)));
+        glVertex2f(-2.0 * (float) config::MARK_SIZE / config::WINDOW_WIDTH, graphToGlobalY(mark * pow(2, power)));
+        glVertex2f(2.0 * (float) config::MARK_SIZE / config::WINDOW_WIDTH, graphToGlobalY(-mark * pow(2, power)));
+        glVertex2f(-2.0 * (float) config::MARK_SIZE / config::WINDOW_WIDTH, graphToGlobalY(-mark * pow(2, power)));
       }
     }
 
@@ -135,17 +125,17 @@ void glGraph()
     {
       if (displayMode - 1)
       {
-        glVertex2f(graphToGlobalX(mark * pow(2, power)), graphHeight);
-        glVertex2f(graphToGlobalX(mark * pow(2, power)), -graphHeight);
-        glVertex2f(graphToGlobalX(-mark * pow(2, power)), graphHeight);
-        glVertex2f(graphToGlobalX(-mark * pow(2, power)), -graphHeight);
+        glVertex2f(graphToGlobalX(mark * pow(2, power)), config::graphHeight);
+        glVertex2f(graphToGlobalX(mark * pow(2, power)), -config::graphHeight);
+        glVertex2f(graphToGlobalX(-mark * pow(2, power)), config::graphHeight);
+        glVertex2f(graphToGlobalX(-mark * pow(2, power)), -config::graphHeight);
       }
       else
       {
-        glVertex2f(graphToGlobalX(mark * pow(2, power)), 2.0 * (float) markSize / height);
-        glVertex2f(graphToGlobalX(mark * pow(2, power)), -2.0 * (float) markSize / height);
-        glVertex2f(graphToGlobalX(-mark * pow(2, power)), 2.0 * (float) markSize / height);
-        glVertex2f(graphToGlobalX(-mark * pow(2, power)), -2.0 * (float) markSize / height);
+        glVertex2f(graphToGlobalX(mark * pow(2, power)), 2.0 * (float) config::MARK_SIZE / config::WINDOW_HEIGHT);
+        glVertex2f(graphToGlobalX(mark * pow(2, power)), -2.0 * (float) config::MARK_SIZE / config::WINDOW_HEIGHT);
+        glVertex2f(graphToGlobalX(-mark * pow(2, power)), 2.0 * (float) config::MARK_SIZE / config::WINDOW_HEIGHT);
+        glVertex2f(graphToGlobalX(-mark * pow(2, power)), -2.0 * (float) config::MARK_SIZE / config::WINDOW_HEIGHT);
       }
     }
 
@@ -155,30 +145,33 @@ void glGraph()
   glColor3f(1, 1, 1);
 }
 
+
+// Draw graph point
 void glPoint(float x, float y)
 {
   glBegin(GL_POLYGON);
 
-  for (int step = 0; step < pointDet; step++)
+  for (int step = 0; step < config::pointDet; step++)
   {
-    glVertex2f(graphToGlobalX(x) - 2.0 * (float) pointRad / width *
-               cos(2 * M_PI * ((float) step / pointDet)),
-               graphToGlobalY(y) - 2.0 * (float) pointRad / height *
-               sin(2 * M_PI * ((float) step / pointDet)));
+    glVertex2f(graphToGlobalX(x) - 2.0 * (float) config::pointRad / config::WINDOW_WIDTH *
+                                   cos(2 * M_PI * ((float) step / config::pointDet)),
+               graphToGlobalY(y) - 2.0 * (float) config::pointRad / config::WINDOW_HEIGHT *
+                                   sin(2 * M_PI * ((float) step / config::pointDet)));
   }
 
   glEnd();
 }
 
+// Zoom key bindings
 void zoom(int key, int x, int y)
 {
   if (key == GLUT_KEY_DOWN)
   {
-    zoomScale *= (1 + zoomDelta);
+    zoomScale *= (1 + config::zoomDelta);
   }
   if (key == GLUT_KEY_UP)
   {
-    zoomScale /= (1 + zoomDelta);
+    zoomScale /= (1 + config::zoomDelta);
   }
   if (key == GLUT_KEY_CTRL_R || key == GLUT_KEY_CTRL_L)
   {
@@ -186,6 +179,7 @@ void zoom(int key, int x, int y)
   }
 }
 
+// Glut display func
 void display()
 {
   glClearColor(0, 0, 0, 1);
@@ -198,13 +192,13 @@ void display()
     glPoint(points[number].x, points[number].y);
   }
 
-  glLineWidth(funcWidth);
+  glLineWidth(config::WIDTH_FUNCTION);
 
   glBegin(GL_LINE_STRIP);
 
-  for (int step = -graphDet; step <= graphDet; step++)
+  for (int step = -config::graphDet; step <= config::graphDet; step++)
   {
-    x = ((float) step / graphDet) * (graphSizeX / graphWidth);
+    x = ((float) step / config::graphDet) * (graphSizeX / config::graphWidth);
     y = interpolation(x);
     glVertex2f(graphToGlobalX(x), graphToGlobalY(y));
   }
@@ -214,10 +208,11 @@ void display()
   glutSwapBuffers();
 }
 
+// Glut redraw screen
 void redraw()
 {
   graphSizeX *= zoomScale;
-  graphSizeY = graphSizeX * (graphHeight / graphWidth);
+  graphSizeY = graphSizeX * (config::graphHeight / config::graphWidth);
 
   zoomScale = 1.0;
 
@@ -226,11 +221,14 @@ void redraw()
 
 int main(int argc, char** argv)
 {
-  cin >> n;
+  std::cout << "Type number of points: ";
+  std::cin >> n;
+
+  std::cout << "Type points:" << std::endl;
 
   for (int i = 0; i < n; i++)
   {
-    cin >> points[i].x >> points[i].y;
+    std::cin >> points[i].x >> points[i].y;
     if (abs(points[i].x) > graphSizeX)
     {
       graphSizeX = abs(points[i].x);
@@ -241,16 +239,16 @@ int main(int argc, char** argv)
     }
   }
 
-  if ((graphSizeY * graphHeight) > (graphSizeX * graphWidth))
+  if ((graphSizeY * config::graphHeight) > (graphSizeX * config::graphWidth))
   {
-    graphSizeX = graphSizeY * (graphWidth / graphHeight);
+    graphSizeX = graphSizeY * (config::graphWidth / config::graphHeight);
   }
   else
   {
-    graphSizeY = graphSizeX * (graphHeight / graphWidth);
+    graphSizeY = graphSizeX * (config::graphHeight / config::graphWidth);
   }
 
-  array<float, maxPoints> polynomial;
+  std::array<float, config::MAX_POINTS> polynomial;
 
   for (int j = 0; j < n; j++)
   {
@@ -284,27 +282,28 @@ int main(int argc, char** argv)
     }
   }
 
-  cout << "y = ";
+  std::cout << "Lagrange polynomial:" << std::endl;
+  std::cout << "f(x) = ";
 
   for (int i = n - 1; i >= 0; i--)
   {
-    cout << to_string(polynomial[i]);
+    std::cout << std::to_string(polynomial[i]);
     if (i > 0)
-      cout << " * x ^ " << to_string(i) << " + ";
+      std::cout << " * x ^ " << std::to_string(i) << " + ";
   }
 
-  cout << endl;
+  std::cout << std::endl;
 
-  string title = "Lab 3: " + to_string(1.0);
+  std::string title = "Lab 3: " + std::to_string(1.0);
 
   glutInit(&argc, argv);
 
   glutSetOption(GLUT_MULTISAMPLE, 4);
   glEnable(GL_LINE_SMOOTH);
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_MULTISAMPLE);
-  glutInitWindowSize(width, height);
+  glutInitWindowSize(config::WINDOW_WIDTH, config::WINDOW_HEIGHT);
   glutCreateWindow(&title[0]);
-  glutPositionWindow(688 - width / 2, 384 - height / 2);
+  glutPositionWindow(688 - config::WINDOW_WIDTH / 2, 384 - config::WINDOW_HEIGHT / 2);
   glutDisplayFunc(display);
   glutSpecialFunc(zoom);
   glutIdleFunc(redraw);
