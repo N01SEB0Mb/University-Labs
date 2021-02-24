@@ -1,0 +1,44 @@
+.text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13pt;
+    line-height: 30px;
+}
+#\31 {
+    font-weight: bolder;
+    background-color: #F5F540;
+}
+#\32 {
+    font-weight: bolder;
+}
+#\33 {
+    font-style: italic;
+}
+#\34 {
+    font-family: 'Noto Serif', serif;
+}
+#\35 {
+    font-weight: bolder;
+}
+#\36 {
+    font-style: italic;
+    color: #ff2823;
+}
+#\37 {
+    font-size: 18pt;
+}
+#\38 {
+    font-style: italic;
+    text-decoration: underline;
+}
+#\39 {
+    text-decoration: line-through;
+}
+#\31 0 {
+    color: #ff2823;
+}
+#\31 1 {
+    font-style: italic;
+}
+#\31 2 {
+    font-size: 18pt;
+}
