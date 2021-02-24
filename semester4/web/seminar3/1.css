@@ -1,0 +1,44 @@
+.title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 32pt;
+}
+.text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13pt;
+    line-height: 30px;
+}
+#\31 {
+    font-style: italic;
+}
+#\32, #\37 {
+    font-style: italic;
+    font-weight: bold;
+    color: #ff2823;
+}
+#\33 {
+    font-weight: bolder;
+}
+#\34, #\35, #\36 {
+    background-color: #F5F540;
+}
+#\38 {
+    font-weight: bolder;
+}
+#\39, #\31 0 {
+    font-weight: bolder;
+}
+#\31 1 {
+    font-style: italic;
+}
+#\31 2 {
+    font-size: 19pt;
+}
+#\31 3 {
+    font-weight: bolder;
+}
+#\31 4 {
+    background-color: #F5F540;
+}
+#\31 5 {
+    font-size: 20pt;
+}
