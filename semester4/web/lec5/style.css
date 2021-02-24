@@ -1,0 +1,42 @@
+p, div {
+    margin: 0px;
+}
+body {
+    margin: -16px 0px 0px 0px;
+    background-image: url("https://eskipaper.com/images/plain-red-backgrounds-1.jpg");
+}
+ul {
+    margin-top: 25px;
+    padding-left: 18px;
+}
+.content {
+    margin: 0px 25% 0px 0px;
+    padding-left: 10%;
+    padding-top: 5%;
+    height: 100vh;
+    background-color: #FFF;
+}
+.name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 64pt;
+    color: #a30011;
+}
+.position {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: lighter;
+    font-size: 16pt;
+    letter-spacing: 5px;
+}
+.company {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 20pt;
+    letter-spacing: 2px;
+    color: #a30011;
+}
+.contacts {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: lighter;
+    font-size: 12pt;
+    letter-spacing: 1px;
+}
