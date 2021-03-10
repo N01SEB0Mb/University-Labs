@@ -1,0 +1,122 @@
+p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: #FFF;
+}
+.block {
+    position: absolute;
+    width: 600px;
+    height: 750px;
+    background-size: cover;
+    display: flex;
+    justify-content: left;
+}
+#left {
+    left: 30px;
+    top: 30px;
+    background-image: url(https://images.unsplash.com/photo-1544369757-b073bb046bd0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80);
+}
+#center {
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    z-index: 2;
+    background-image: url(https://images.unsplash.com/photo-1509697452888-7cdcf2c98813?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80);
+}
+#right {
+    position: absolute;
+    left: 970px;
+    top: 30px;
+    background-image: url(https://i.pinimg.com/originals/d9/6c/93/d96c9383beb63a6457c96eefc3511379.jpg);
+}
+.content {
+    width: 60%;
+    padding: 15px;
+}
+.image-container {
+    margin: 15px 0px 0px 0px;
+    text-align: center;
+}
+.main-image, .tab-switch {
+    width: 100%;
+    border: 5px solid #FFF;
+}
+.tab-switch {
+    margin: 40px 0 auto 0;
+    background-color: #FFF;
+}
+.image-description {
+    margin-top: 5px;
+}
+.tab-buttons {
+    width: 100%;
+    background-color: #CCC;
+    display: flex;
+    justify-content: left;
+}
+.button {
+    background-color: #ffffff;
+    margin-top: 2px;
+    margin-left: 2px;
+    height: 100%;
+    padding: 0 15px 0 15px;
+}
+.button-text {
+    margin: 10px 0px 10px 0px;
+    color: #36a4ee;
+    font-size: 12px;
+}
+.button:hover .button-text, .button:first-child .button-text {
+    color: #ee272f
+}
+.tab-content {
+    margin: 0;
+    padding: 10px 15px 0px 15px;
+}
+.tab-image {
+    width: 25%;
+    border: 4px solid #CCC;
+    margin: 0 9px 9px 0;
+    float: left;
+}
+.tab-text {
+    margin: 0;
+    color: #000;
+    font-size: 11px;
+    font-weight: normal;
+}
+.tab-link {
+    margin: 14px 0 14px 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+.grid {
+    width: 35%;
+    padding: 30px 10px 0 5px;
+}
+.grid-image {
+    width: 100%;
+    border: 2px solid #FFF;
+}
+.grid-image-description {
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+td {
+    padding: 2%;
+}
+tr {
+    margin-bottom: 50px;
+}
+#center .tab-buttons {
+    background-color: #0f93c1;
+}
+#center .button {
+    background-color: #22b9f5;
+}
+#center .button:hover, #center .button:first-child {
+    background-color: #1ba841
+}
+#center .button-text {
+    color: #FFF;
+}
