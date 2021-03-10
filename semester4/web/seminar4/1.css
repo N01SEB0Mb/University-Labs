@@ -40,6 +40,7 @@ p {
 .main-image, .tab-switch {
     width: 100%;
     border: 5px solid #FFF;
+    box-sizing: border-box;
 }
 .tab-switch {
     margin: 40px 0 auto 0;
