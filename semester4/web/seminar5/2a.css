@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+}
+.page {
+    width: 50%;
+    height: 50vh;
+    display: grid;
+    border: 2px solid #de4d00;
+    border-radius: 3px;
+    font-family: "Arial", sans-serif;
+    font-weight: bolder;
+    color: #e03400;
+    grid-template-areas:
+    "a a a"
+    "a a a"
+    "b c e"
+    "b d .";
+}
+.element {
+    background-color: #ff9851;
+    border: 2px solid #ff7d3b;
+    border-radius: 6px;
+    padding: 6%;
+}
+.line {
+    background-color: #ffd76a;
+    border: 2px solid #ffb342;
+    display: flex;
+    align-items: center;
+    padding-left: 3%;
+    flex: 1;
+}
+#One {
+    padding: 3%;
+    grid-area: a;
+    display: flex;
+    flex-direction: column;
+}
+#Two {
+    grid-area: b;
+}
+#Three {
+    grid-area: c;
+}
+#Four {
+    grid-area: d;
+}
+#Five {
+    grid-area: e;
+}
