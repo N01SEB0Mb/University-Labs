@@ -1,0 +1,35 @@
+div {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 0;
+    flex: 1;
+}
+body, .containerColumn, .containerRow, .content, .page {
+    display: flex;
+    margin: 0;
+}
+.page {
+    width: 100%;
+    height: 100vh;
+}
+.containerRow, .containerColumn, .content {
+    padding: 0;
+}
+.containerRow {
+    flex-direction: row;
+}
+.content, .containerColumn {
+    flex-direction: column;
+}
+.purple {
+    background-color: #d44ba4;
+}
+.skyblue {
+    background-color: #4c9dd4;
+}
+.green {
+    background-color: #39d471;
+}
+.red {
+    background-color: #d42e3b;
+}
