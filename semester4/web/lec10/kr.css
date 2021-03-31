@@ -1,0 +1,102 @@
+body {
+    margin: 20px 0;
+
+    background-image: url("https://static-dm.akamaized.net/siege/prod/r6s-bg-default-repeat.jpg");
+}
+p {
+    font-family: "Montserrat", sans-serif;
+
+    color: #FFF;
+}
+.content {
+    margin: 0 auto;
+
+    width: 60%;
+    min-height: 150vh;
+
+    max-width: 1200px;
+    min-width: 600px;
+
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 20px;
+
+    background-color: #273b62;
+}
+.images {
+    z-index: 1;
+
+    flex: 2;
+
+    background-color: rgba(27, 23, 32, 0.12);
+}
+.article {
+    flex: 5;
+}
+.logo {
+    padding: 25% 15% 15% 15%;
+}
+.gallery {
+    padding: 5% 0 25% 10%;
+}
+img {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    border-radius: 10px 0 0 10px;
+}
+.header, .main-image-container {
+    padding: 5% 5% 0 5%;
+}
+.facts-container {
+    padding: 0 5%;
+
+    display: flex;
+    flex-direction: row;
+}
+.facts-container-left, .facts-container-right {
+    flex: 1;
+}
+.fact {
+    margin-bottom: 30px;
+
+    padding-right: 10%;
+}
+.fact-title {
+    font-style: italic;
+}
+ul {
+    padding-left: 5%;
+}
+li::marker {
+    color: #Fff;
+}
+.decor {
+    position: absolute;
+
+    width: inherit;
+    height: 140px;
+
+    z-index: 0;
+    transform: rotate(-1deg);
+
+    background-color: rgba(27, 23, 32, 0.14);
+}
+#upper {
+    top: 0;
+}
+#lower {
+    top: calc(160vh + 90px);
+}
+@media (max-width: 1080px) {
+    .facts-container {
+        flex-direction: column;
+    }
+}
+@media (max-width: 600px) {
+    .content {
+        min-width: 100%;
+    }
+}
