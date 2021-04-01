@@ -5,14 +5,20 @@ p {
     font-family: "PT Sans", sans-serif;
     line-height: 22px;
 }
-
+div, ul {
+    margin: 0;
+}
+.page {
+    width: 1320px;
+    margin: 0 auto;
+}
 .header {
     display: flex;
     flex-direction: row;
 
     height: 150px;
 
-    padding: 30px 15%;
+    padding: 30px 0;
 
     background-color: #FFF;
 }
@@ -58,11 +64,14 @@ p {
     color: #2B6EBC;
     font-size: 32px;
     font-style: italic;
+    text-align: right;
 
     margin: 0;
 }
 
 .menu {
+    width: 100vw;
+    margin: 0 calc((1320px - 100vw) / 2);
     background-color: #2B6EBC;
 }
 .menu-list {
@@ -89,4 +98,15 @@ p {
 }
 .menu-button:hover {
     background-color: #1f5ba1;
+}
+
+.slider {
+    display: flex;
+    justify-content: center;
+}
+.slider-image {
+    width: 1320px;
+    height: 200px;
+
+    object-fit: cover;
 }
