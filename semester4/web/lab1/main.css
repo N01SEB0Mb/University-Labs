@@ -12,7 +12,7 @@ p {
 
     height: 150px;
 
-    padding: 50px 15%;
+    padding: 30px 15%;
 
     background-color: #FFF;
 }
@@ -60,4 +60,33 @@ p {
     font-style: italic;
 
     margin: 0;
+}
+
+.menu {
+    background-color: #2B6EBC;
+}
+.menu-list {
+    list-style-type: none;
+
+    display: flex;
+    justify-content: center;
+}
+.menu-button {
+    height: 60px;
+}
+.menu-link {
+    color: #FFF;
+    font-family: "PT Sans", sans-serif;
+    font-size: 22px;
+    text-decoration: none;
+
+    padding: 0 36px;
+
+    display: table-cell;
+    vertical-align: middle;
+
+    height: inherit;
+}
+.menu-button:hover {
+    background-color: #1f5ba1;
 }
