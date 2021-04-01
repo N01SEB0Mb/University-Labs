@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+}
+p {
+    font-family: "PT Sans", sans-serif;
+    line-height: 22px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+
+    height: 150px;
+
+    padding: 50px 15%;
+
+    background-color: #FFF;
+}
+.logo, .contacts, .spacer, .phonenumber {
+    flex: 1;
+}
+.logo {
+    display: flex;
+    flex-direction: row;
+}
+.logo-text, .contacts {
+    display: flex;
+    flex-direction: column;
+}
+.logo-text {
+    margin-left: 25px;
+}
+.logo-text-primary {
+    color: #2B6EBC;
+    font-size: 72px;
+    font-weight: bolder;
+    line-height: 100px;
+
+    margin: 0;
+
+    flex: 3;
+}
+.logo-text-secondary {
+    color: #2B6EBC;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bolder;
+    line-height: 0;
+
+    margin: 0;
+
+    flex: 2;
+}
+.contacts {
+    padding: 30px 0;
+}
+.phonenumber {
+    color: #2B6EBC;
+    font-size: 32px;
+    font-style: italic;
+
+    margin: 0;
+}
