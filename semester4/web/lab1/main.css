@@ -9,20 +9,20 @@ div, ul {
     margin: 0;
 }
 .page {
-    width: 1320px;
+    width: 100%;
     margin: 0 auto;
 }
 .header {
     display: flex;
     flex-direction: row;
 
-    height: 150px;
+    height: 120px;
 
-    padding: 30px 0;
+    padding: 30px 300px;
 
     background-color: #FFF;
 }
-.logo, .contacts, .spacer, .phonenumber {
+.logo, .contacts, .phonenumber {
     flex: 1;
 }
 .logo {
@@ -58,11 +58,11 @@ div, ul {
     flex: 2;
 }
 .contacts {
-    padding: 30px 0;
+    padding: 24px 0;
 }
 .phonenumber {
     color: #2B6EBC;
-    font-size: 32px;
+    font-size: 30px;
     font-style: italic;
     text-align: right;
 
@@ -70,8 +70,6 @@ div, ul {
 }
 
 .menu {
-    width: 100vw;
-    margin: 0 calc((1320px - 100vw) / 2);
     background-color: #2B6EBC;
 }
 .menu-list {
@@ -103,11 +101,13 @@ div, ul {
 }
 
 .slider {
+    width: 100%;
+
     display: flex;
     justify-content: center;
 }
 .slider-image {
-    min-width: calc(100vw / 2);
+    min-width: calc(100% / 2);
     height: 200px;
 
     object-fit: cover;
@@ -117,7 +117,7 @@ div, ul {
 }
 
 .content {
-    margin-top: 20px;
+    margin: 20px 300px 200px 300px;
 
     display: flex;
     flex-direction: row;
@@ -125,15 +125,15 @@ div, ul {
 .news-container {
     flex: 2;
 
-    padding: 20px;
+    padding: 20px 40px 0 20px;
 
     background-color: #2B6EBC;
 }
 .news-list {
     list-style-type: none;
 
-    margin: 20px 0;
     padding: 0;
+    margin: 20px 0;
 }
 .news-title, .news-date, .news-text, .news-archive-link {
     color: #FFF;
@@ -151,10 +151,47 @@ div, ul {
     margin-bottom: 20px;
 }
 .article-container {
-    margin-left: 20px;
+    margin-left: 40px;
 
     flex: 5;
 }
 .article-title {
     color: #2B6EBC;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+
+    padding: 50px 300px;
+
+    background-color: #2B6EBC;
+}
+.owner {
+    flex: 1;
+}
+.navigation {
+    flex: 1;
+}
+.navigation-list {
+    list-style-type: none;
+}
+.creator {
+    flex: 1;
+
+    display: flex;
+    flex-direction: row;
+}
+.source-logo {
+    height: 44px;
+
+    margin-right: -5px;
+}
+.footer a, .footer p {
+    margin: 0;
+
+    color: #FFF;
+}
+.email {
+    font-style: italic;
 }
