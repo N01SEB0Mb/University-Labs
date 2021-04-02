@@ -225,6 +225,8 @@ div, ul {
     font-size: 20px;
     font-style: italic;
     font-weight: bolder;
+
+    margin-bottom: 10px;
 }
 .part-info div:nth-child(even) {
     background-color: #2B6EBC;
