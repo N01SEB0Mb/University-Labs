@@ -5,7 +5,7 @@
 body {
     margin: 0;
 }
-p, a, h1 {
+p, a, h1, input, button, summary {
     font-family: "PT Sans", sans-serif;
     line-height: 22px;
 }
@@ -111,7 +111,7 @@ div, ul {
 
     height: inherit;
 }
-.menu-button:hover {
+.menu-button:hover, .search-submit:hover {
     background-color: #1f5ba1;
 }
 
@@ -144,15 +144,49 @@ div, ul {
 
     background-color: #2B6EBC;
 }
+.filters-container {
+    flex: 1;
+
+    padding: 10px 0 10px 20px;
+
+    background-color: #2B6EBC;
+}
+.filters-container::marker {
+    content: "-";
+}
 .news-list {
     list-style-type: none;
 
     padding: 0;
     margin: 20px 0;
 }
-.news-title, .news-date, .news-text, .news-archive-link {
+.search-container {
+    display: flex;
+    flex-direction: row;
+}
+.search-input {
+    flex: 1;
+    padding: 8px;
+    font-size: 28px;
+    margin-right: 20px;
+}
+.search-submit {
+    font-size: 22px;
+    color: #FFF;
+
+    border: none;
+
+    background-color: #2B6EBC;
+
+    width: 100px;
+}
+.news-title, .news-date, .news-text, .news-archive-link, .filters-title {
     color: #FFF;
     margin: 0;
+}
+.filters-title {
+    font-size: 25px;
+    line-height: 26px;
 }
 .news-date {
     font-style: italic;
@@ -165,10 +199,13 @@ div, ul {
 .news-item {
     margin-bottom: 20px;
 }
-.article-container {
+.article-container, .parts-container {
     margin-left: 40px;
 
     flex: 5;
+}
+.parts-container {
+    flex: 4;
 }
 .article-title {
     color: #2B6EBC;
