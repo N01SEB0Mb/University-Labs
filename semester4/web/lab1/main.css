@@ -293,6 +293,13 @@ summary {
 
     margin-bottom: 10px;
 }
+.part-info:hover {
+    border-color: #1f5ba1;
+    color: #1f5ba1;
+}
+.part-info:hover div:nth-child(even) {
+    background-color: #1f5ba1;
+}
 .part-info div:nth-child(even) {
     background-color: #2B6EBC;
     color: #FFF;
