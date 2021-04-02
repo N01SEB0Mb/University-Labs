@@ -266,6 +266,12 @@ h1 {
     .news-container {
         margin-left: 10px;
     }
+    .owner, .navigation {
+        text-align: center;
+    }
+    .creator {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 1080px) {
@@ -273,6 +279,7 @@ h1 {
         padding: 10px 0 0 0;
         justify-content: center;
         flex-direction: column;
+        max-height: 186px;
     }
     .logo {
         justify-content: center;
@@ -299,6 +306,9 @@ h1 {
     }
 }
 @media (max-width: 720px) {
+    .header {
+        max-height: 208px;
+    }
     .logo-image {
         height: 100px;
     }
@@ -323,6 +333,7 @@ h1 {
         margin-bottom: 10px;
     }
     .footer {
+        max-height: 220px;
         flex-direction: column;
         justify-content: center;
     }
