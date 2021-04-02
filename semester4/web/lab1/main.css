@@ -5,7 +5,7 @@
 body {
     margin: 0;
 }
-p, a, h1, input, button, summary {
+p, a, h1, h3, input, button, summary {
     font-family: "PT Sans", sans-serif;
     line-height: 22px;
 }
@@ -189,6 +189,31 @@ summary {
     background-color: #2B6EBC;
 
     width: 100px;
+}
+.contacts-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    width: 100%;
+}
+.contacts-title {
+    color: #2B6EBC;
+
+    font-size: 42px;
+}
+.contacts-phone-number-title, .contacts-email-title, .contacts-office-title {
+    font-size: 28px;
+}
+.contacts-phone-number-list, .contacts-email-list {
+    display: flex;
+    flex-direction: column;
+}
+.contacts-phone-number, .contacts-email, .contacts-office {
+    line-height: 0;
+    font-style: italic;
+    font-size: 20px;
 }
 .filters-submit {
     font-size: 20px;
