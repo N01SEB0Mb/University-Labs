@@ -12,6 +12,9 @@ p, a, h1, input, button, summary {
 div, ul {
     margin: 0;
 }
+summary {
+    color: #FFF;
+}
 .page {
     width: 100%;
     min-height: 100vh;
@@ -148,12 +151,18 @@ div, ul {
     flex: 1;
 }
 .filters {
-    padding: 10px 0 10px 20px;
+    padding: 12px 15px 15px 15px;
 
     background-color: #2B6EBC;
 }
-.filters::marker {
-    content: "-";
+.filters-list {
+    margin: 18px 10px;
+}
+.filters-list summary {
+    font-size: 18px;
+}
+.filters-list details {
+    margin-bottom: 8px;
 }
 .news-list {
     list-style-type: none;
@@ -180,6 +189,37 @@ div, ul {
     background-color: #2B6EBC;
 
     width: 100px;
+}
+.filters-submit {
+    font-size: 20px;
+    color: #2B6EBC;
+
+    border: none;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 10px;
+
+    background-color: #FFF;
+}
+.filters-submit:hover {
+    background-color: #EDEDED;
+}
+.filter-type-checkbox, .filter-brand-checkbox, .filter-country-checkbox {
+    margin: 0 16px;
+
+    display: flex;
+    flex-direction: row;
+}
+.filters-type-list, .filters-brand-list, .filters-country-list {
+    margin-top: 10px;
+}
+.filter-text {
+    color: #FFF;
+    font-size: 16px;
+
+    margin: 5px 5px;
 }
 .news-title, .news-date, .news-text, .news-archive-link, .filters-title {
     color: #FFF;
@@ -242,6 +282,7 @@ div, ul {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 
     padding: 10px;
 }
@@ -320,8 +361,11 @@ h1 {
         margin-right: 0;
         width: 100%;
     }
-    .news-container {
+    .news-container, .filters-container {
         margin-left: 10px;
+    }
+    .parts-container {
+        margin: 0 10px;
     }
     .owner, .navigation {
         text-align: center;
@@ -344,6 +388,15 @@ h1 {
     .contacts {
         flex-direction: row;
         padding: 12px 0;
+    }
+    .filters-container {
+        flex: 2;
+    }
+    .part-info {
+        font-size: 16px;
+    }
+    .part-info div {
+        padding: 5px;
     }
     .phonenumber {
         text-align: center;
@@ -382,6 +435,18 @@ h1 {
     .content {
         flex-direction: column-reverse;
         margin-bottom: 50px;
+    }
+    .filters-container {
+        margin: 10px;
+    }
+    .parts-container {
+        margin: 10px;
+    }
+    .part-info {
+        font-size: 12px;
+    }
+    #catalog {
+        flex-direction: column;
     }
     .news-container {
         margin: 10px;
