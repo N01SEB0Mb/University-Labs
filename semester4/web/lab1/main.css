@@ -146,12 +146,13 @@ div, ul {
 }
 .filters-container {
     flex: 1;
-
+}
+.filters {
     padding: 10px 0 10px 20px;
 
     background-color: #2B6EBC;
 }
-.filters-container::marker {
+.filters::marker {
     content: "-";
 }
 .news-list {
@@ -167,7 +168,7 @@ div, ul {
 .search-input {
     flex: 1;
     padding: 8px;
-    font-size: 28px;
+    font-size: 24px;
     margin-right: 20px;
 }
 .search-submit {
@@ -199,13 +200,67 @@ div, ul {
 .news-item {
     margin-bottom: 20px;
 }
-.article-container, .parts-container {
+.article-container {
     margin-left: 40px;
 
     flex: 5;
 }
 .parts-container {
+    margin-left: 20px;
+
     flex: 4;
+}
+.parts-table {
+    display: flex;
+    flex-direction: column;
+}
+.part-fields, .part-info {
+    display: flex;
+    flex-direction: row;
+}
+.part-info {
+    border: 2px solid #2B6EBC;
+    color: #2B6EBC;
+
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bolder;
+}
+.part-info div:nth-child(even) {
+    background-color: #2B6EBC;
+    color: #FFF;
+}
+.part-fields {
+    color: #2B6EBC;
+
+    font-size: 20px;
+    font-weight: bolder;
+}
+.part-info div, .part-fields div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+}
+.part-fields p {
+    line-height: 0;
+}
+.part-image {
+    flex: 2;
+}
+.part-article, .part-brand {
+    flex: 4;
+}
+.part-price {
+    flex: 3;
+}
+.part-title {
+    flex: 10;
+}
+.part-image img {
+    width: 100%;
+    object-fit: cover;
 }
 .article-title {
     color: #2B6EBC;
