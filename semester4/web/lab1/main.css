@@ -305,6 +305,40 @@ summary {
     width: 100%;
     object-fit: cover;
 }
+.page-buttons-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+    margin: 20px 0;
+}
+.page-button-container {
+    margin: 6px;
+    padding: 10px 0;
+
+    background-color: #2B6EBC;
+}
+.page-button-container:hover {
+    background-color: #1f5ba1;
+}
+.page-button-separator-container {
+    margin: 6px;
+}
+.page-button {
+    text-decoration: none;
+    color: #FFF;
+
+    padding: 0 16px;
+}
+.page-button-separator {
+    text-decoration: none;
+    color: #2B6EBC;
+
+    margin: 20px 0 10px 0;
+    padding: 0 8px;
+}
 .article-title {
     color: #2B6EBC;
 }
@@ -392,6 +426,9 @@ h1 {
     .filters-container {
         flex: 2;
     }
+    .part-fields {
+        font-size: 16px;
+    }
     .part-info {
         font-size: 16px;
     }
@@ -441,6 +478,9 @@ h1 {
     }
     .parts-container {
         margin: 10px;
+    }
+    .part-fields {
+        font-size: 14px;
     }
     .part-info {
         font-size: 12px;
