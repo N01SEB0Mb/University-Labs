@@ -1,0 +1,12 @@
+.container-fluid {
+    padding: 0;
+}
+.row {
+    margin: 10px 0;
+}
+.row div {
+    background-color: #4c9dd4;
+}
+.row div:nth-child(even) {
+    background-color: #2B6EBC;
+}
