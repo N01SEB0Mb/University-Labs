@@ -28,6 +28,9 @@ body {
 .col-sm-4:hover {
     background-color: #DDD;
 }
+.social-media {
+    margin: 3% 10%;
+}
 
 @media (max-width: 800px) {
    h3 {
