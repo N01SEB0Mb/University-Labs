@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Forms</title>
+  </head>
+  <body>
+    <table class="page" align="center" cellpadding="10">
+      <tbody>
+        <tr>
+          <td align="left">
+            <h1>Форма заявки на работу в зоопарке</h1>
+            <i>
+              Пожалуйста, заполните форму. Обязательные поля помечены
+              <font color="red">*</font>
+            </i>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <fieldset>
+              <legend>Контактная информация</legend>
+              <table width="100%" cellpadding="4">
+                <tr>
+                  <td>
+                    <label for="name">
+                      Имя <font color="red">*</font>
+                    </label>
+                  </td>
+                  <td width="75%">
+                    <input type="text" id="name" name="name">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="number">
+                      Телефон
+                    </label>
+                  </td>
+                  <td>
+                    <input type="text" id="number" name="name">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="email">
+                      E-Mail
+                      <font color="red">*</font>
+                    </label>
+                  </td>
+                  <td width="75%">
+                    <input type="text" id="email" name="name">
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <fieldset>
+              <legend>Персональная информация</legend>
+              <table width="100%" cellpadding="4">
+                <tr>
+                  <td>
+                    <label for="age">
+                      Возраст <font color="red">*</font>
+                    </label>
+                  </td>
+                  <td width="75%">
+                    <input type="text" id="age" name="age">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      Пол
+                    </label>
+                  </td>
+                  <td>
+                    <select style="width: 246px;">
+                      <optgroup label="Пол">
+                        <option>Мужчина</option>
+                        <option>Женщина</option>
+                      </optgroup>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      Перечислите <br> личные <br> качества
+                    </label>
+                  </td>
+                  <td width="75%">
+                    <textarea style="width: 240px; height: 85px;"></textarea>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <fieldset>
+              <legend>Выберите ваших любимых животных</legend>
+              <table width="100%" cellpadding="10">
+                <tr>
+                  <td>
+                    <input type="checkbox">
+                    Зебра
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Кошак
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Анаконда
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Человек
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox">
+                    Слон
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Антилопа
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Голубь
+                  </td>
+                  <td>
+                    <input type="checkbox">
+                    Краб
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" name="submit" value="Отправить информацию">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
