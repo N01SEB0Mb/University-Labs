@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="histogram.css">
+
+    <script>
+      function submit_count() {
+        let count = document.getElementById("count");
+        let graph = document.getElementById("graph");
+        let container = document.getElementById("input-numbers");
+
+        graph.innerHTML = "";
+        container.innerHTML = "";
+
+        for (let i = 0; i < count.value; i++) {
+          let value_div = document.createElement("div");
+          let value_input = document.createElement("input");
+
+          value_div.setAttribute("id", "value" + i);
+          value_div.setAttribute("class", "value");
+          value_div.innerHTML = "0";
+          value_input.value = "0";
+          value_input.setAttribute("id", "number" + i);
+
+          graph.appendChild(value_div);
+          container.appendChild(value_input);
+
+          value_input.addEventListener("change", (event) => {
+            let max_value = 1;
+
+            for (let j = 0; j < count.value; j++) {
+              if (parseInt(document.getElementById("number" + j).value) > max_value) {
+                max_value = parseInt(document.getElementById("number" + j).value);
+              }
+            }
+
+            for (let j = 0; j < count.value; j++) {
+              let value = document.getElementById("number" + j).value
+              document.getElementById("value" + j).style.height = value / max_value * 100 + "%";
+              document.getElementById("value" + j).innerHTML = value.toString();
+            }
+          })
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="input-container">
+        <div class="input-count">
+          <input type="number" id="count">
+          <button onclick="submit_count()">Start</button>
+        </div>
+
+        <div id="input-numbers"></div>
+      </div>
+
+      <div class="graph-container">
+        <div class="values-container">
+          <div class="graph" id="graph">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
