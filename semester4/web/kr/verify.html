@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+      input {
+        margin: 4px;
+        width: 100%;
+      }
+    </style>
+    
+    <script>
+      function submit() {
+        let message = document.getElementById("message");
+
+        // Check if username filled
+        if (!document.getElementById("username").value) {
+          message.innerText = "Username is required";
+
+          return null;
+        }
+
+        // Check if password filled
+        if (!document.getElementById("password").value) {
+          message.innerText = "Password is required";
+
+          return null;
+        }
+
+        // Check if password confirmation filled
+        if (!document.getElementById("password-confirm").value) {
+          message.innerText = "Password confirmation required";
+
+          return null;
+        }
+
+        // Check if passwords equal
+        if (document.getElementById("password").value !== document.getElementById("password-confirm").value) {
+          message.innerText = "Passwords are not equal";
+
+          return null;
+        }
+
+        // Check if salary is valid
+        if (isNaN(document.getElementById("salary").value)) {
+          message.innerText = "Salary must be a integer";
+
+          return null;
+        }
+
+        // Check if random number is float
+        if (isNaN(document.getElementById("random").value)) {
+          message.innerText = "Random number must be a number";
+
+          return null;
+        }
+
+        // All fields verified => success
+        let success_message = document.createElement("h2");
+        success_message.setAttribute("class", "text-center m-5");
+        success_message.innerText = "Success";
+
+        document.getElementById("form").innerHTML = "";
+        document.getElementById("form").appendChild(success_message);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid mt-3">
+      <div class="row justify-content-center">
+        <div class="col-sm-6 border rounded" id="form">
+          <h3 class="text-center m-2">Sign Up</h3>
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">* Username:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="username" placeholder="Username" id="username">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">* Password:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="password" placeholder="Password" type="password" id="password">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">* Confirm password:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="password" placeholder="Password" type="password" id="password-confirm">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">Date of birth:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="birthday" type="date" id="birthday">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">Salary:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="salary" placeholder="Salary" type="number" id="salary">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 align-self-center p-0">
+              <p class="text-right m-0">Random number:</p>
+            </div>
+            <div class="col-sm-8">
+              <input class="random" placeholder="Random float number" id="random">
+            </div>
+          </div>
+
+          <div class="col-md-12 text-center mt-3">
+            <p class="message" id="message">Please, fill a registration form</p>
+          </div>
+
+          <div class="col-md-12 text-center mt-3 mb-2">
+            <button class="btn btn-success" style="width: 30%;" onclick="submit()">Confirm</button>
+          </div>
+    </div>
+  </body>
+</html>
