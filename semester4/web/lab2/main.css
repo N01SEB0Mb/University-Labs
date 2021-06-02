@@ -73,31 +73,6 @@ summary {
     height: 100%;
     border-radius: 7px;
 }
-.contacts-article {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-
-    width: 100%;
-}
-.contacts-title {
-    color: #2B6EBC;
-
-    font-size: 42px;
-}
-.contacts-phone-number-title, .contacts-email-title, .contacts-office-title {
-    font-size: 28px;
-}
-.contacts-phone-number-list, .contacts-email-list {
-    display: flex;
-    flex-direction: column;
-}
-.contacts-phone-number, .contacts-email, .contacts-office {
-    line-height: 0;
-    font-style: italic;
-    font-size: 20px;
-}
 .filters-submit {
     font-size: 20px;
     color: #2B6EBC;
