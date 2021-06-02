@@ -1,0 +1,379 @@
+@font-face {
+    font-family: "PT Sans";
+    src: url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+}
+body {
+    margin: 0;
+}
+p, a, h3, input, button, summary {
+    font-family: "PT Sans", sans-serif;
+    line-height: 22px;
+}
+h1 {
+    line-height: 45px;
+}
+summary {
+    color: #FFF;
+}
+.logo-image {
+    height: 110px;
+}
+.logo-text {
+    margin-left: 25px;
+}
+.logo-text-primary {
+    font-size: 72px;
+    font-weight: bolder;
+    line-height: 75px;
+    margin-top: -15px;
+}
+.logo-text-secondary {
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bolder;
+    line-height: 0;
+    margin: 0;
+}
+.phonenumber {
+    font-size: 24px;
+    font-style: italic;
+    text-align: right;
+}
+.search-submit:hover {
+    background-color: #1f5ba1;
+}
+.slider-image {
+    min-width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.filters-container {
+    flex: 1;
+}
+.filters {
+    padding: 12px 15px 15px 15px;
+
+    background-color: #2B6EBC;
+}
+.filters-list {
+    margin: 18px 10px;
+}
+.filters-list summary {
+    font-size: 18px;
+}
+.filters-list details {
+    margin-bottom: 8px;
+}
+.search-container {
+    display: flex;
+    flex-direction: row;
+}
+.search-input {
+    flex: 1;
+    padding: 8px;
+    font-size: 24px;
+    margin-right: 20px;
+}
+.search-submit {
+    font-size: 22px;
+    color: #FFF;
+
+    border: none;
+
+    background-color: #2B6EBC;
+
+    width: 100px;
+}
+.contacts-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    width: 100%;
+}
+.contacts-title {
+    color: #2B6EBC;
+
+    font-size: 42px;
+}
+.contacts-phone-number-title, .contacts-email-title, .contacts-office-title {
+    font-size: 28px;
+}
+.contacts-phone-number-list, .contacts-email-list {
+    display: flex;
+    flex-direction: column;
+}
+.contacts-phone-number, .contacts-email, .contacts-office {
+    line-height: 0;
+    font-style: italic;
+    font-size: 20px;
+}
+.filters-submit {
+    font-size: 20px;
+    color: #2B6EBC;
+
+    border: none;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 10px;
+
+    background-color: #FFF;
+}
+.filters-submit:hover {
+    background-color: #EDEDED;
+}
+.filter-type-checkbox, .filter-brand-checkbox, .filter-country-checkbox {
+    margin: 0 16px;
+
+    display: flex;
+    flex-direction: row;
+}
+.filters-type-list, .filters-brand-list, .filters-country-list {
+    margin-top: 10px;
+}
+.filter-text {
+    color: #FFF;
+    font-size: 16px;
+
+    margin: 5px 5px;
+}
+.filters-title {
+    font-size: 25px;
+    line-height: 26px;
+}
+.news-archive {
+    text-align: right;
+}
+.parts-container {
+    margin-left: 20px;
+
+    flex: 4;
+}
+.parts-table {
+    display: flex;
+    flex-direction: column;
+}
+.part-fields, .part-info {
+    display: flex;
+    flex-direction: row;
+}
+.part-info {
+    border: 2px solid #2B6EBC;
+    color: #2B6EBC;
+
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bolder;
+
+    margin-bottom: 10px;
+}
+.part-info:hover {
+    border-color: #1f5ba1;
+    color: #1f5ba1;
+}
+.part-info:hover div:nth-child(even) {
+    background-color: #1f5ba1;
+}
+.part-info div:nth-child(even) {
+    background-color: #2B6EBC;
+    color: #FFF;
+}
+.part-fields {
+    color: #2B6EBC;
+
+    font-size: 20px;
+    font-weight: bolder;
+}
+.part-info div, .part-fields div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 10px;
+}
+.part-fields p {
+    line-height: 0;
+}
+.part-image {
+    flex: 2;
+}
+.part-article, .part-brand {
+    flex: 4;
+}
+.part-price {
+    flex: 3;
+}
+.part-title {
+    flex: 10;
+}
+.part-image img {
+    width: 100%;
+    object-fit: cover;
+}
+.page-buttons-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+    margin: 20px 0;
+}
+.page-button-container {
+    margin: 6px;
+    padding: 10px 0;
+
+    background-color: #2B6EBC;
+}
+.page-button-container:hover {
+    background-color: #1f5ba1;
+}
+.page-button-separator-container {
+    margin: 6px;
+}
+.page-button {
+    text-decoration: none;
+    color: #FFF;
+
+    padding: 0 16px;
+}
+.page-button-separator {
+    text-decoration: none;
+    color: #2B6EBC;
+
+    margin: 20px 0 10px 0;
+    padding: 0 8px;
+}
+.source-logo {
+    height: 44px;
+
+    margin-right: -5px;
+}
+
+@media (max-width: 1320px) {
+    .header, .menu, .slider, .content, .footer {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    .news-container, .filters-container {
+        margin-left: 10px;
+    }
+    .parts-container {
+        margin: 0 10px;
+    }
+    .owner, .navigation {
+        text-align: center;
+    }
+    .creator {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1080px) {
+    .header {
+        padding: 10px 0 0 0;
+        justify-content: center;
+        flex-direction: column;
+        max-height: 186px;
+    }
+    .logo {
+        justify-content: center;
+    }
+    .contacts {
+        flex-direction: row;
+        padding: 12px 0;
+    }
+    .filters-container {
+        flex: 2;
+    }
+    .part-fields {
+        font-size: 16px;
+    }
+    .part-info {
+        font-size: 16px;
+    }
+    .part-info div {
+        padding: 5px;
+    }
+    .phonenumber {
+        text-align: center;
+        margin: 10px auto;
+    }
+    .menu-list {
+        justify-content: space-around;
+    }
+    .menu-link {
+        padding: 0;
+    }
+    .news-container {
+        padding: 14px 20px 0 14px;
+    }
+    .article-container {
+        margin-left: 14px;
+    }
+}
+@media (max-width: 720px) {
+    .header {
+        max-height: 208px;
+    }
+    .logo-image {
+        height: 100px;
+    }
+    .logo-text {
+        margin-left: 10px;
+    }
+    .logo-text-primary {
+        font-size: 56px;
+        line-height: 76px;
+    }
+    .contacts {
+        flex-direction: column;
+    }
+    .content {
+        flex-direction: column-reverse;
+        margin-bottom: 50px;
+    }
+    .filters-container {
+        margin: 10px;
+    }
+    .parts-container {
+        margin: 10px;
+    }
+    .part-fields {
+        font-size: 14px;
+    }
+    .part-info {
+        font-size: 12px;
+    }
+    #catalog {
+        flex-direction: column;
+    }
+    .news-container {
+        margin: 10px;
+    }
+    .article-container {
+        margin-bottom: 10px;
+    }
+    .footer {
+        max-height: 220px;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .owner, .navigation {
+        text-align: center;
+    }
+    .navigation-list {
+        padding: 0;
+        margin: 30px 0;
+    }
+    .creator {
+        justify-content: center;
+    }
+}
