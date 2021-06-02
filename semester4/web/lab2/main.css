@@ -17,6 +17,7 @@ summary {
 }
 .logo-image {
     height: 110px;
+    margin-bottom: 20px
 }
 .logo-text {
     margin-left: 25px;
@@ -270,108 +271,6 @@ summary {
     }
     .owner, .navigation {
         text-align: center;
-    }
-    .creator {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 1080px) {
-    .header {
-        padding: 10px 0 0 0;
-        justify-content: center;
-        flex-direction: column;
-        max-height: 186px;
-    }
-    .logo {
-        justify-content: center;
-    }
-    .contacts {
-        flex-direction: row;
-        padding: 12px 0;
-    }
-    .filters-container {
-        flex: 2;
-    }
-    .part-fields {
-        font-size: 16px;
-    }
-    .part-info {
-        font-size: 16px;
-    }
-    .part-info div {
-        padding: 5px;
-    }
-    .phonenumber {
-        text-align: center;
-        margin: 10px auto;
-    }
-    .menu-list {
-        justify-content: space-around;
-    }
-    .menu-link {
-        padding: 0;
-    }
-    .news-container {
-        padding: 14px 20px 0 14px;
-    }
-    .article-container {
-        margin-left: 14px;
-    }
-}
-@media (max-width: 720px) {
-    .header {
-        max-height: 208px;
-    }
-    .logo-image {
-        height: 100px;
-    }
-    .logo-text {
-        margin-left: 10px;
-    }
-    .logo-text-primary {
-        font-size: 56px;
-        line-height: 76px;
-    }
-    .contacts {
-        flex-direction: column;
-    }
-    .content {
-        flex-direction: column-reverse;
-        margin-bottom: 50px;
-    }
-    .filters-container {
-        margin: 10px;
-    }
-    .parts-container {
-        margin: 10px;
-    }
-    .part-fields {
-        font-size: 14px;
-    }
-    .part-info {
-        font-size: 12px;
-    }
-    #catalog {
-        flex-direction: column;
-    }
-    .news-container {
-        margin: 10px;
-    }
-    .article-container {
-        margin-bottom: 10px;
-    }
-    .footer {
-        max-height: 220px;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .owner, .navigation {
-        text-align: center;
-    }
-    .navigation-list {
-        padding: 0;
-        margin: 30px 0;
     }
     .creator {
         justify-content: center;
