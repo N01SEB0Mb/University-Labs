@@ -1,0 +1,4 @@
+lxml~=4.6.3
+aiogram~=2.13
+asyncio~=3.4.3
+requests~=2.25.1
