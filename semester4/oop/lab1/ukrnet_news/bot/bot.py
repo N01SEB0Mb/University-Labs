@@ -27,3 +27,10 @@ class UkrnetNewsBot(Bot):
         # Initialize news scraper
 
         self.__scraper: BaseNewsScraper = UkrnetNewsScraper()
+
+    def refresh_news(self) -> None:
+        """
+        Refreshing news stream (checking for new articles)
+        """
+
+        pass
