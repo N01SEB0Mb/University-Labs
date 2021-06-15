@@ -9,6 +9,9 @@
   },
 
   "news": {
-    "refresh_interval": 30
+    "refresh_interval": 300,
+    "posting_interval": 2,
+
+    "post_no_image": false
   }
 }

@@ -41,9 +41,14 @@ class UkrnetNewsScraper(BaseNewsScraper):
 
         # Iterate found news
         for news in news_request.json()["tops"]:
-            # Yield news
-            yield News.from_url(
-                news["Url"],
-                news_id=news["NewsId"],
-                dups=None if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
-            )
+            try:
+                # Try yielding news
+                yield News.from_url(
+                    news["Url"],
+                    news_id=news["NewsId"],
+                    dups=None if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
+                )
+
+            except BaseException:
+                # Some error occured
+                pass

@@ -1,6 +1,9 @@
 # coding=utf-8
 
+import requests
 from typing import *
+
+from .parser import PARSER_CLASSES
 
 
 class News:
@@ -51,6 +54,41 @@ class News:
 
         Returns:
             News: News object
+
+        Raises:
+            ModuleNotFoundError: If no parsers found for specified URL (broken PARSER_CLASSES list)
+            ValueError: If title or description are None
         """
 
-        pass
+        # Select matching parser
+        for parser_class in PARSER_CLASSES:
+            # Check if given 'url' contains parser's specified url
+
+            if parser_class.url in url:
+                # Found matching parser
+                break
+        else:
+            # No parser found => exception
+            raise ModuleNotFoundError("Parser not found for specified URL")
+
+        # Get news page
+        page_request = requests.get(url)
+
+        if page_request.status_code != 200:
+            # Failed to get news page
+            raise requests.exceptions.RequestException(f"Failed to get '{url}'")
+
+        # Get news info
+        title, description, image_url = parser_class.parse(page_request.text)
+
+        if title is None or description is None:
+            # No news info
+            raise ValueError(f"Couldn't get news page '{url}'")
+
+        return cls(
+            url=url,
+            title=title,
+            description=description,
+            image_url=image_url,
+            *args, **kwargs
+        )

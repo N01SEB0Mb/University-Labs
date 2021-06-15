@@ -20,7 +20,7 @@ async def refresher(bot: UkrnetNewsBot, interval: int = CONFIG["news"]["refresh_
 
     while True:
         # Refresh news stream
-        bot.refresh_news()
+        await bot.refresh_news()
 
         # Wait for specified interval
         await asyncio.sleep(interval)

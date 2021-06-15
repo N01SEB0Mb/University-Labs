@@ -6,7 +6,7 @@ This script used for running UkrnetNewsBot
 import time
 import asyncio
 
-from ukrnet_news.bot import UkrnetNewsBot, checker
+from ukrnet_news.bot import UkrnetNewsBot, refresher
 from ukrnet_news.config import TELEGRAM
 
 
