@@ -1,0 +1,9 @@
+{
+  "bot": {
+    "token": "<Bot API-token>"
+  },
+
+  "channel": {
+    "id": "<Channel ID>"
+  }
+}
