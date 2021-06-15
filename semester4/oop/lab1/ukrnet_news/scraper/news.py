@@ -42,7 +42,7 @@ class News:
         self.dups: List[int] = dups or []
 
     @classmethod
-    def from_url(cls, url: str) -> "News":
+    def from_url(cls, url: str, *args, **kwargs) -> "News":
         """
         Get news from specified url
 
