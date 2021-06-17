@@ -17,4 +17,5 @@ PARSER_CLASSES: List[Type[BaseInfoParser]] = [
 # Define public attributes of the package
 __all__ = (
     "MetaInfoParser",
+    "PARSER_CLASSES"
 )

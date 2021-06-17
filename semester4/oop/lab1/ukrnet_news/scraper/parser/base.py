@@ -3,6 +3,7 @@
 import abc
 from typing import *
 from lxml import html
+from urllib.parse import urlparse
 
 
 class BaseInfoParser(abc.ABC):
@@ -43,12 +44,13 @@ class MetaInfoParser(BaseInfoParser):
     url: str = ""
 
     @staticmethod
-    def parse(html_code: str) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    def parse(html_code: str, page_url: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
         """
         Parse news HTML page and gets page metadata
 
         Args:
             html_code (str): HTML page you want to parse
+            page_url (Optional[str]): Page URL, used for relative URLs. Defaults by None
 
         Returns:
             Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
@@ -82,6 +84,17 @@ class MetaInfoParser(BaseInfoParser):
             html_tree.xpath('//meta[@name="twitter:image" or @property="twitter:image"]/@content') +
             [None]
         )[0]
+
+        if image and not urlparse(image).netloc:
+            # Image url is relative
+
+            if page_url:
+                # Add page url to create absolute url
+                image = page_url + image[1:]
+
+            else:
+                # Page url is not provided
+                image = None
 
         # Return parsed info
         return title, description, image
