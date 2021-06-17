@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from .parser import PARSER_CLASSES
 from ukrnet_news.utils import clear
 from ukrnet_news.config import CONFIG, BLACKLIST
+from ukrnet_news.exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
 
 
 class News:
@@ -60,9 +61,9 @@ class News:
             News: News object
 
         Raises:
-            KeyError: If site is in the blacklist
-            ValueError: If title or description are None
-            ModuleNotFoundError: If no parsers found for specified URL (broken PARSER_CLASSES list)
+            InBlacklistError: If site is in the blacklist
+            EmptyNewsError: If title or description are None
+            ParserNotFoundError: If no parsers found for specified URL
         """
 
         # Parse URL
@@ -71,7 +72,7 @@ class News:
         # Check blaclist
         if parsed_url.netloc in BLACKLIST:
             # Given URL is in the blacklist
-            raise KeyError(f"Specified URL is in the blacklist '{url}'")
+            raise InBlacklistError(f"Specified URL is in the blacklist '{url}'")
 
         # Select matching parser
         for parser_class in PARSER_CLASSES:
@@ -82,7 +83,7 @@ class News:
                 break
         else:
             # No parser found => exception
-            raise ModuleNotFoundError("Parser not found for specified URL")
+            raise ParserNotFoundError("Parser not found for specified URL")
 
         # Get news page
         page_request = requests.get(
@@ -100,7 +101,7 @@ class News:
 
         if title is None or description is None:
             # No news info
-            raise ValueError(f"Couldn't get news page info '{url}'")
+            raise EmptyNewsError(f"Couldn't get news page info '{url}'")
 
         return cls(
             url=url,

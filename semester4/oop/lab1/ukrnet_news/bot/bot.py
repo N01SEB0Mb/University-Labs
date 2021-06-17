@@ -14,6 +14,7 @@ from aiogram.utils.exceptions import RetryAfter, WrongFileIdentifier
 
 from ukrnet_news.config import CONFIG, TELEGRAM
 from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper, News
+from ukrnet_news.exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
 
 
 class UkrnetNewsBot(Bot):
@@ -113,15 +114,15 @@ class UkrnetNewsBot(Bot):
                     dups=new["dups"]
                 )
 
-            except KeyError:
+            except InBlacklistError:
                 # URL is blacklisted
                 logging.warning("Given URL is in the blacklist")
 
-            except ModuleNotFoundError:
+            except ParserNotFoundError:
                 # Could not find parser for given URL
                 logging.error("Could not find parser for given URL")
 
-            except ValueError:
+            except EmptyNewsError:
                 # Could not get news info (title or description)
                 logging.error("Could not get info (title or description)")
 
