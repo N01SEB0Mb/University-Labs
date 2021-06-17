@@ -10,7 +10,7 @@ from typing import *
 from pathlib import Path
 from aiogram import Bot
 from aiogram.utils.markdown import bold, link
-from aiogram.utils.exceptions import RetryAfter, WrongFileIdentifier
+from aiogram.utils.exceptions import RetryAfter, WrongFileIdentifier, BadRequest
 
 from ukrnet_news.config import CONFIG, TELEGRAM
 from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper, News
@@ -183,7 +183,11 @@ class UkrnetNewsBot(Bot):
 
             except WrongFileIdentifier:
                 # Invalid image URL
-                logging.info(f"Invalid image URL specified: '{new.image_url}'")
+                logging.warning(f"Invalid image URL specified: '{new.image_url}'")
+
+            except BadRequest:
+                # Wrong image type
+                logging.warning(f"Invalid image type provided: '{new.image_url}'")
 
             except RetryAfter:
                 # Flood control (retry after 16 seconds)
