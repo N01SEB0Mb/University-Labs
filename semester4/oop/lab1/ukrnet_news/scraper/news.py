@@ -99,7 +99,7 @@ class News:
         # Get news info
         title, description, image_url = parser_class.parse(page_request.text, page_url=url)
 
-        if title is None or description is None:
+        if not title or not description:
             # No news info
             raise EmptyNewsError(f"Couldn't get news page info '{url}'")
 
