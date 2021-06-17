@@ -21,7 +21,7 @@ class BaseNewsException(Exception, ABC):
             **kwargs (Any): BaseNewsException **kwargs
         """
 
-        super(ExpressionError, self).__init__(err_msg or self.__msg, *args, **kwargs)
+        super(BaseNewsException, self).__init__(err_msg or self.__msg, *args, **kwargs)
 
 
 class ParserNotFoundError(BaseNewsException):
