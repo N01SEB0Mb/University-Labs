@@ -13,6 +13,7 @@ from .sites import *
 PARSER_CLASSES: List[Type[BaseInfoParser]] = [
     BizuaInfoParser,
     UAMotorsInfoParser,
+    USIOnlineInfoParser,
     AutoPoradyInfoParser,
     MetaInfoParser
 ]
@@ -22,6 +23,7 @@ PARSER_CLASSES: List[Type[BaseInfoParser]] = [
 __all__ = (
     "BizuaInfoParser",
     "UAMotorsInfoParser",
+    "USIOnlineInfoParser",
     "AutoPoradyInfoParser",
     "MetaInfoParser",
     "PARSER_CLASSES"
