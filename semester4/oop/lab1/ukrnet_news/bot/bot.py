@@ -179,7 +179,7 @@ class UkrnetNewsBot(Bot):
                 json.dumps(
                     [news.to_dict() for news in self.__news],
                     indent=2,
-                    ensure_ascii=True
+                    ensure_ascii=False
                 ).encode("utf-8")
             )
 

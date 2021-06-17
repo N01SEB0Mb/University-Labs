@@ -5,6 +5,7 @@ import requests
 from typing import *
 
 from .parser import PARSER_CLASSES
+from ukrnet_news.utils import clear
 from ukrnet_news.config import CONFIG
 
 
@@ -39,8 +40,8 @@ class News:
         self.url: str = url
 
         # Define news info
-        self.title:       str = title
-        self.description: str = description
+        self.title:       str = clear(title)
+        self.description: str = clear(description)
         self.image_url:   str = image_url
 
         # Define news dups
