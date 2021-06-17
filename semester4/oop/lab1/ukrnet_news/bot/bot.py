@@ -2,6 +2,7 @@
 
 import json
 import time
+import traceback
 from typing import *
 from pathlib import Path
 from aiogram import Bot
@@ -121,9 +122,11 @@ class UkrnetNewsBot(Bot):
         else:
             with filepath.open("rb") as news_file:
                 # Load news
-                self.__news = json.loads(
-                    news_file.read().decode("utf-8")
-                )
+                self.__news = [
+                    News.from_dict(news) for news in json.loads(
+                        news_file.read().decode("utf-8")
+                    )
+                ]
 
     def __save_news(self, filepath: Path = news_path) -> None:
         """

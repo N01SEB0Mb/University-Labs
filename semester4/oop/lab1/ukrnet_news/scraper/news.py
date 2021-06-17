@@ -45,7 +45,7 @@ class News:
         self.dups: List[int] = dups or []
 
     @classmethod
-    def from_url(cls, url: str, *args, **kwargs) -> "News":
+    def from_url(cls, url: str, *args: Any, **kwargs: Any) -> "News":
         """
         Get news from specified url
 
@@ -91,6 +91,27 @@ class News:
             description=description,
             image_url=image_url,
             *args, **kwargs
+        )
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "News":
+        """
+        Create News object from dict
+
+        Args:
+            data (Dict[str, Any]): News dict you want top convert
+
+        Returns:
+            News: Converted News object
+        """
+
+        return cls(
+            news_id=data["id"],
+            url=data["url"],
+            title=data["title"],
+            description=data["description"],
+            image_url=data["image_url"],
+            dups=data["dups"],
         )
 
     def to_dict(self) -> Dict[str, Any]:
