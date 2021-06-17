@@ -2,7 +2,6 @@
 
 import logging
 import traceback
-import requests.exceptions
 from typing import *
 
 from .news import News
@@ -21,7 +20,7 @@ class UkrnetNewsScraper(BaseNewsScraper):
 
         get_news = "https://www.ukr.net/news/dat/{}/"
 
-    def get_news(self, category: str) -> Generator[News, None, None]:
+    def get_news(self, category: str) -> Generator[Dict, None, None]:
         """
         Get latest news from specified category
 
@@ -43,44 +42,17 @@ class UkrnetNewsScraper(BaseNewsScraper):
             # News request failed
             return None
 
+        logging.info(f"Found {len(news_request.json()['tops'])} news")
+
         # Iterate found news
         for number, news in enumerate(news_request.json()["tops"]):
-            try:
-                if "News" in news:
-                    # Get first news from list
-                    news = news["News"][0]
+            if "News" in news:
+                # Get first news from list
+                news = news["News"][0]
 
-                # Log current request
-                logging.info(f"Get ({number + 1}/{len(news_request.json()['tops'])}): "
-                             f"<id={news['NewsId']}> <url={news['Url']}>")
-
-                # Try yielding news
-                yield News.from_url(
-                    news["Url"],
-                    news_id=news["NewsId"],
-                    dups=None if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
-                )
-
-            except KeyError:
-                # URL is blacklisted
-                logging.warning("Given URL is in the blacklist")
-
-            except ModuleNotFoundError:
-                # Could not find parser for given URL
-                logging.error("Could not find parser for given URL")
-
-            except ValueError:
-                # Could not get news info (title or description)
-                logging.error("Could not get info (title or description)")
-
-            except requests.exceptions.Timeout:
-                # Page request timeout expired
-                logging.error(f"Connection timeout expired")
-
-            except requests.exceptions.RequestException as request_error:
-                # Could not get page
-                logging.error(str(request_error))
-
-            except BaseException:
-                # Some error occured
-                logging.error(traceback.format_exc())
+            # Yield found news
+            yield {
+                "id": news["NewsId"],
+                "url": news["Url"],
+                "dups": [] if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
+            }

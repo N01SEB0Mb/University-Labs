@@ -4,6 +4,8 @@ import json
 import time
 import logging
 import traceback
+import requests.exceptions
+
 from typing import *
 from pathlib import Path
 from aiogram import Bot
@@ -53,28 +55,87 @@ class UkrnetNewsBot(Bot):
         news = list(self.__scraper.get_news("auto"))
 
         # Define list of news to be posted
-        to_post = []
+        to_get = []
 
         # Filter only latest news
         for new in news:
             for existing_new in self.__news:
                 # Check if news equal
-                if new.id == existing_new.id:
+                if new["id"] == existing_new["id"]:
                     break
 
                 # Check if news are dups
-                if new.id in existing_new.dups or existing_new.id in new.dups:
+                if new["id"] in existing_new["dups"] or existing_new["id"] in new["dups"]:
                     break
             else:
                 # No equal news found
-                to_post.append(new)
+                to_get.append(new)
 
         # Update and save existing news
-        self.__news = news
+        self.__news = [{
+            "id": new["id"],
+            "dups": new["dups"]
+        } for new in news]
+
         self.__save_news()
+
+        # Get info about newly found news
+        to_post = self.__get_news(to_get)
 
         # Post newly found news
         await self.__post(*to_post)
+
+    def __get_news(self, news: List[Dict[str, Any]]) -> Generator[News, None, None]:
+        """
+        Get info about latest news
+
+        Args:
+            news (List[Dict[str, Any]]): News, info of which you want to get
+
+        Yields:
+            News: News object
+        """
+
+        # Log number of news
+        logging.info(f"News to get: {len(news)}")
+
+        # Iterating news
+        for number, new in enumerate(news):
+            # Trying to get info about news
+            try:
+                # Log current request
+                logging.info(f"Get ({number + 1}/{len(news)}): <id={new['id']}> <url={new['url']}>")
+
+                # Yield info about news
+                yield News.from_url(
+                    new["url"],
+                    news_id=new["id"],
+                    dups=new["dups"]
+                )
+
+            except KeyError:
+                # URL is blacklisted
+                logging.warning("Given URL is in the blacklist")
+
+            except ModuleNotFoundError:
+                # Could not find parser for given URL
+                logging.error("Could not find parser for given URL")
+
+            except ValueError:
+                # Could not get news info (title or description)
+                logging.error("Could not get info (title or description)")
+
+            except requests.exceptions.Timeout:
+                # Page request timeout expired
+                logging.error(f"Connection timeout expired")
+
+            except requests.exceptions.RequestException as request_error:
+                # Could not get page
+                logging.error(str(request_error))
+
+            except BaseException:
+                # Some error occured
+                logging.error(traceback.format_exc())
 
     async def __post(self, *news: News) -> None:
         """
@@ -144,7 +205,7 @@ class UkrnetNewsBot(Bot):
             filepath (Path): News cache file path
         """
 
-        logging.info(f"Loading news from '{filepath}'")
+        logging.info(f"Loading recent news from '{filepath}'")
 
         if not filepath.exists():
             # News file not exists => return load empty list
@@ -153,11 +214,7 @@ class UkrnetNewsBot(Bot):
         else:
             with filepath.open("rb") as news_file:
                 # Load news
-                self.__news = [
-                    News.from_dict(news) for news in json.loads(
-                        news_file.read().decode("utf-8")
-                    )
-                ]
+                self.__news = json.loads(news_file.read().decode("utf-8"))
 
     def __save_news(self, filepath: Path = news_path) -> None:
         """
@@ -167,7 +224,7 @@ class UkrnetNewsBot(Bot):
             filepath (Path): News cache file path
         """
 
-        logging.info(f"Saving news to '{filepath}'")
+        logging.info(f"Saving recent news to '{filepath}'")
 
         if not filepath.exists():
             # Create directories if not exists
@@ -177,7 +234,7 @@ class UkrnetNewsBot(Bot):
             # Save news
             news_file.write(
                 json.dumps(
-                    [news.to_dict() for news in self.__news],
+                    self.__news,
                     indent=2,
                     ensure_ascii=False
                 ).encode("utf-8")
