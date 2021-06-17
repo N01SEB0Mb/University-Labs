@@ -5,7 +5,10 @@ from typing import *
 from pathlib import Path
 
 
-def load_json(filename: str, dirpath: Path = Path(__file__).resolve().parent) -> Dict[str, Any]:
+JSON: Type = Union[Dict[str, Any], List[Any]]
+
+
+def load_json(filename: str, dirpath: Path = Path(__file__).resolve().parent) -> JSON:
     """
     Used to load json file to dict from specified path
 
@@ -14,7 +17,7 @@ def load_json(filename: str, dirpath: Path = Path(__file__).resolve().parent) ->
         dirpath (Optional[Path]): Path to file. Default path is "config/"
 
     Returns:
-        Dict[str, Any]: Loaded json
+        JSON: Loaded json
 
     Raises:
         FileNotFoundError: If no such file or directory
