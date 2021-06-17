@@ -12,6 +12,7 @@ from .sites import *
 # Define list of available parser classes
 PARSER_CLASSES: List[Type[BaseInfoParser]] = [
     BizuaInfoParser,
+    UAMotorsInfoParser,
     MetaInfoParser
 ]
 
@@ -19,6 +20,7 @@ PARSER_CLASSES: List[Type[BaseInfoParser]] = [
 # Define public attributes of the package
 __all__ = (
     "BizuaInfoParser",
+    "UAMotorsInfoParser",
     "MetaInfoParser",
     "PARSER_CLASSES"
 )
