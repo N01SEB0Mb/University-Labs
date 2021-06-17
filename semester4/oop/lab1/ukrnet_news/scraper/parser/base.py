@@ -16,9 +16,12 @@ class BaseInfoParser(abc.ABC):
 
     url: str
 
-    @staticmethod
-    @abc.abstractmethod
-    def parse(html_code: str, page_url: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    @classmethod
+    def parse(
+            cls: Type["BaseInfoParser"],
+            html_code: str,
+            page_url: Optional[str] = None
+    ) -> Tuple[Optional[str], Optional[str], Optional[str]]:
         """
         Parse news HTML page and get info
 
@@ -28,6 +31,60 @@ class BaseInfoParser(abc.ABC):
 
         Returns:
             Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
+        """
+
+        # Parse HTML to lxml tree
+        html_tree = html.fromstring(html_code)
+
+        # Parse news info and return
+        return (
+            cls._title(html_tree),
+            cls._description(html_tree),
+            cls._image(html_tree, page_url=page_url)
+        )
+
+    @staticmethod
+    @abc.abstractmethod
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
+        """
+        Parse news HTML page and get title
+
+        Args:
+            html_tree (str): HTML page you want to parse
+
+        Returns:
+            Optional[str]: News title
+        """
+
+        pass
+
+    @staticmethod
+    @abc.abstractmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+        """
+        Parse news HTML page and get description
+
+        Args:
+            html_tree (str): HTML page you want to parse
+
+        Returns:
+            Optional[str]: News description
+        """
+
+        pass
+
+    @staticmethod
+    @abc.abstractmethod
+    def _image(html_tree: html.HtmlElement, page_url: Optional[str] = None) -> Optional[str]:
+        """
+        Parse news HTML page and get image
+
+        Args:
+            html_tree (str): HTML page you want to parse
+            page_url (str): Page URL, used for relative URLs. Defaults by None
+
+        Returns:
+            Optional[str]: News image
         """
 
         pass
@@ -45,20 +102,7 @@ class MetaInfoParser(BaseInfoParser):
     url: str = ""
 
     @staticmethod
-    def parse(html_code: str, page_url: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Parse news HTML page and gets page metadata
-
-        Args:
-            html_code (str): HTML page you want to parse
-            page_url (Optional[str]): Page URL, used for relative URLs. Defaults by None
-
-        Returns:
-            Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
-        """
-
-        # Parse HTML to lxml tree
-        html_tree = html.fromstring(html_code)
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
 
         # Get best (longest) title or empty if there are none
         title = max(
@@ -69,6 +113,11 @@ class MetaInfoParser(BaseInfoParser):
             key=lambda value: 0 if value is None else len(value)
         )
 
+        return title
+
+    @staticmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+
         # Get best (longest) description or empty if there are none
         description = max(
             html_tree.xpath('//div[@class="article-body"]//strong/text()') +  # Article description
@@ -78,6 +127,11 @@ class MetaInfoParser(BaseInfoParser):
             [None],  # empty description
             key=lambda value: 0 if value is None else len(value)
         )
+
+        return description
+
+    @staticmethod
+    def _image(html_tree: html.HtmlElement, page_url: Optional[str] = None) -> Optional[str]:
 
         # Get first image or empty if there are none
         image = list(
@@ -97,5 +151,4 @@ class MetaInfoParser(BaseInfoParser):
                 # Page url is not provided
                 image = None
 
-        # Return parsed info
-        return title, description, image
+        return image

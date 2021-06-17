@@ -3,10 +3,10 @@
 from typing import *
 from lxml import html
 
-from .base import BaseInfoParser
+from .base import MetaInfoParser
 
 
-class BizuaInfoParser(BaseInfoParser):
+class BizuaInfoParser(MetaInfoParser):
     """
     BizuaInfoParser class. Parses news info from https://bizua.org/
     """
@@ -14,19 +14,7 @@ class BizuaInfoParser(BaseInfoParser):
     url: str = "bizua.org"
 
     @staticmethod
-    def parse(html_code: str, *args, **kwargs) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Parse https://bizua.org/ news and gets info
-
-        Args:
-            html_code (str): HTML page you want to parse
-
-        Returns:
-            Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
-        """
-
-        # Parse HTML to lxml tree
-        html_tree = html.fromstring(html_code)
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
 
         # Get news title
         title = max(
@@ -35,8 +23,18 @@ class BizuaInfoParser(BaseInfoParser):
             key=lambda value: 0 if value is None else len(value)
         )
 
+        return title
+
+    @staticmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+
         # Get news description
         description = "\n\n".join(html_tree.xpath('//div[@class="entry-content"]/p/text()'))  # News description
+
+        return description
+
+    @staticmethod
+    def _image(html_tree: html.HtmlElement, page_url: Optional[str] = None) -> Optional[str]:
 
         # Get news image
         image = list(
@@ -44,10 +42,10 @@ class BizuaInfoParser(BaseInfoParser):
             [None],  # empty title
         )[0]
 
-        return title, description, image
+        return image
 
 
-class UAMotorsInfoParser(BaseInfoParser):
+class UAMotorsInfoParser(MetaInfoParser):
     """
     UAMotorsInfoParser class. Parses news info from https://uamotors.com.ua/
     """
@@ -55,19 +53,7 @@ class UAMotorsInfoParser(BaseInfoParser):
     url: str = "uamotors.com.ua"
 
     @staticmethod
-    def parse(html_code: str, *args, **kwargs) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Parse https://uamotors.com.ua/ news and gets info
-
-        Args:
-            html_code (str): HTML page you want to parse
-
-        Returns:
-            Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
-        """
-
-        # Parse HTML to lxml tree
-        html_tree = html.fromstring(html_code)
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
 
         # Get news title
         title = max(
@@ -76,19 +62,18 @@ class UAMotorsInfoParser(BaseInfoParser):
             key=lambda value: 0 if value is None else len(value)
         )
 
+        return title
+
+    @staticmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+
         # Get news description
         description = "\n \n".join(html_tree.xpath('//div[@class="post-fulltext"]/p/text()'))  # News description
 
-        # Get news image
-        image = list(
-            html_tree.xpath('//meta[@property="og:image"]/@content') +  # Meta image
-            [None],  # empty image
-        )[0]
-
-        return title, description, image
+        return description
 
 
-class AutoPoradyInfoParser(BaseInfoParser):
+class AutoPoradyInfoParser(MetaInfoParser):
     """
     AutoPoradyInfoParser class. Parses news info from https://autoporady.com/
     """
@@ -96,19 +81,7 @@ class AutoPoradyInfoParser(BaseInfoParser):
     url: str = "autoporady.com"
 
     @staticmethod
-    def parse(html_code: str, *args, **kwargs) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Parse https://autoporady.com/ news and gets info
-
-        Args:
-            html_code (str): HTML page you want to parse
-
-        Returns:
-            Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
-        """
-
-        # Parse HTML to lxml tree
-        html_tree = html.fromstring(html_code)
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
 
         # Get news title
         title = max(
@@ -117,20 +90,21 @@ class AutoPoradyInfoParser(BaseInfoParser):
             key=lambda value: 0 if value is None else len(value)
         )
 
+        return title
+
+    @staticmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+
         # Get news description
-        description = "\n \n".join(html_tree.xpath('//div[@class="td-post-content tagdiv-type"]/*'
-                                                   '[not(self::div)]/text()'))  # News description
+        description = "\n \n".join(html_tree.xpath(
+            '//div[@class="td-post-content tagdiv-type"]/*'
+            '[not(self::div)]/text()')
+        )
 
-        # Get news image
-        image = list(
-            html_tree.xpath('//meta[@property="og:image"]/@content') +  # Meta image
-            [None],  # empty image
-        )[0]
-
-        return title, description, image
+        return description
 
 
-class USIOnlineInfoParser(BaseInfoParser):
+class USIOnlineInfoParser(MetaInfoParser):
     """
     AutoPoradyInfoParser class. Parses news info from https://usionline.com/
     """
@@ -138,19 +112,7 @@ class USIOnlineInfoParser(BaseInfoParser):
     url: str = "usionline.com"
 
     @staticmethod
-    def parse(html_code: str, *args, **kwargs) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Parse https://autoporady.com/ news and gets info
-
-        Args:
-            html_code (str): HTML page you want to parse
-
-        Returns:
-            Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
-        """
-
-        # Parse HTML to lxml tree
-        html_tree = html.fromstring(html_code)
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
 
         # Get news title
         title = max(
@@ -159,15 +121,14 @@ class USIOnlineInfoParser(BaseInfoParser):
             key=lambda value: 0 if value is None else len(value)
         )
 
+        return title
+
+    @staticmethod
+    def _description(html_tree: html.HtmlElement) -> Optional[str]:
+
         # Get news description
         description = "\n \n".join(html_tree.xpath(
             '//div[@class="single-post__desc" or @class="single-post__content wysiwyg"]//text()'
-        ))  # News description
+        ))
 
-        # Get news image
-        image = list(
-            html_tree.xpath('//meta[@property="og:image"]/@content') +  # Meta image
-            [None],  # empty image
-        )[0]
-
-        return title, description, image
+        return description
