@@ -91,7 +91,7 @@ class MetaInfoParser(BaseInfoParser):
 
             if page_url:
                 # Add page url to create absolute url
-                image = page_url + image[1:]
+                image = urlparse(page_url).scheme + "://" + urlparse(page_url).netloc + image
 
             else:
                 # Page url is not provided

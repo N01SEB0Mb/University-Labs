@@ -79,7 +79,7 @@ class News:
             raise requests.exceptions.RequestException(f"Failed to get '{url}'")
 
         # Get news info
-        title, description, image_url = parser_class.parse(page_request.text)
+        title, description, image_url = parser_class.parse(page_request.text, page_url=url)
 
         if title is None or description is None:
             # No news info
