@@ -77,7 +77,7 @@ class News:
         for parser_class in PARSER_CLASSES:
             # Check if given URL contains parser's specified url
 
-            if parsed_url.netloc == parser_class.url:
+            if parser_class.url in parsed_url.netloc:
                 # Found matching parser
                 break
         else:
