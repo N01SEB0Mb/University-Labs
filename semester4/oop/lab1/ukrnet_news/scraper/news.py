@@ -3,10 +3,11 @@
 import logging
 import requests
 from typing import *
+from urllib.parse import urlparse
 
 from .parser import PARSER_CLASSES
 from ukrnet_news.utils import clear
-from ukrnet_news.config import CONFIG
+from ukrnet_news.config import CONFIG, BLACKLIST
 
 
 class News:
@@ -59,15 +60,24 @@ class News:
             News: News object
 
         Raises:
-            ModuleNotFoundError: If no parsers found for specified URL (broken PARSER_CLASSES list)
+            KeyError: If site is in the blacklist
             ValueError: If title or description are None
+            ModuleNotFoundError: If no parsers found for specified URL (broken PARSER_CLASSES list)
         """
+
+        # Parse URL
+        parsed_url = urlparse(url)
+
+        # Check blaclist
+        if parsed_url.netloc in BLACKLIST:
+            # Given URL is in the blacklist
+            raise KeyError(f"Specified URL is in the blacklist '{url}'")
 
         # Select matching parser
         for parser_class in PARSER_CLASSES:
-            # Check if given 'url' contains parser's specified url
+            # Check if given URL contains parser's specified url
 
-            if parser_class.url in url:
+            if parsed_url.netloc == parser_class.url:
                 # Found matching parser
                 break
         else:

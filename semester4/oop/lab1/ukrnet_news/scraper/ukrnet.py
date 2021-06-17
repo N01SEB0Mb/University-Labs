@@ -61,6 +61,18 @@ class UkrnetNewsScraper(BaseNewsScraper):
                     dups=None if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
                 )
 
+            except KeyError:
+                # URL is blacklisted
+                logging.warning("Given URL is in the blacklist")
+
+            except ModuleNotFoundError:
+                # Could not find parser for given URL
+                logging.error("Could not find parser for given URL")
+
+            except ValueError:
+                # Could not get news info (title or description)
+                logging.error("Could not get info (title or description)")
+
             except requests.exceptions.Timeout:
                 # Page request timeout expired
                 logging.error(f"Connection timeout expired")
@@ -68,10 +80,6 @@ class UkrnetNewsScraper(BaseNewsScraper):
             except requests.exceptions.RequestException as request_error:
                 # Could not get page
                 logging.error(str(request_error))
-
-            except ValueError:
-                # Could not get news info (title or description)
-                logging.error("Could not get info (title or description)")
 
             except BaseException:
                 # Some error occured
