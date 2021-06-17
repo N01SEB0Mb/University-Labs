@@ -10,7 +10,7 @@
 
   "news": {
     "refresh_interval": 300,
-    "posting_interval": 2,
+    "posting_interval": 5,
 
     "post_no_image": false
   }

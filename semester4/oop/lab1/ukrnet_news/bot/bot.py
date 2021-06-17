@@ -7,6 +7,7 @@ from typing import *
 from pathlib import Path
 from aiogram import Bot
 from aiogram.utils.markdown import bold, link
+from aiogram.utils.exceptions import RetryAfter
 
 from ukrnet_news.config import CONFIG, TELEGRAM
 from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper, News
@@ -82,34 +83,42 @@ class UkrnetNewsBot(Bot):
             *news (News): News you want to post
         """
 
-        # Iterate all news
+        # Iterate all news and trying to post it
         for new in news:
-            # Check if image exists
+            try:
+                # Check if image exists
 
-            if new.image_url:
-                # Has image
+                if new.image_url:
+                    # Has image
+                    await self.send_photo(
+                        chat_id=TELEGRAM["channel"]["id"],
+                        photo=str(new.image_url),
+                        caption=self.__format_news(new),
+                        parse_mode="Markdown"
+                    )
 
-                await self.send_photo(
-                    chat_id=TELEGRAM["channel"]["id"],
-                    photo=str(new.image_url),
-                    caption=self.__format_news(new),
-                    parse_mode="Markdown"
-                )
+                elif CONFIG["news"]["post_no_image"]:
+                    # Has no image, but posting is allowed
+                    await self.send_message(
+                        chat_id=TELEGRAM["channel"]["id"],
+                        text=self.__format_news(new),
+                        parse_mode="Markdown"
+                    )
 
-            elif CONFIG["news"]["post_no_image"]:
-                # Has no image, but posting is allowed
+                else:
+                    continue
 
-                await self.send_message(
-                    chat_id=TELEGRAM["channel"]["id"],
-                    text=self.__format_news(new),
-                    parse_mode="Markdown"
-                )
+            except RetryAfter:
+                # Flood control (retry after 16 seconds)
+                time.sleep(16)
+
+            except BaseException:
+                # Some exception occured
+                pass
 
             else:
-                continue
-
-            # Sleep for configured interval
-            time.sleep(CONFIG["news"]["posting_interval"])
+                # Sleep for configured interval
+                time.sleep(CONFIG["news"]["posting_interval"])
 
     def __load_news(self, filepath: Path = news_path) -> None:
         """
