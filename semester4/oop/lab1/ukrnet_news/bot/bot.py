@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import json
 import time
 from typing import *
 from pathlib import Path
@@ -61,8 +62,9 @@ class UkrnetNewsBot(Bot):
                 # No equal news found
                 to_post.append(new)
 
-        # Update existing news
+        # Update and save existing news
         self.__news = news
+        self.__save_news()
 
         # Post newly found news
         await self.__post(*to_post)
@@ -114,12 +116,12 @@ class UkrnetNewsBot(Bot):
 
         if not filepath.exists():
             # News file not exists => return load empty list
-            self.__users = []
+            self.__news = []
 
         else:
             with filepath.open("rb") as news_file:
                 # Load news
-                self.__users = json.loads(
+                self.__news = json.loads(
                     news_file.read().decode("utf-8")
                 )
 
@@ -133,13 +135,13 @@ class UkrnetNewsBot(Bot):
 
         if not filepath.exists():
             # Create directories if not exists
-            filepath.mkdir(parents=True, exist_ok=True)
+            filepath.parent.mkdir(parents=True, exist_ok=True)
 
         with filepath.open("wb") as news_file:
             # Save news
             news_file.write(
                 json.dumps(
-                    self.__news,
+                    [news.to_dict() for news in self.__news],
                     indent=2,
                     ensure_ascii=True
                 ).encode("utf-8")

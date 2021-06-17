@@ -92,3 +92,20 @@ class News:
             image_url=image_url,
             *args, **kwargs
         )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Converting News object to dictionary
+
+        Returns:
+            Dict[str, Any]: Converted News
+        """
+
+        return {
+            "id": self.id,
+            "url": self.url,
+            "title": self.title,
+            "description": self.description,
+            "image_url": self.image_url,
+            "dups": self.dups
+        }
