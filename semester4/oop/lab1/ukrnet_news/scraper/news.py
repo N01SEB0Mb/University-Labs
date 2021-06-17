@@ -49,6 +49,9 @@ class News:
         # Define news dups
         self.dups: List[int] = dups or []
 
+        # Truncate news text to limit
+        self.__truncate()
+
     @classmethod
     def from_url(cls, url: str, *args: Any, **kwargs: Any) -> "News":
         """
@@ -148,3 +151,28 @@ class News:
             "image_url": self.image_url,
             "dups": self.dups
         }
+
+    def __truncate(self, max_lenght: int = CONFIG["news"]["max_text_length"]) -> None:
+        """
+        Truncates news text to maximum limit
+
+        Args:
+            max_lenght (int): Max text length you want to get. Defaults by configured
+        """
+
+        # Check if maximum length is exceeded
+        if len(self.title) + len(self.description) + 16 > max_lenght:
+
+            # Cut description to maximum possible
+            while len(self.title) + len(self.description) + 16 > max_lenght:
+                self.description = self.description[:-1]
+
+            # Cut last word
+            self.description = self.description.rsplit(" ", 1)[0]
+
+            # Remove special characters at the end of description
+            while self.description[-1] in " .,;:()'\"-":
+                self.description = self.description[:-1]
+
+            # Add ellipsis to the end of description
+            self.description += "..."
