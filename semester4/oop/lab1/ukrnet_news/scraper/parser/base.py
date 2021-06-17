@@ -18,12 +18,13 @@ class BaseInfoParser(abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def parse(html_code: str) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    def parse(html_code: str, page_url: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
         """
         Parse news HTML page and get info
 
         Args:
             html_code (str): HTML page you want to parse
+            page_url (Optional[str]): Page URL, used for relative URLs. Defaults by None
 
         Returns:
             Tuple[Optional[str], Optional[str], Optional[str]): News title, description and image URL
