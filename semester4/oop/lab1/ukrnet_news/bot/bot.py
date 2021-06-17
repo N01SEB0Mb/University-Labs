@@ -2,12 +2,13 @@
 
 import json
 import time
+import logging
 import traceback
 from typing import *
 from pathlib import Path
 from aiogram import Bot
 from aiogram.utils.markdown import bold, link
-from aiogram.utils.exceptions import RetryAfter
+from aiogram.utils.exceptions import RetryAfter, WrongFileIdentifier
 
 from ukrnet_news.config import CONFIG, TELEGRAM
 from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper, News
@@ -83,11 +84,18 @@ class UkrnetNewsBot(Bot):
             *news (News): News you want to post
         """
 
-        # Iterate all news and trying to post it
-        for new in news:
-            try:
-                # Check if image exists
+        # Log number of news
+        logging.info(f"News to post: {len(news)}")
 
+        # Iterate all news
+        for number, new in enumerate(news):
+
+            logging.info(f"Posting ({number + 1}/{len(news)}): <id={new.id}> <url={new.url}>")
+
+            # Trying to post news
+            try:
+
+                # Check if image exists
                 if new.image_url:
                     # Has image
                     await self.send_photo(
@@ -97,24 +105,32 @@ class UkrnetNewsBot(Bot):
                         parse_mode="Markdown"
                     )
 
-                elif CONFIG["news"]["post_no_image"]:
-                    # Has no image, but posting is allowed
-                    await self.send_message(
-                        chat_id=TELEGRAM["channel"]["id"],
-                        text=self.__format_news(new),
-                        parse_mode="Markdown"
-                    )
-
                 else:
-                    continue
+                    # Has no image
+                    logging.warning("No image")
+
+                    if CONFIG["news"]["post_no_image"]:
+                        # Posting is allowed
+                        await self.send_message(
+                            chat_id=TELEGRAM["channel"]["id"],
+                            text=self.__format_news(new),
+                            parse_mode="Markdown"
+                        )
+                    else:
+                        continue
+
+            except WrongFileIdentifier:
+                # Invalid image URL
+                logging.info(f"Invalid image URL specified: '{new.image_url}'")
 
             except RetryAfter:
                 # Flood control (retry after 16 seconds)
+                logging.info("Flood control: retry after 16 seconds")
                 time.sleep(16)
 
             except BaseException:
                 # Some exception occured
-                pass
+                logging.error(traceback.format_exc())
 
             else:
                 # Sleep for configured interval
@@ -127,6 +143,8 @@ class UkrnetNewsBot(Bot):
         Args:
             filepath (Path): News cache file path
         """
+
+        logging.info(f"Loading news from '{filepath}'")
 
         if not filepath.exists():
             # News file not exists => return load empty list
@@ -148,6 +166,8 @@ class UkrnetNewsBot(Bot):
         Args:
             filepath (Path): News cache file path
         """
+
+        logging.info(f"Saving news to '{filepath}'")
 
         if not filepath.exists():
             # Create directories if not exists

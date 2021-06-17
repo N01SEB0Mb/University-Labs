@@ -1,5 +1,8 @@
 # coding=utf-8
 
+import logging
+import traceback
+import requests.exceptions
 from typing import *
 
 from .news import News
@@ -30,6 +33,7 @@ class UkrnetNewsScraper(BaseNewsScraper):
         """
 
         # Request latest news
+        logging.info(f"Getting latest news ({category})")
         news_request = self.get(
             self.Links.get_news.format(category),
             timeout=self.timeout
@@ -37,11 +41,19 @@ class UkrnetNewsScraper(BaseNewsScraper):
 
         if news_request.status_code != 200:
             # News request failed
-            return []
+            return None
 
         # Iterate found news
-        for news in news_request.json()["tops"]:
+        for number, news in enumerate(news_request.json()["tops"]):
             try:
+                if "News" in news:
+                    # Get first news from list
+                    news = news["News"][0]
+
+                # Log current request
+                logging.info(f"Get ({number + 1}/{len(news_request.json()['tops'])}): "
+                             f"<id={news['NewsId']}> <url={news['Url']}>")
+
                 # Try yielding news
                 yield News.from_url(
                     news["Url"],
@@ -49,6 +61,18 @@ class UkrnetNewsScraper(BaseNewsScraper):
                     dups=None if "Dups" not in news else list(map(lambda dup: dup["NewsId"], news["Dups"]))
                 )
 
+            except requests.exceptions.Timeout:
+                # Page request timeout expired
+                logging.error(f"Connection timeout expired")
+
+            except requests.exceptions.RequestException as request_error:
+                # Could not get page
+                logging.error(str(request_error))
+
+            except ValueError:
+                # Could not get news info (title or description)
+                logging.error("Could not get info (title or description)")
+
             except BaseException:
                 # Some error occured
-                pass
+                logging.error(traceback.format_exc())

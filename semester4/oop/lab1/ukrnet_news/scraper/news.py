@@ -1,9 +1,11 @@
 # coding=utf-8
 
+import logging
 import requests
 from typing import *
 
 from .parser import PARSER_CLASSES
+from ukrnet_news.config import CONFIG
 
 
 class News:
@@ -72,7 +74,11 @@ class News:
             raise ModuleNotFoundError("Parser not found for specified URL")
 
         # Get news page
-        page_request = requests.get(url)
+        page_request = requests.get(
+            url,
+            headers=CONFIG["connection"]["headers"],
+            timeout=CONFIG["connection"]["timeout"]
+        )
 
         if page_request.status_code != 200:
             # Failed to get news page
@@ -83,7 +89,7 @@ class News:
 
         if title is None or description is None:
             # No news info
-            raise ValueError(f"Couldn't get news page '{url}'")
+            raise ValueError(f"Couldn't get news page info '{url}'")
 
         return cls(
             url=url,

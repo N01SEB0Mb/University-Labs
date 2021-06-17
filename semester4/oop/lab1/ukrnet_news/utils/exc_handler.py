@@ -1,5 +1,7 @@
 # coding=utf-8
 
+import logging
+import traceback
 from typing import *
 
 
@@ -32,6 +34,8 @@ def exception_handler(function: Callable) -> Callable:
 
         except BaseException:
             # Some exception raised
+            logging.exception(traceback.format_exc())
+
             return None
 
         else:
@@ -70,6 +74,8 @@ def async_exception_handler(function: Callable) -> Callable:
 
         except BaseException:
             # Some exception raised
+            logging.exception(traceback.format_exc())
+
             return None
 
         else:
