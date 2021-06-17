@@ -14,6 +14,7 @@ PARSER_CLASSES: List[Type[BaseInfoParser]] = [
     BizuaInfoParser,
     UAMotorsInfoParser,
     USIOnlineInfoParser,
+    AutoDreamInfoParser,
     AutoPoradyInfoParser,
     MetaInfoParser
 ]
@@ -24,6 +25,7 @@ __all__ = (
     "BizuaInfoParser",
     "UAMotorsInfoParser",
     "USIOnlineInfoParser",
+    "AutoDreamInfoParser",
     "AutoPoradyInfoParser",
     "MetaInfoParser",
     "PARSER_CLASSES"

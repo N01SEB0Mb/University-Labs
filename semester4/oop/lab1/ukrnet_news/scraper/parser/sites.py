@@ -106,7 +106,7 @@ class AutoPoradyInfoParser(MetaInfoParser):
 
 class USIOnlineInfoParser(MetaInfoParser):
     """
-    AutoPoradyInfoParser class. Parses news info from https://usionline.com/
+    USIOnlineInfoParser class. Parses news info from https://usionline.com/
     """
 
     url: str = "usionline.com"
@@ -132,3 +132,23 @@ class USIOnlineInfoParser(MetaInfoParser):
         ))
 
         return description
+
+
+class AutoDreamInfoParser(MetaInfoParser):
+    """
+    AutoDreamInfoParser class. Parses news info from https://usionline.com/
+    """
+
+    url: str = "avtodream.org"
+
+    @staticmethod
+    def _title(html_tree: html.HtmlElement) -> Optional[str]:
+
+        # Get news title
+        title = max(
+            html_tree.xpath('//h1[@id="news-title"]/text()') +  # News title
+            [None],  # empty title
+            key=lambda value: 0 if value is None else len(value)
+        )
+
+        return title
