@@ -59,6 +59,10 @@ class UkrnetNewsBot(Bot):
                 # Check if news equal
                 if new.id == existing_new.id:
                     break
+
+                # Check if news are dups
+                if new.id in existing_new.dups or existing_new.id in new.dups:
+                    break
             else:
                 # No equal news found
                 to_post.append(new)
