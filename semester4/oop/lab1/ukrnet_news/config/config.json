@@ -1,6 +1,7 @@
 {
   "connection": {
     "timeout": 8,
+    "max_redirects": 5,
 
     "headers": {
       "Connection": "keep-alive",

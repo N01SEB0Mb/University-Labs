@@ -39,6 +39,9 @@ class BaseNewsScraper(requests.Session, abc.ABC):
         # Disable SSL verify
         self.verify = False
 
+        # Set max allowed number of redirects
+        self.max_redirects = CONFIG["connection"]["max_redirects"]
+
     @abc.abstractmethod
     def get_news(self, category: str) -> Generator[Dict, None, None]:
         """
