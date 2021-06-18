@@ -9,7 +9,7 @@ class BaseNewsException(Exception, ABC):
     BaseNewsException class. Commonn class for all package exceptions
     """
 
-    __msg: str
+    _msg: str
 
     def __init__(self, err_msg: str = "", *args: Any, **kwargs: Any) -> None:
         """
@@ -21,7 +21,7 @@ class BaseNewsException(Exception, ABC):
             **kwargs (Any): BaseNewsException **kwargs
         """
 
-        super(BaseNewsException, self).__init__(err_msg or self.__msg, *args, **kwargs)
+        super(BaseNewsException, self).__init__(err_msg or self._msg, *args, **kwargs)
 
 
 class ParserNotFoundError(BaseNewsException):
@@ -29,7 +29,7 @@ class ParserNotFoundError(BaseNewsException):
     No parser found for given website
     """
 
-    __msg = "No parser found for given website"
+    _msg = "No parser found for given website"
 
 
 class EmptyNewsError(BaseNewsException):
@@ -37,7 +37,7 @@ class EmptyNewsError(BaseNewsException):
     No news info provided (title or description is empty)
     """
 
-    __msg = "No news info provided"
+    _msg = "No news info provided"
 
 
 class InBlacklistError(BaseNewsException):
@@ -45,4 +45,4 @@ class InBlacklistError(BaseNewsException):
     Given website is in the blacklist
     """
 
-    __msg = "Given website is in the blacklist"
+    _msg = "Given website is in the blacklist"
