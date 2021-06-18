@@ -5,8 +5,6 @@ import requests
 from typing import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from .news import News
-
 from ukrnet_news.config import CONFIG
 
 
@@ -42,7 +40,7 @@ class BaseNewsScraper(requests.Session, abc.ABC):
         self.verify = False
 
     @abc.abstractmethod
-    def get_news(self, category: str) -> Generator[News, None, None]:
+    def get_news(self, category: str) -> Generator[Dict, None, None]:
         """
         Get last news from specified category
 
@@ -50,7 +48,7 @@ class BaseNewsScraper(requests.Session, abc.ABC):
             category (str): Name of category
 
         Yields:
-            News: Last news from specified category
+            Dict: Last news from specified category
         """
 
         pass

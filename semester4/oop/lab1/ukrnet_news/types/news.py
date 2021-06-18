@@ -5,10 +5,11 @@ import requests
 from typing import *
 from urllib.parse import urlparse
 
-from .parser import PARSER_CLASSES
 from ukrnet_news.utils import clear
 from ukrnet_news.config import CONFIG, BLACKLIST
-from ukrnet_news.exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
+from ukrnet_news.scraper.parser import PARSER_CLASSES
+
+from .exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
 
 
 class News:

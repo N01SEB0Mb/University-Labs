@@ -4,7 +4,6 @@ import logging
 import traceback
 from typing import *
 
-from .news import News
 from .basescraper import BaseNewsScraper
 
 
@@ -28,7 +27,7 @@ class UkrnetNewsScraper(BaseNewsScraper):
             category (str): Name of category
 
         Yields:
-            News: Last news from specified category
+            Dict: Last news from specified category
         """
 
         # Request latest news

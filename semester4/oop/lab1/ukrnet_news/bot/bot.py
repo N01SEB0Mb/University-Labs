@@ -12,9 +12,10 @@ from aiogram import Bot
 from aiogram.utils.markdown import bold, link
 from aiogram.utils.exceptions import RetryAfter, WrongFileIdentifier, BadRequest
 
+from ukrnet_news.types import News
 from ukrnet_news.config import CONFIG, TELEGRAM
-from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper, News
-from ukrnet_news.exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
+from ukrnet_news.scraper import BaseNewsScraper, UkrnetNewsScraper
+from ukrnet_news.types.exceptions import ParserNotFoundError, EmptyNewsError, InBlacklistError
 
 
 class UkrnetNewsBot(Bot):
