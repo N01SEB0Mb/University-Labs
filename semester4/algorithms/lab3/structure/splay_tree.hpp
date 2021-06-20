@@ -83,6 +83,7 @@ namespace structures {
             Node* root;
 
             void splay(Node* to_splay, Node* root_splay) {
+                std::cout << std::endl;
                 std::cout << "To splay:   " << to_splay->value << std::endl;
                 std::cout << "Root splay: " << root_splay->value << std::endl;
 
@@ -117,7 +118,7 @@ namespace structures {
             }
 
             void zig(Node* to_splay, bool is_left) {
-                std::cout << "Zig step" << std::endl;
+                std::cout << "> Zig step" << std::endl;
 
                 Node* parent = to_splay->parent;
 
@@ -155,7 +156,7 @@ namespace structures {
             }
 
             void zig_zig(Node* to_splay, bool is_left) {
-                std::cout<< "Zig-Zig step" << std::endl;
+                std::cout<< "> Zig-Zig step" << std::endl;
 
                 Node* parent = to_splay->parent;
                 Node* gran = parent->parent;
@@ -209,7 +210,7 @@ namespace structures {
             }
 
             void zig_zag(Node* to_splay, bool is_left) {
-                std::cout<< "Zig-Zag step" << std::endl;
+                std::cout<< "> Zig-Zag step" << std::endl;
 
                 Node* parent = to_splay->parent;
                 Node* gran = parent->parent;
@@ -375,6 +376,7 @@ namespace structures {
                 }
 
                 if (node == this->root) {
+                    std::cout << std::endl;
                     std::cout << node->value;
                     std::cout << " (Parent)" << std::endl;
                 }
