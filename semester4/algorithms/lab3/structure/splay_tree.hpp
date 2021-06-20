@@ -375,16 +375,16 @@ namespace structures {
                     return;
                 }
 
+                for (int space = 0; space < depth * SPACES; ++space) {
+                    std::cout << " ";
+                }
+
                 if (node == this->root) {
                     std::cout << std::endl;
                     std::cout << node->value;
                     std::cout << " (Parent)" << std::endl;
                 }
                 else {
-                    for (int space = 0; space < depth * SPACES; ++space) {
-                        std::cout << " ";
-                    }
-
                     std::cout << node->value;
                     std::cout << (is_left ? " (L) " : " (R) ");
                     // std::cout << "[Parent=" << node->parent->value << "]";
