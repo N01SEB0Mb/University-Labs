@@ -88,7 +88,7 @@ namespace structures {
                     std::cout << std::endl;
                 }
 
-                this->root = constructBST(nullptr, 1, size);
+                this->root = initializeBST(nullptr, 1, size);
             }
 
             ~OptimalBST() {
@@ -186,7 +186,7 @@ namespace structures {
                 std::cout << std::endl;
             }
 
-            Node *constructBST(Node *node, int low, int high) {
+            Node *initializeBST(Node *node, int low, int high) {
                 if (low > high) {
                     return new Node(T(), fict_probabilities[high]);
                 }
@@ -194,8 +194,8 @@ namespace structures {
                 int current_index = roots[low][high] - 1;
                 Node *temp_root = new Node(elements[current_index], probabilities[current_index]);
 
-                temp_root->left = constructBST(temp_root, low, roots[low][high] - 1);
-                temp_root->right = constructBST(temp_root, roots[low][high] + 1, high);
+                temp_root->left = initializeBST(temp_root, low, roots[low][high] - 1);
+                temp_root->right = initializeBST(temp_root, roots[low][high] + 1, high);
                 temp_root->parent = node;
 
                 return temp_root;
@@ -222,6 +222,7 @@ namespace structures {
 
                 if (node == this->root) {
                     std::cout << node->value;
+                    std::cout << " (Parent)";
                     std::cout << " <Probability=" << node->probability << ">";
                     std::cout << std::endl;
                 }
