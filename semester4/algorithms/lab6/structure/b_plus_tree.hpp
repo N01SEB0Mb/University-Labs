@@ -29,45 +29,45 @@ namespace structures {
                     return;
                 }
 
-                Node* toInsert = findLeaf(root, key);
+                Node* to_insert = findLeaf(root, key);
 
                 int pos = 0;
 
-                while (pos < toInsert->elements.size() && toInsert->elements[pos].key < key) {
+                while (pos < to_insert->elements.size() && to_insert->elements[pos].key < key) {
                     pos++;
                 }
 
-                auto it = toInsert->elements.begin() + pos;
+                auto it = to_insert->elements.begin() + pos;
 
-                toInsert->elements.template emplace(it,  *element);
-                toInsert->child.template emplace_back(nullptr);
+                to_insert->elements.emplace(it, *element);
+                to_insert->child.emplace_back(nullptr);
 
-                if (toInsert->elements.size() == power * 2) {
-                    splitNode(toInsert);
+                if (to_insert->elements.size() == power * 2) {
+                    splitNode(to_insert);
                 }
             }
 
             void erase(K key) {
-                Node* toDelete = findLeaf(root, key);
+                Node* to_delete = findLeaf(root, key);
 
-                if (toDelete == root && toDelete->elements.size() == 1) {
+                if (to_delete == root && to_delete->elements.size() == 1) {
                     root = nullptr;
                     return;
                 }
 
-                erase(toDelete, key);
+                erase(to_delete, key);
             }
 
             T search(K key) {
-                Node* toFind = findLeaf(root, key);
+                Node* to_find = findLeaf(root, key);
 
                 int pos = 0;
 
-                while (pos < toFind->elements.size() && toFind->elements[pos].key < key) {
+                while (pos < to_find->elements.size() && to_find->elements[pos].key < key) {
                     pos++;
                 }
 
-                return toFind->elements[pos].value;
+                return to_find->elements[pos].value;
             }
 
             void output() {
@@ -78,53 +78,53 @@ namespace structures {
 
             class Element {
 
-            public:
+                public:
 
-                K key;
-                T value;
+                    K key;
+                    T value;
 
-                Element(K key, T value) {
-                    this->key = key;
-                    this->value = value;
-                }
-            };
+                    Element(K key, T value) {
+                        this->key = key;
+                        this->value = value;
+                    }
+                };
 
             class Node {
 
-            public:
+                public:
 
-                bool isLeaf{};
-                std::vector<Element> elements;
-                std::vector<Node*> child;
-                Node* parent;
-                Node* left_neighbor;
-                Node* right_neighbor;
+                    bool is_leaf{};
+                    std::vector<Element> elements;
+                    std::vector<Node*> child;
+                    Node* parent;
+                    Node* left_neighbor;
+                    Node* right_neighbor;
 
-                Node(bool isLeaf, const std::vector<Element>& elements, const std::vector<Node*>& child) {
-                    this->isLeaf = isLeaf;
-                    this->elements = elements;
-                    this->child = child;
+                    Node(bool is_leaf, const std::vector<Element>& elements, const std::vector<Node*>& child) {
+                        this->is_leaf = is_leaf;
+                        this->elements = elements;
+                        this->child = child;
 
-                    parent = left_neighbor = right_neighbor = nullptr;
-                }
-            };
+                        parent = left_neighbor = right_neighbor = nullptr;
+                    }
+                };
 
             int power{};
 
             Node* root;
 
-            Node* findLeaf(Node* node, K toFind) {
-                if (node->isLeaf) {
+            Node* findLeaf(Node* node, K to_find) {
+                if (node->is_leaf) {
                     return node;
                 }
 
                 for (int i = 0; i < node->elements.size(); ++i) {
-                    if (toFind < node->elements[i].key) {
-                        return findLeaf(node->child[i], toFind);
+                    if (to_find < node->elements[i].key) {
+                        return findLeaf(node->child[i], to_find);
                     }
                 }
 
-                return findLeaf(node->child[node->child.size() - 1], toFind);
+                return findLeaf(node->child[node->child.size() - 1], to_find);
             }
 
             void splitNode(Node* to_split) {
@@ -134,18 +134,18 @@ namespace structures {
                 Element middle = to_split->elements[power];
 
                 for (int i = 0; i < power - 1; ++i) {
-                    elements_split.template emplace_back(to_split->elements[i + power + 1]);
-                    child_split.template emplace_back(to_split->child[i + power + 1]);
+                    elements_split.emplace_back(to_split->elements[i + power + 1]);
+                    child_split.emplace_back(to_split->child[i + power + 1]);
                 }
 
-                child_split.template emplace_back(to_split->child[power * 2]);
+                child_split.emplace_back(to_split->child[power * 2]);
 
-                if (to_split->isLeaf) {
-                    elements_split.template emplace(elements_split.begin(), middle);
-                    child_split.template emplace(child_split.begin(), nullptr);
+                if (to_split->is_leaf) {
+                    elements_split.emplace(elements_split.begin(), middle);
+                    child_split.emplace(child_split.begin(), nullptr);
                 }
 
-                Node* new_node = new Node(to_split->isLeaf, elements_split, child_split);
+                Node* new_node = new Node(to_split->is_leaf, elements_split, child_split);
 
                 for (int i = 0; i < power; ++i) {
                     to_split->elements.pop_back();
@@ -178,10 +178,10 @@ namespace structures {
                     }
 
                     auto first = parent->elements.begin() + pos;
-                    parent->elements.template emplace(first, middle);
+                    parent->elements.emplace(first, middle);
 
                     auto second = parent->child.begin() + pos + 1;
-                    parent->child.template emplace(second, new_node);
+                    parent->child.emplace(second, new_node);
 
                     if (parent->elements.size() == 2 * power) {
                         splitNode(parent);
@@ -212,9 +212,9 @@ namespace structures {
                 Node* left = to_delete->left_neighbor;
 
                 if (left != nullptr && left->elements.size() > power - 1) {
-                    to_delete->elements.template emplace(to_delete->elements.begin(),
+                    to_delete->elements.emplace(to_delete->elements.begin(),
                                                          left->elements[left->elements.size() - 1]);
-                    to_delete->child.template emplace(to_delete->child.begin(),
+                    to_delete->child.emplace(to_delete->child.begin(),
                                                       left->child[left->child.size() - 1]);
 
                     left->elements.pop_back();
@@ -223,8 +223,8 @@ namespace structures {
                     updateKeys(to_delete);
                 }
                 else if (right != nullptr && right->elements.size() > power - 1) {
-                    to_delete->elements.template emplace_back(right->elements[0]);
-                    to_delete->child.template emplace_back(right->child[0]);
+                    to_delete->elements.emplace_back(right->elements[0]);
+                    to_delete->child.emplace_back(right->child[0]);
 
                     right->elements.erase(right->elements.begin());
                     right->child.erase(right->child.begin());
@@ -234,11 +234,11 @@ namespace structures {
                 else {
                     if (left != nullptr) {
                         for (int i = 0; i < to_delete->elements.size(); ++i) {
-                            left->elements.template emplace_back(to_delete->elements[i]);
-                            left->child.template emplace_back(to_delete->child[i]);
+                            left->elements.emplace_back(to_delete->elements[i]);
+                            left->child.emplace_back(to_delete->child[i]);
                         }
 
-                        left->child.template emplace_back(to_delete->child[to_delete->child.size() - 1]);
+                        left->child.emplace_back(to_delete->child[to_delete->child.size() - 1]);
                         left->right_neighbor = right;
 
                         if (right != nullptr) {
@@ -251,11 +251,11 @@ namespace structures {
                     }
                     else if (right != nullptr) {
                         for (int i = 0; i < right->elements.size(); ++i) {
-                            to_delete->elements.template emplace_back(right->elements[i]);
-                            to_delete->child.template emplace_back(right->child[i]);
+                            to_delete->elements.emplace_back(right->elements[i]);
+                            to_delete->child.emplace_back(right->child[i]);
                         }
 
-                        to_delete->child.template emplace_back(right->child[right->child.size() - 1]);
+                        to_delete->child.emplace_back(right->child[right->child.size() - 1]);
                         to_delete->right_neighbor = right->right_neighbor;
 
                         if (to_delete->right_neighbor != nullptr) {
@@ -278,11 +278,11 @@ namespace structures {
                     return;
                 }
 
-                if (to_update->child.size() - to_update->elements.size() > 1 && !to_update->isLeaf) {
+                if (to_update->child.size() - to_update->elements.size() > 1 && !to_update->is_leaf) {
                     to_update->elements.clear();
 
                     for (int i = 1; i < to_update->child.size(); ++i) {
-                        to_update->elements.template emplace_back(to_update->child[i]->elements[0]);
+                        to_update->elements.emplace_back(to_update->child[i]->elements[0]);
                     }
                 }
 
@@ -331,7 +331,7 @@ namespace structures {
                     std::cout << std::endl;
                 }
 
-                if (node->isLeaf) {
+                if (node->is_leaf) {
                     return;
                 }
 
