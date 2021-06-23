@@ -29,11 +29,11 @@ namespace structures {
             }
 
             void erase(const T& t) {
-                Node* toDelete = erase(this->root, t);
+                Node* to_delete = erase(this->root, t);
 
-                std::cout << toDelete->value << std::endl;
+                std::cout << to_delete->value << std::endl;
 
-                splay(toDelete, this->root);
+                splay(to_delete, this->root);
                 merge(this->root->left, this->root->right);
 
                 if (this->root) {
@@ -330,7 +330,6 @@ namespace structures {
             }
 
             void split(const T& t) {
-
                 Node* successor;
                 Node* temp = this->root;
 
