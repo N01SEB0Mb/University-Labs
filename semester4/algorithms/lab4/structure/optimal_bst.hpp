@@ -3,6 +3,8 @@
 
 #define SPACES 2
 #define SEPARATORS 64
+#define P 101
+#define Q 3571
 
 #include <cfloat>  // for double max value
 #include <vector>
@@ -35,9 +37,12 @@ namespace structures {
                        const std::vector<double> &probabilities,
                        const std::vector<double> &fict_probabilities) {
                 int size = elements.size();
-
                 this->root = nullptr;
-                this->elements = elements;
+
+                for (auto &element: elements) {
+                    this->elements.push_back(element);
+                }
+
                 this->probabilities = probabilities;
                 this->fict_probabilities = fict_probabilities;
 
@@ -118,26 +123,43 @@ namespace structures {
 
             class Node {
 
-            public:
+                public:
 
-                T value;
-                Node *parent;
-                Node *left;
-                Node *right;
-                double probability{};
+                    T value;
+                    std::string name;
+                    double probability{};
 
-                Node() {
-                    left = right = parent = nullptr;
-                    probability = 0;
-                }
+                    Node *parent;
+                    Node *left;
+                    Node *right;
 
-                Node(const T &value, double probability) {
-                    this->value = value;
-                    left = right = parent = nullptr;
-                    this->probability = probability;
-                }
+                    Node() {
+                        left = right = parent = nullptr;
+                        probability = 0;
+                    }
 
-                ~Node() = default;
+                    Node(const std::string &name, double probability) {
+                        this->name = name;
+                        this->value = hash(value);
+                        this->probability = probability;
+
+                        left = right = parent = nullptr;
+                    }
+
+                    ~Node() = default;
+
+                private:
+                    int hash(std::string &string) {
+                        int result = 0;
+
+                        for (char c: string) {
+                            if (c != ' ') {
+                                result = (P * result + std::tolower(c)) % Q;
+                            }
+                        }
+
+                        return result;
+                    }
             };
 
             Node *root;
@@ -221,13 +243,13 @@ namespace structures {
                 }
 
                 if (node == this->root) {
-                    std::cout << node->value;
+                    std::cout << node->name;
                     std::cout << " (Parent)";
                     std::cout << " <Probability=" << node->probability << ">";
                     std::cout << std::endl;
                 }
                 else {
-                    std::cout << node->value;
+                    std::cout << node->name;
                     std::cout << (is_left ? " (L)" : " (R)");
                     std::cout << " <Probability=" << node->probability << ">";
                     std::cout << std::endl;
