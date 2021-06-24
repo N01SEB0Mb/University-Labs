@@ -31,41 +31,67 @@ void print_separator(const std::string& text, const std::string& value) {
 int main() {
     auto* tree = new structures::BPlusTree<int, int>(2);
 
-    int numbers[10] = {6, 9, 11, 5, 4, 7, 3, 1, 2, 8};
+    std::vector<std::string> professors = {
+            "Ivanov I. I.",
+            "Borisov B. B.",
+            "Foobar F. B.",
+            "Olexandrov O. O.",
+            "Nikolaev N. N."
+    };
+    std::vector<std::vector<std::string>> professor_courses = {
+            {"OOP", "Algorithms"},
+            {"Linear Algebra"},
+            {},
+            {"Math Analysis", "Discrete Math", "Linear Algebra"},
+            {"Philosophy", "Physics"}
+    };
 
     // Insert
 
-    for (int &key: numbers) {
-        tree->insert(key, 0);
+    for (int i = 0; i < 5; ++i) {
+        tree->insert(professors[i], professor_courses[i]);
 
-        print_separator("Insert", &key);
+        print_separator("Insert", professors[i]);
+
+        for (auto &courses: professor_courses[i]) {
+            std::cout << courses << std::endl;
+        }
+
 
         tree->output();
     }
 
-    tree->insert(10, 3);
+    // Insert one value
 
-    print_separator("Insert", "10, 3");
+    std::string name = "Test N. T.";
+    std::vector<std::string> courses = {"Theory of Algorithms"};
+
+    tree->insert(name, courses);
+
+    print_separator("Insert", "Test N. T., {'Theory of Algorithms'}");
 
     tree->output();
 
     // Search
 
-    print_separator("Search by key", "4");
-    std::cout << tree->search(4) << std::endl;
+    std::vector<std::string> search_names = {"Ivanov I. I.", "Borisov B. B."};
 
-    print_separator("Search by key", "8");
-    std::cout << tree->search(8) << std::endl;
+    for (auto &search_name: search_names) {
+        print_separator("Search by key", search_name);
 
-    print_separator("Search by key", "10");
-    std::cout << tree->search(10) << std::endl;
+        auto found_courses = tree->search(search_name);
+
+        for (auto &found_course: found_courses) {
+            std::cout << found_course << " " << std::endl;
+        }
+    }
 
     // Delete
 
-    for (int i = 1; i <= 11; i++) {
-        tree->erase(i);
+    for (int i = 0; i < 3; ++i) {
+        tree->erase(professors[i]);
 
-        print_separator("Delete", &i);
+        print_separator("Delete", professors[i]);
 
         tree->output();
     }

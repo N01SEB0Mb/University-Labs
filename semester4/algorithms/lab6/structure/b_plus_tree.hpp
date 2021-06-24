@@ -1,8 +1,10 @@
 #ifndef LAB3_B_PLUS_HPP
 #define LAB3_B_PLUS_HPP
 
-#define SPACES 2
-#define SEPARATORS 64
+#define SPACES 3
+#define SEPARATORS 100
+#define P 101
+#define Q 3571
 
 #include <vector>
 #include <iostream>
@@ -20,8 +22,8 @@ namespace structures {
                 this->power = power;
             }
 
-            void insert(K key, T value) {
-                auto* element = new Element(key, value);
+            void insert(std::string &name, std::vector<std::string> &courses) {
+                auto* element = new Element(name, courses);
 
                 if (root == nullptr) {
                     std::vector<Element> vector = {*element};
@@ -29,11 +31,11 @@ namespace structures {
                     return;
                 }
 
-                Node* to_insert = findLeaf(root, key);
+                Node* to_insert = findLeaf(root, name);
 
                 int pos = 0;
 
-                while (pos < to_insert->elements.size() && to_insert->elements[pos].key < key) {
+                while (pos < to_insert->elements.size() && to_insert->elements[pos].key < Element(name).key) {
                     pos++;
                 }
 
@@ -47,27 +49,27 @@ namespace structures {
                 }
             }
 
-            void erase(K key) {
-                Node* to_delete = findLeaf(root, key);
+            void erase(std::string &name) {
+                Node* to_delete = findLeaf(root, name);
 
                 if (to_delete == root && to_delete->elements.size() == 1) {
                     root = nullptr;
                     return;
                 }
 
-                erase(to_delete, key);
+                erase(to_delete, name);
             }
 
-            T search(K key) {
-                Node* to_find = findLeaf(root, key);
+            std::vector<std::string> search(std::string &name) {
+                Node* to_find = findLeaf(root, name);
 
                 int pos = 0;
 
-                while (pos < to_find->elements.size() && to_find->elements[pos].key < key) {
+                while (pos < to_find->elements.size() && to_find->elements[pos].key < Element(name).key) {
                     pos++;
                 }
 
-                return to_find->elements[pos].value;
+                return to_find->elements[pos].courses;
             }
 
             void output() {
@@ -81,13 +83,45 @@ namespace structures {
                 public:
 
                     K key;
+                    std::string name;
+
+                    std::vector<std::string> courses;
                     T value;
 
-                    Element(K key, T value) {
-                        this->key = key;
-                        this->value = value;
+                    explicit Element(std::string &name) {
+                        this->name = name;
+                        this->key = hash(name);
+
+                        this->value = 0;
                     }
-                };
+
+                    Element(std::string &name, std::vector<std::string> &courses) {
+                        this->name = name;
+                        this->key = hash(name);
+
+                        this->courses = courses;
+                        this->value = courses.size();
+                    }
+
+                    void addCourse(std::string &course) {
+                        this->courses.push_back(course);
+                        this->value++;
+                    }
+
+                private:
+
+                    int hash(std::string &string) {
+                        int result = 0;
+
+                        for (char c: string) {
+                            if (c != ' ') {
+                                result = (P * result + std::tolower(c)) % Q;
+                            }
+                        }
+
+                        return result;
+                    }
+            };
 
             class Node {
 
@@ -113,13 +147,13 @@ namespace structures {
 
             Node* root;
 
-            Node* findLeaf(Node* node, K to_find) {
+            Node* findLeaf(Node* node, std::string &to_find) {
                 if (node->is_leaf) {
                     return node;
                 }
 
                 for (int i = 0; i < node->elements.size(); ++i) {
-                    if (to_find < node->elements[i].key) {
+                    if (Element(to_find).key < node->elements[i].key) {
                         return findLeaf(node->child[i], to_find);
                     }
                 }
@@ -189,10 +223,10 @@ namespace structures {
                 }
             }
 
-            void erase(Node* to_delete, K key) {
+            void erase(Node* to_delete, std::string &name) {
                 int pos = 0;
 
-                while (pos < to_delete->elements.size() && to_delete->elements[pos].key < key) {
+                while (pos < to_delete->elements.size() && to_delete->elements[pos].key < Element(name).key) {
                     pos++;
                 }
 
@@ -246,7 +280,7 @@ namespace structures {
                         }
 
                         updateKeys(left);
-                        erase(left->parent, to_delete->elements[0].key);
+                        erase(left->parent, to_delete->elements[0].name);
 
                     }
                     else if (right != nullptr) {
@@ -264,7 +298,7 @@ namespace structures {
 
                         updateKeys(to_delete);
 
-                        erase(to_delete->parent, right->elements[0].key);
+                        erase(to_delete->parent, right->elements[0].name);
                     }
                 }
 
@@ -313,7 +347,8 @@ namespace structures {
                     std::cout << std::endl;
 
                     for (auto parent: node->elements) {
-                        std::cout << parent.key << " ";
+                        std::cout << parent.name;
+                        std::cout << " (" << parent.value << ") | ";
                     }
 
                     std::cout << std::endl;
@@ -324,10 +359,11 @@ namespace structures {
                     }
 
                     for (auto child: node->elements) {
-                        std::cout << child.key << " ";
+                        std::cout << child.name;
+                        std::cout << " (" << child.value << ") | ";
                     }
 
-                    std::cout << "[Parent=" << node->parent->elements[0].key << "]";
+                    std::cout << "[Parent=" << node->parent->elements[0].name << "]";
                     std::cout << std::endl;
                 }
 
