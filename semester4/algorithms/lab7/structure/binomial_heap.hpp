@@ -3,6 +3,8 @@
 
 #define SPACES 2
 #define SEPARATORS 32
+#define P 101
+#define Q 3571
 
 #include <cmath>
 #include <vector>
@@ -20,8 +22,8 @@ namespace structures {
                 head = nullptr;
             }
 
-            void insert(T& t) {
-                Node* to_insert = new Node(t);
+            void insert(std::string &name) {
+                Node* to_insert = new Node(name);
                 this->head = connectHeap(to_insert, head);
             }
 
@@ -113,6 +115,7 @@ namespace structures {
                 public:
 
                     T value;
+                    std::string name;
 
                     Node* parent;
                     Node* neighbor;
@@ -120,14 +123,29 @@ namespace structures {
 
                     int degree;
 
-                    explicit Node(T& value) {
-                        this->value = value;
+                    explicit Node(std::string &name) {
+                        this->name = name;
+                        this->value = hash(name);
 
                         parent = nullptr;
                         neighbor = nullptr;
                         child = nullptr;
 
                         degree = 0;
+                    }
+
+                private:
+
+                    int hash(std::string &string) {
+                        int result = 0;
+
+                        for (char c: string) {
+                            if (c != ' ') {
+                                result = (P * result + std::tolower(c)) % Q;
+                            }
+                        }
+
+                        return result;
                     }
             };
 
@@ -251,10 +269,10 @@ namespace structures {
                     std::cout << " ";
                 }
 
-                std::cout<< node->value;
+                std::cout<< node->name;
 
                 if (node->parent) {
-                    std::cout << " [Parent=" << node->parent->value << "]";
+                    std::cout << " [Parent=" << node->parent->name << "]";
                 }
 
                 std::cout << std::endl;
